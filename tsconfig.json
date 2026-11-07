@@ -12,12 +12,23 @@
     "experimentalDecorators": true,
     "importHelpers": true,
     "target": "ES2022",
-    "module": "preserve"
+    "module": "preserve",
+    "paths": {
+      "wb-ff-ds": ["./dist/wb-ff-ds"]
+    }
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
     "strictInjectionParameters": true,
     "strictInputAccessModifiers": true
   },
-  "files": []
+  "files": [],
+  "references": [
+    {
+      "path": "./projects/wb-ff-ds/tsconfig.lib.json"
+    },
+    {
+      "path": "./projects/wb-ff-ds/tsconfig.spec.json"
+    }
+  ]
 }
