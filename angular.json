@@ -2,9 +2,43 @@
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
   "cli": {
-    "packageManager": "npm"
+    "packageManager": "npm",
+    "schematicCollections": ["angular-eslint"]
   },
   "newProjectRoot": "projects",
   "projects": {
+    "wb-ff-ds": {
+      "projectType": "library",
+      "root": "projects/wb-ff-ds",
+      "sourceRoot": "projects/wb-ff-ds/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:ng-packagr",
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/wb-ff-ds/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/wb-ff-ds/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular/build:unit-test",
+          "options": {
+            "tsConfig": "projects/wb-ff-ds/tsconfig.spec.json"
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": ["projects/wb-ff-ds/**/*.ts", "projects/wb-ff-ds/**/*.html"],
+            "eslintConfig": "projects/wb-ff-ds/eslint.config.js"
+          }
+        }
+      }
+    }
   }
 }
