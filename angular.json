@@ -39,6 +39,77 @@
           }
         }
       }
+    },
+    "ferrofluid-ds": {
+      "projectType": "application",
+      "schematics": {},
+      "root": "projects/ferrofluid-ds",
+      "sourceRoot": "projects/ferrofluid-ds/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:application",
+          "options": {
+            "browser": "projects/ferrofluid-ds/src/main.ts",
+            "tsConfig": "projects/ferrofluid-ds/tsconfig.app.json",
+            "assets": [
+              {
+                "glob": "**/*",
+                "input": "projects/ferrofluid-ds/public"
+              }
+            ],
+            "styles": ["projects/ferrofluid-ds/src/styles.css"]
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kB",
+                  "maximumError": "1MB"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "4kB",
+                  "maximumError": "8kB"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "optimization": false,
+              "extractLicenses": false,
+              "sourceMap": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular/build:dev-server",
+          "configurations": {
+            "production": {
+              "buildTarget": "ferrofluid-ds:build:production"
+            },
+            "development": {
+              "buildTarget": "ferrofluid-ds:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "test": {
+          "builder": "@angular/build:unit-test"
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "projects/ferrofluid-ds/**/*.ts",
+              "projects/ferrofluid-ds/**/*.html"
+            ],
+            "eslintConfig": "projects/ferrofluid-ds/eslint.config.js"
+          }
+        }
+      }
     }
   }
 }
