@@ -29,6 +29,12 @@
     },
     {
       "path": "./projects/wb-ff-ds/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/ferrofluid-ds/tsconfig.app.json"
+    },
+    {
+      "path": "./projects/ferrofluid-ds/tsconfig.spec.json"
     }
   ]
 }

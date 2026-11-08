@@ -72,18 +72,24 @@ jobs:
       - name: Lint
         run: npx ng lint
 
-      - name: Build
-        run: npx ng build
+      # The library first: the docs site consumes its build output (dist/wb-ff-ds)
+      - name: Build library (wb-ff-ds)
+        run: npx ng build wb-ff-ds
 
-      # The library has no components yet, and ng test errors when there are no test files.
-      # Make this unconditional once the first component exists.
+      - name: Build docs site (ferrofluid-ds)
+        run: npx ng build ferrofluid-ds
+
+      # ng test errors for a project with no test files, so each project is tested once it has some.
+      # Make the library's tests unconditional once its first component exists.
       - name: Unit tests
         run: |
-          if find projects -name '*.spec.ts' -not -path '*/node_modules/*' | grep -q .; then
-            npx ng test --watch=false
-          else
-            echo "::notice::No test files yet. Tests skipped until the first component exists."
-          fi
+          for project in wb-ff-ds ferrofluid-ds; do
+            if find "projects/${project}" -name '*.spec.ts' | grep -q .; then
+              npx ng test "${project}" --watch=false
+            else
+              echo "::notice::${project}: no test files yet. Tests skipped until its first component exists."
+            fi
+          done
 
   dependency-review:
     name: Dependency review
