@@ -1,13 +1,17 @@
 {
   "name": "wb-ff-ds",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
-    "watch": "ng build --watch --configuration development",
-    "test": "ng test",
-    "lint": "ng lint"
+    "start": "ng serve ferrofluid-ds",
+    "build": "npm run build:lib && npm run build:docs",
+    "test": "ng test ferrofluid-ds --watch=false",
+    "lint": "ng lint",
+    "build:lib": "ng build wb-ff-ds",
+    "build:docs": "ng build ferrofluid-ds",
+    "watch:lib": "ng build wb-ff-ds --watch --configuration development",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
   },
   "private": true,
   "packageManager": "npm@11.20.0",

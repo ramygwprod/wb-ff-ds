@@ -4,6 +4,7 @@
 
 /*
 !/.gitignore
+!/README.md
 
 # Agent skills only (vendored, hash-pinned); .claude/settings.local.json and the rest of .claude/ stay local
 !/.claude/
@@ -23,6 +24,7 @@
 !/tsconfig.json
 !/.editorconfig
 !/.prettierrc
+!/.prettierignore
 !/.vscode/
 !/eslint.config.js
 

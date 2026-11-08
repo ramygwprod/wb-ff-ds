@@ -46,13 +46,13 @@ jobs:
         uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6.0.0
 
       - name: Build library (wb-ff-ds)
-        run: npx ng build wb-ff-ds
+        run: npm run build:lib
 
       # The base path comes from Pages itself (e.g. /wb-ff-ds/), so it stays correct if the URL changes
       - name: Build docs site (ferrofluid-ds)
         env:
           BASE_PATH: ${{ steps.pages.outputs.base_path }}
-        run: npx ng build ferrofluid-ds --base-href "${BASE_PATH}/"
+        run: npm run build:docs -- --base-href "${BASE_PATH}/"
 
       # GitHub Pages has no SPA fallback: serving index.html as 404.html makes deep links and refreshes work
       - name: Add SPA fallback
