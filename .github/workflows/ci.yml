@@ -69,18 +69,22 @@ jobs:
             console.log(`OK: ${found.size} advisory(ies), all accepted`);
           '
 
+      # Steps run the package.json scripts, so CI, agents and people use the same commands
+      - name: Format check
+        run: npm run format:check
+
       - name: Lint
-        run: npx ng lint
+        run: npm run lint
 
       # The library first: the docs site consumes its build output (dist/wb-ff-ds)
       - name: Build library (wb-ff-ds)
-        run: npx ng build wb-ff-ds
+        run: npm run build:lib
 
       - name: Build docs site (ferrofluid-ds)
-        run: npx ng build ferrofluid-ds
+        run: npm run build:docs
 
       # ng test errors for a project with no test files, so each project is tested once it has some.
-      # Make the library's tests unconditional once its first component exists.
+      # Make the library's tests unconditional once its first component exists; then this step becomes `npm test`.
       - name: Unit tests
         run: |
           for project in wb-ff-ds ferrofluid-ds; do
