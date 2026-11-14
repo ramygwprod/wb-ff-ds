@@ -427,7 +427,17 @@ function renderAgent(entry, registry, ctx, legendOf) {
   const rules = mine
     .flatMap((f) => f.rules.data.rules)
     .filter((r) => data.role === 'foundation' || r.consumers.includes(data.consumer));
-  const waiting = [...new Set(rules.flatMap((r) => [...(ctx.waitsOn.get(r.id) ?? [])]))].sort();
+  // A foundation agent also waits on its foundation's gaps: open questions with no rule yet.
+  const gapDecisions =
+    data.role === 'foundation'
+      ? mine.flatMap((f) => (f.rules.data.gaps ?? []).map((g) => g.decision))
+      : [];
+  const waiting = [
+    ...new Set([...rules.flatMap((r) => [...(ctx.waitsOn.get(r.id) ?? [])]), ...gapDecisions]),
+  ].sort();
+  // Proposed guidance is not a rule yet, so it is never listed as guidance to apply.
+  const guidance = rules.filter((r) => r.kind === 'guidance');
+  const proposed = guidance.filter((r) => r.status === 'proposed');
   const reviews = [...registry.foundations.map((f) => f.agent), ...(registry.agents ?? [])].filter(
     (a) => a?.data.reviewedBy?.includes(data.name),
   );
@@ -468,11 +478,25 @@ function renderAgent(entry, registry, ctx, legendOf) {
   out.push(
     '## Guidance to apply while working',
     bullets(
-      rules.filter((r) => r.kind === 'guidance').map((r) => `- **${r.id}:** ${r.text}`),
+      guidance.filter((r) => r.status !== 'proposed').map((r) => `- **${r.id}:** ${r.text}`),
       'None yet.',
     ),
+  );
+  if (proposed.length) {
+    out.push(
+      '## Proposed guidance, not decided yet',
+      "Don't apply these, and don't treat them as rules: each waits on the decision named with it.",
+      proposed
+        .map((r) => {
+          const on = [...(ctx.waitsOn.get(r.id) ?? [])].sort().join(', ');
+          return `- **${r.id}** (waits on ${on}): ${r.text}`;
+        })
+        .join('\n'),
+    );
+  }
+  out.push(
     '## Open decisions',
-    `${data.role === 'reviewer' ? 'The rules you review' : 'Your rules'} wait on these. ` +
+    `${data.role === 'reviewer' ? 'The rules you review' : 'Your rules and gaps'} wait on these. ` +
       "Don't answer them yourself: finish with `needs-decision` and name the decision.",
     bullets(
       waiting.map((id) => `- **${id}:** ${ctx.decisionById.get(id).question}`),
@@ -480,7 +504,8 @@ function renderAgent(entry, registry, ctx, legendOf) {
     ),
     '## How your work is checked',
     [
-      `When you finish, these run: ${data.gate.checks.map((c) => `\`npm run ${c}\``).join(', ')}.`,
+      'When you finish, your JSON is formatted and the Markdown is regenerated for you, ' +
+        `then these run: ${data.gate.checks.map((c) => `\`npm run ${c}\``).join(', ')}.`,
       data.gate.maxRetries === 0
         ? 'If a check fails, stop as `blocked`: no retries.'
         : `After a failed check you may fix it and retry up to ${data.gate.maxRetries} ` +

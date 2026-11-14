@@ -24,21 +24,22 @@ WB-FF-DS is WideBot's AI-native, white-label design system, built in Angular.
 
 CI runs these same scripts, so what passes locally is what CI checks.
 
-| Command                     | What it does                                                                         |
-| --------------------------- | ------------------------------------------------------------------------------------ |
-| `npm ci`                    | Install exactly what's in the lockfile                                               |
-| `npm start`                 | Docs site dev server (build the library first)                                       |
-| `npm run build`             | Build the library, then the docs site                                                |
-| `npm run build:lib`         | Build the library only                                                               |
-| `npm run build:docs`        | Build the docs site only                                                             |
-| `npm run watch:lib`         | Rebuild the library on change                                                        |
-| `npm test`                  | Unit tests (the docs site; the library gets added when it has tests)                 |
-| `npm run lint`              | Lint both projects, including template accessibility rules and the CSS checks        |
-| `npm run format`            | Format allowed files (`.prettierignore` protects vendored skills and changelogs)     |
-| `npm run format:check`      | Check formatting without changing anything                                           |
-| `npm run registry:check`    | Validate the knowledge registry, check generated files are current, scan the run log |
-| `npm run registry:generate` | Regenerate the knowledge-base Markdown (and local agent files) from the JSON         |
-| `npm run test:tools`        | Tests for the pipeline tools: registry, generator, CSS checks, hooks                 |
+| Command                     | What it does                                                                           |
+| --------------------------- | -------------------------------------------------------------------------------------- |
+| `npm ci`                    | Install exactly what's in the lockfile                                                 |
+| `npm start`                 | Docs site dev server (build the library first)                                         |
+| `npm run build`             | Build the library, then the docs site                                                  |
+| `npm run build:lib`         | Build the library only                                                                 |
+| `npm run build:docs`        | Build the docs site only                                                               |
+| `npm run watch:lib`         | Rebuild the library on change                                                          |
+| `npm test`                  | Unit tests (the docs site; the library gets added when it has tests)                   |
+| `npm run lint`              | Lint both projects, including template accessibility rules and the CSS checks          |
+| `npm run format`            | Format allowed files (`.prettierignore` protects vendored skills and changelogs)       |
+| `npm run format:check`      | Check formatting without changing anything                                             |
+| `npm run registry:check`    | Validate the knowledge registry, check generated files are current, scan the run log   |
+| `npm run registry:format`   | Format the knowledge base only (the finish gate runs it for agents, who have no shell) |
+| `npm run registry:generate` | Regenerate the knowledge-base Markdown (and local agent files) from the JSON           |
+| `npm run test:tools`        | Tests for the pipeline tools: registry, generator, CSS checks, hooks                   |
 
 Requires Node 26 (`.nvmrc`) and npm 11.20 (`packageManager`). `engine-strict` refuses other versions.
 
@@ -48,7 +49,7 @@ Requires Node 26 (`.nvmrc`) and npm 11.20 (`packageManager`). `engine-strict` re
 - **Direction:** RTL Arabic and LTR English. Use `@angular/cdk/bidi` for direction, and CSS logical properties (`margin-inline-start`, not `margin-left`).
 - **Text:** built-in component text (EN/AR) comes from a **runtime label service**. It switches language without a rebuild, and white-label customers can override labels.
 - **Layout:** responsive, desktop and mobile.
-- **Theme axes:** brand × scheme (light/dark) × direction × compliance (AA/AAA) × density. What "density" means is not defined yet; ask before using it.
+- **Theme axes:** brand × scheme (light/dark) × direction × conformance (AA/AAA) × density. What "density" means is not defined yet; ask before using it.
 - **Standards referenced:** WAI-ARIA Authoring Practices, DTCG 2025.10 (design tokens), EN 301 549 (version still to confirm).
 - Brand colours, fonts and tokens are not set yet. Don't add them.
 

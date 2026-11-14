@@ -13,6 +13,11 @@ import { createValidators, loadRegistry, PROTECTED, scopeOverlaps } from '../reg
 export const REPO_ROOT = fileURLToPath(new URL('../../', import.meta.url));
 export const WRITE_TOOLS = ['Write', 'Edit', 'MultiEdit', 'NotebookEdit'];
 export const OUTCOMES = ['passed', 'blocked', 'needs-decision', 'cancelled'];
+/**
+ * What the finish gate runs before an agent's own gate checks, because agents have no Bash:
+ * format the knowledge base as format:check expects, then regenerate the Markdown from the JSON.
+ */
+export const GATE_PREPARE = ['registry:format', 'registry:generate'];
 const SCHEMA_DIR = fileURLToPath(new URL('../registry/schemas/', import.meta.url));
 
 /** Reads the hook's JSON input from stdin. */

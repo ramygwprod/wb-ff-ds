@@ -1,9 +1,10 @@
 #!/usr/bin/env node
 /**
  * SubagentStop hook: the finish gate (spine step S5). Runs when a sub-agent tries to finish.
- * For an agent with a manifest it regenerates the Markdown (agents have no Bash), runs the
- * manifest's gate checks, reads the agent's "Outcome: …" line, and either lets it stop or sends
- * it back with the failures, at most gate.maxRetries times. Every result goes to the run log.
+ * For an agent with a manifest it formats the knowledge base and regenerates the Markdown (agents
+ * have no Bash, so they can run neither), runs the manifest's gate checks, reads the agent's
+ * "Outcome: …" line, and either lets it stop or sends it back with the failures, at most
+ * gate.maxRetries times. Every result goes to the run log.
  * Agents without a manifest aren't gated here (they can't write in the repository anyway).
  * Usage (from .claude/settings.json): node tools/hooks/subagent-stop.mjs [--root dir] [--log-dir dir] [--state-dir dir]
  */
@@ -14,6 +15,7 @@ import { parseArgs } from 'node:util';
 import {
   appendRunLog,
   decideGate,
+  GATE_PREPARE,
   loadManifests,
   parseOutcome,
   readStdinJson,
@@ -43,7 +45,7 @@ if (manifest) {
   const stateFile = path.join(stateDir, `${run}.json`);
   const attempts = existsSync(stateFile) ? JSON.parse(readFileSync(stateFile, 'utf8')).attempts : 0;
 
-  const results = runScripts(root, ['registry:generate', ...manifest.gate.checks]);
+  const results = runScripts(root, [...GATE_PREPARE, ...manifest.gate.checks]);
   const claimed = parseOutcome(input.last_assistant_message);
   const d = decideGate({ claimed, results, attempts, maxRetries: manifest.gate.maxRetries });
 

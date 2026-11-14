@@ -230,35 +230,18 @@
       "options": [],
       "recordedOn": "2026-11-13",
       "blocks": ["L-L2", "L-S4"],
-      "notes": "The layout agent proposes values with evidence; Ramy approves."
+      "notes": "The layout agent proposes values with evidence; Ramy approves. DEC-051 gave every container a maximum as well; those values are open too. Read as held until the foundations are done (DEC-083), because the navigation and panes are components; to confirm."
     },
     {
       "id": "DEC-023",
       "question": "What are the token names?",
-      "status": "open",
+      "status": "answered",
       "options": [],
       "recordedOn": "2026-11-13",
-      "blocks": [
-        "L-T1",
-        "L-T2",
-        "L-T3",
-        "L-T4",
-        "L-T5",
-        "L-T6",
-        "L-T7",
-        "L-T8",
-        "L-T9",
-        "L-T10",
-        "L-T11",
-        "L-T12",
-        "L-T13",
-        "L-T14",
-        "L-T15",
-        "L-T16",
-        "L-T17",
-        "L-T18"
-      ],
-      "notes": "Comes from the token architect's naming contract, which isn't written yet. The spacing step names 3xs to 3xl are working names until then."
+      "notes": "Answered by Ramy across DEC-084 (name them now), DEC-091 (follow the standards), DEC-092 (size, not scale) and DEC-093 (no glossary, no approval name by name). Not covered here: the parameters of the formula are named with DEC-073, the density levels with DEC-069, and the other foundations' tokens with their own steps and the general token contract (DEC-026).",
+      "answer": "They follow the standards. The layout tokens sit in the groups size, spacing and layout; the nine sizes are numbered 1 to 9; every other token is named after the CSS property it feeds (L-T20).",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-14"
     },
     {
       "id": "DEC-024",
@@ -477,6 +460,584 @@
       "decidedBy": "Ramy",
       "decidedOn": "2026-11-14",
       "recordedOn": "2026-11-14"
+    },
+    {
+      "id": "DEC-044",
+      "question": "Above 1440px, once sizes stop growing (L-T3), where does the extra space go?",
+      "status": "answered",
+      "options": [
+        "Side margins grow around a centred maximum width",
+        "More grid tracks or panes",
+        "It depends on the content"
+      ],
+      "answer": "It depends on the content: each layout decides how it uses the extra space.",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-14",
+      "recordedOn": "2026-11-14",
+      "notes": "L-T3's wording 'the grid adds space instead' is to be updated to match."
+    },
+    {
+      "id": "DEC-045",
+      "question": "Below 320px (a foldable cover screen, a widget in a narrow sidebar), what happens to the layout?",
+      "status": "answered",
+      "options": [
+        "Keep adapting; only the text and target floors hold",
+        "Stay at the 320px form and scroll sideways",
+        "Out of scope"
+      ],
+      "answer": "It depends on the content: layouts can wrap and hide more elements. A smartwatch view is used as an extreme test case.",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-14",
+      "recordedOn": "2026-11-14",
+      "notes": "L-T3's wording 'below 320px nothing shrinks further' is to be updated to match. Whether hidden elements stay reachable is answered in DEC-046."
+    },
+    {
+      "id": "DEC-046",
+      "question": "When a layout hides elements in a small space, do they stay reachable?",
+      "status": "answered",
+      "options": ["Still reachable, folded away", "Can be removed", "Depends on the element"],
+      "answer": "Yes, everything stays reachable. A large component that is useless in a small space changes form instead: for example, a table becomes data cards with nested listing and search, so the user still reaches the information, in smaller portions, with interactions that fit the device, its touch targets and its readable area.",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-14",
+      "recordedOn": "2026-11-14"
+    },
+    {
+      "id": "DEC-047",
+      "question": "When a resizable pane collapses below its minimum, what form does it take?",
+      "options": [
+        "Hidden, with a button to restore it",
+        "A narrow icon rail",
+        "Decided per component"
+      ],
+      "answer": "Decided by each component's properties and variations, not by one rule for all, so that components of different complexity don't leave gaps between rules.",
+      "notes": "Resizable panes follow the WAI-ARIA APG window splitter pattern (a separator with aria-valuenow/min/max, arrow keys, Enter to collapse or restore) and WCAG 2.5.7, which requires a single-pointer alternative to dragging.",
+      "status": "answered",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-14",
+      "recordedOn": "2026-11-14"
+    },
+    {
+      "id": "DEC-048",
+      "question": "When a window is too narrow for both resizable panes' minimum sizes, which pane gives way?",
+      "options": [
+        "The navigation collapses first",
+        "The content pane collapses",
+        "One pane overlays the other"
+      ],
+      "answer": "It depends on the priority and frequency of use of each pane, per view or task.",
+      "status": "answered",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-14",
+      "recordedOn": "2026-11-14"
+    },
+    {
+      "id": "DEC-049",
+      "question": "Is a user's chosen pane width remembered?",
+      "options": ["Remembered", "Reset each time"],
+      "answer": "Yes. The user's chosen width is remembered, with a fallback to the default.",
+      "status": "answered",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-14",
+      "recordedOn": "2026-11-14"
+    },
+    {
+      "id": "DEC-050",
+      "question": "Are resizable panes a general pattern, or only for the app shell?",
+      "options": ["A general pattern for any pair of panes", "The app shell only"],
+      "answer": "A general pattern: that is how the fluid concept adapts as devices and areas change.",
+      "status": "answered",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-14",
+      "recordedOn": "2026-11-14"
+    },
+    {
+      "id": "DEC-051",
+      "question": "How do containers on the same layer share space when one opens or grows?",
+      "options": [
+        "Grow to its maximum first, then neighbours resize along the split direction",
+        "Another order"
+      ],
+      "answer": "Every container has a minimum and a maximum. Containers on the same layer push each other: the container taking space grows to its own maximum first, then its neighbours resize along the split direction. A container that reaches its minimum reacts as its component defines (DEC-047): it freezes its size, minimizes, or reacts in a way specific to that component.",
+      "notes": "Learned from the Claude Code desktop pane layout (code.claude.com/docs/en/desktop.md, \"Arrange your workspace\" and \"Minimize a pane\").",
+      "status": "answered",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-14",
+      "recordedOn": "2026-11-14"
+    },
+    {
+      "id": "DEC-052",
+      "question": "When a container frozen at its minimum still leaves too little room, what gives way?",
+      "options": [
+        "The lowest-priority container",
+        "The container that just opened",
+        "The layout scrolls"
+      ],
+      "answer": "The lowest-priority container (DEC-048) gives way: it collapses, minimizes or moves out.",
+      "status": "answered",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-14",
+      "recordedOn": "2026-11-14"
+    },
+    {
+      "id": "DEC-053",
+      "question": "May the system float a container (overlap it on a higher layer), or only the user?",
+      "options": ["The user's choice only", "The system may too", "Per component"],
+      "answer": "The user controls some views, and the system sets the default behaviour, especially where a different layer needs an overlap: draggable floating windows or popovers.",
+      "status": "answered",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-14",
+      "recordedOn": "2026-11-14"
+    },
+    {
+      "id": "DEC-054",
+      "question": "What is every element measured on: its nearest container, or the viewport?",
+      "options": ["Its nearest query container", "The viewport", "Split by purpose"],
+      "answer": "Its nearest query container. The viewport is only the top-level case: container query units fall back to the small viewport size when there is no query container (CSS Containment 3). Everything inside a pane reacts to that pane as it is resized.",
+      "notes": "L-T3 and L-T10 are to be updated: the 320–1440px fluid range applies to the inline size of the nearest query container.",
+      "status": "answered",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-14",
+      "recordedOn": "2026-11-14"
+    },
+    {
+      "id": "DEC-055",
+      "question": "Who sets each pane's priority and frequency of use per view or task (DEC-048), and where is it stored?",
+      "options": [],
+      "notes": "Raised by DEC-048 and DEC-052. To be settled when views are defined.",
+      "status": "open",
+      "recordedOn": "2026-11-14"
+    },
+    {
+      "id": "DEC-056",
+      "question": "Where is a user's remembered pane size (DEC-049) stored?",
+      "status": "answered",
+      "options": ["With the other user preferences", "Separately"],
+      "answer": "In the same place as the user's other preferences, such as theme, scheme, language and density.",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-14",
+      "recordedOn": "2026-11-14",
+      "notes": "Where that preference store lives is DEC-057."
+    },
+    {
+      "id": "DEC-057",
+      "question": "Where do user preferences live (theme, scheme, language, density, pane sizes), and how do they reach the design system?",
+      "status": "open",
+      "options": [],
+      "recordedOn": "2026-11-14",
+      "notes": "Raised by DEC-056. L-D9 already says the chosen density is stored and wins over tenant and device defaults; the store itself is not defined yet."
+    },
+    {
+      "id": "DEC-058",
+      "question": "Are layout and the container component (the frame that shapes other components) separate elements?",
+      "options": ["Separate", "One element"],
+      "answer": "Separate. Layout is the wireframe: how space is divided and shared (query containers, tracks, sizes, split direction, pushing, priority, collapsing, thresholds), with no visual traits. The container component is the frame that shapes any other component: its surface, border, corner radius, elevation, layering and padding.",
+      "notes": "Mirrors CSS, which keeps layout properties (display, track sizing, container-type, min/max sizes) apart from box decoration (background, border, border-radius, box-shadow).",
+      "status": "answered",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-14",
+      "recordedOn": "2026-11-14"
+    },
+    {
+      "id": "DEC-059",
+      "question": "Who owns floating (overlapping on a higher layer): layout or the container component?",
+      "options": ["The container component", "Split between them"],
+      "answer": "The container component owns layering, elevation and floating. Layout only shares space between containers on the same layer. Who may float a container stays as DEC-053 says.",
+      "status": "answered",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-14",
+      "recordedOn": "2026-11-14"
+    },
+    {
+      "id": "DEC-060",
+      "question": "Who owns padding, the inset between a frame's edge and its content?",
+      "options": ["The container component", "Layout"],
+      "answer": "The container component, using layout's inset relation: an inset is a ratio of the component's own text size (L-T13, L-T17).",
+      "status": "answered",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-14",
+      "recordedOn": "2026-11-14"
+    },
+    {
+      "id": "DEC-061",
+      "question": "Where do element and property names come from?",
+      "options": ["DOM, HTML, CSS and Angular references", "Our own naming"],
+      "answer": "From the DOM and Angular references (with the HTML, CSS and ARIA standards they build on), to avoid unnecessary conflicts. A name is invented only where no standard name exists.",
+      "notes": "Shapes D2, the naming grammar, and DEC-023, the token names.",
+      "status": "answered",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-14",
+      "recordedOn": "2026-11-14"
+    },
+    {
+      "id": "DEC-062",
+      "question": "How does a container size itself?",
+      "options": ["Fill the available space", "Hug its content", "Each container chooses"],
+      "answer": "Each container chooses: some fill the space they are given, others hug their content. In CSS terms, hug is the fit-content size and fill is the stretch-fit size, reached through grid and flex layout because the stretch keyword is not Baseline.",
+      "notes": "CSS Sizing 3 (fit-content size = clamp(min-content, stretch-fit, max-content)); CSS Sizing 4 (stretch keyword, not Baseline in the web-features data bundled with @eslint/css).",
+      "status": "answered",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-14",
+      "recordedOn": "2026-11-14"
+    },
+    {
+      "id": "DEC-063",
+      "question": "How does an image or video fill a container that fills its space?",
+      "options": ["Crop to the area, keeping an agreed aspect ratio", "Fit inside", "Stretch"],
+      "answer": "It crops to the available area while keeping an agreed aspect ratio, never stretching or force-fitting, as with hero images and product cards: object-fit: cover with object-position for the focal point, and an aspect-ratio token. Static images use NgOptimizedImage in fill mode.",
+      "notes": "CSS Images 3: object-fit's initial value is fill, which stretches the image, so this must be enforced, e.g. by a source check. Angular image-optimization guide: fill mode takes the parent container's size, without width and height.",
+      "status": "answered",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-14",
+      "recordedOn": "2026-11-14"
+    },
+    {
+      "id": "DEC-064",
+      "question": "When a label is too long for its space (a button, menu item or table cell), does it wrap or truncate?",
+      "options": ["Wrap, and the control grows", "Truncate with an ellipsis", "Per component"],
+      "answer": "Each component's profile decides.",
+      "status": "answered",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-14",
+      "recordedOn": "2026-11-14"
+    },
+    {
+      "id": "DEC-065",
+      "question": "How are line height and diacritics handled across languages?",
+      "options": ["Settled in the typography step", "Now, in layout"],
+      "answer": "In the typography step, after the layout is final. Font metrics are controlled through text properties (for example a maximum line height, truncation, and the cap-height-to-baseline relation) rather than taken as the font ships them, because some fonts, such as Cairo, come with line heights large enough to ruin the UI scale.",
+      "notes": "Test input from Ramy for that step (Arabic marks above, below, stacked, and madda): بَ ، بُ ، بِ ، بْ ، بً ، بٌ ، بٍ ، بّ ، بَّ ، بُّ ، بِّ ، بًّ ، بٌّ ، بٍّ ، آ. Latin has diacritics too. ALREQ 7.4: Arabic ascenders and descenders extend much further than Latin ones.",
+      "status": "answered",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-14",
+      "recordedOn": "2026-11-14"
+    },
+    {
+      "id": "DEC-066",
+      "question": "Is density one setting or two?",
+      "options": ["One value (DEC-015)", "Two settings: layout density and component density"],
+      "answer": "Two settings, usable together: layout density (the spacing between elements, Material 3's information density) and component density (the spacing inside components, Material 3's component scaling). Unchanged from DEC-015: rem owns the system and em owns the inside of a component, one level deep, bridged by unitless ratio tokens; one density per page or scope; the user's choice wins.",
+      "supersedes": ["DEC-015"],
+      "notes": "The levels of each setting, and which relations each one adjusts, are DEC-069. Material 3 density guidance: m3.material.io/foundations/layout/grids-spacing/density.",
+      "status": "answered",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-14",
+      "recordedOn": "2026-11-14"
+    },
+    {
+      "id": "DEC-067",
+      "question": "Do all components follow density changes?",
+      "options": ["Per component", "All follow"],
+      "answer": "No: each component's profile says whether density applies to it. Material 3 advises against densifying focused tasks such as menus, and alerts such as snackbars and dialogs.",
+      "status": "answered",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-14",
+      "recordedOn": "2026-11-14"
+    },
+    {
+      "id": "DEC-068",
+      "question": "What does a size floor apply to: a component's content, its visible box, or its target?",
+      "options": ["The target", "The visible box"],
+      "answer": "Three sizes are kept apart: the content (for example an icon glyph of 20 by 21), the box that holds it (for example the 24 by 24 icon box, so every icon aligns the same way), and the target, the area that accepts the pointer. The target may be larger than the visible box and transparent: a condensed button can look 24 high while its target is 44, so neighbours aren't hit by mistake, as on a keypad. The floors (L-T14, L-D2) apply to the target.",
+      "notes": "WCAG 2.2 defines a target as the region of the display that will accept a pointer action; overlapping target areas are not counted in its size (2.5.8 AA 24 by 24, 2.5.5 AAA 44 by 44).",
+      "status": "answered",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-14",
+      "recordedOn": "2026-11-14"
+    },
+    {
+      "id": "DEC-069",
+      "question": "What are the levels of layout density and of component density (DEC-066), and which relations does each adjust (gaps, block padding, control height, growth)?",
+      "options": [],
+      "blocks": ["L-D7", "L-D10"],
+      "notes": "DEC-015 had one value with levels 0.75, 1 and 1.25 adjusting growth, gaps and block insets; with two settings each needs its own answer. L-D10 holds a proposal: DEC-015's relations split across the two settings. Material 2 (Applying density) changes only a component's height, 4dp a step, and keeps its padding. Also to settle: which setting a coarse pointer's comfortable default (L-D3) applies to. The levels of component density are held until the foundations are done (DEC-083). The names of the levels are decided here too (DEC-087): the rules now describe them as denser, default and looser; Angular Material names its levels by integers, 0 for the default down to -5 for the densest. DEC-094 names the levels less, normal and more.",
+      "status": "open",
+      "recordedOn": "2026-11-14"
+    },
+    {
+      "id": "DEC-070",
+      "question": "In the AAA compliance level, are the denser levels of density (DEC-066) available?",
+      "options": ["Allowed, with every target kept at 44 by 44", "No dense in AAA"],
+      "answer": "No: the AAA level always uses the default density.",
+      "notes": "Asked after reading Material 2, Applying density: users must opt in to high-density components because they do not meet its touch-target guidance. WCAG 2.2 floors: 2.5.8 (AA) 24 by 24 and 2.5.5 (AAA) 44 by 44 CSS pixels; a target meets a size when a solid, axis-aligned square of that size fits completely inside it. The density levels themselves are DEC-069. To confirm: whether the looser level, which a coarse pointer selects by default (DEC-006, L-D3), stays available in AAA; L-D12 states only that the denser levels are not.",
+      "status": "answered",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-14",
+      "recordedOn": "2026-11-14"
+    },
+    {
+      "id": "DEC-071",
+      "question": "Under the browser's text-size setting (not zoom), does spacing grow with the text, or stay fixed while the text grows?",
+      "options": [
+        "Spacing grows with the text: rem everywhere, as L-T8, L-T14 and L-T16 say today",
+        "Spacing stays fixed while the text grows"
+      ],
+      "notes": "Held for the typography agent (DEC-082). Raised on 2026-11-14 when zoom and text size were told apart: zoom already reflows layouts on its own (DEC-054). Ramy shares text-related spacing and sizing material before this is decided, to avoid rework. A data point: Material 2 on Android scales text (sp) with the user's setting but not spacing (dp). The second option would also change L-T13 and L-T14.",
+      "status": "open",
+      "recordedOn": "2026-11-14"
+    },
+    {
+      "id": "DEC-072",
+      "question": "What is the minimum height of a control?",
+      "options": [
+        "One line box (1lh) plus block padding, never below the target floor; multi-line controls declare a minimum and a maximum number of lines",
+        "Another rule"
+      ],
+      "blocks": ["L-C14"],
+      "notes": "Held until the foundations are done (DEC-083). Why it needs a rule: an icon in a flex container is a flex item with no line box, so an icon-only button comes out shorter than a text button; the line-box strut exists only for inline content (CSS 2.2, 10.8.1). Fields with an empty state, button groups with mixed content and table cells have the same problem, more so in Arabic. Proposed on 2026-11-14, not confirmed.",
+      "status": "open",
+      "recordedOn": "2026-11-14"
+    },
+    {
+      "id": "DEC-073",
+      "question": "What is the value of each of the nine sizes at the range start, and the exact formula that generates them?",
+      "options": [],
+      "blocks": ["L-T10"],
+      "notes": "L-T10 fixes the parameters (the 0.25rem step, growth 1.5, the range) but not each step's size, nor the formula itself. The layout agent proposes both with evidence (the calibration samples in U-FIGMA and U-TOKENS); Ramy approves. No longer waits on DEC-071, which is held for typography (DEC-082). DEC-091: the proposal follows the standards, so it can be made now; the steps are numbered 1 to 9. DEC-094 names the parameters: size.step, size.growth-ratio, size.range-start and size.range-end.",
+      "status": "open",
+      "recordedOn": "2026-11-14"
+    },
+    {
+      "id": "DEC-074",
+      "question": "Are layout density and component density (DEC-066) linked?",
+      "options": [
+        "Linked: denser components bring looser layout spacing",
+        "Independent",
+        "Independent, but both can't be at their densest together"
+      ],
+      "blocks": ["L-D13"],
+      "notes": "Material 2, Applying density: \"The denser your components become, the larger the margins and gutter widths should be\", because dense components in a dense grid make groups hard to tell apart.",
+      "status": "open",
+      "recordedOn": "2026-11-14"
+    },
+    {
+      "id": "DEC-075",
+      "question": "Is proximity a layout rule: less space inside a group of related elements than around it?",
+      "options": ["Yes", "No"],
+      "blocks": ["L-L10"],
+      "notes": "Material 2 calls this implicit containment, and uses gutter width the same way (tight gutters read as one collection).",
+      "status": "open",
+      "recordedOn": "2026-11-14"
+    },
+    {
+      "id": "DEC-076",
+      "question": "When a component changes form in a small space (DEC-046), must the new form be functionally equivalent?",
+      "options": [
+        "Yes: the same function and information, never one kind of component for another",
+        "No extra limit"
+      ],
+      "blocks": ["L-R7"],
+      "notes": "Material 2, Component behavior: only functionally equivalent components are swapped (\"Do not, for example, swap a button for a chip\"), with caution between list items and cards.",
+      "status": "open",
+      "recordedOn": "2026-11-14"
+    },
+    {
+      "id": "DEC-077",
+      "question": "Beyond the default density (DEC-006), may a component change its form by input method (the pointer and hover media features)?",
+      "options": [
+        "Yes: a component may declare a reaction to the input method",
+        "No: one form for every input method"
+      ],
+      "notes": "L-D3 already selects comfortable density for a coarse pointer, and L-D6 forbids anything reachable only on hover. The media features describe the whole device, not a container, and a device can have both inputs (pointer reports the primary one, any-pointer the rest). Example: a 360px side pane on a desktop and a 360px phone have the same room but different inputs.",
+      "status": "open",
+      "recordedOn": "2026-11-14"
+    },
+    {
+      "id": "DEC-078",
+      "question": "How is the padding of a container with no text set (an image-only card, an icon-only frame), given that padding is a ratio of the component's own text size (DEC-060)?",
+      "options": [
+        "From the inherited text size, like all other padding",
+        "From a rem spacing step"
+      ],
+      "notes": "Held until the foundations are done (DEC-083). In CSS, em resolves against the element's computed font size even when it holds no text. Asked by Ramy on 2026-11-14; not settled.",
+      "status": "open",
+      "recordedOn": "2026-11-14"
+    },
+    {
+      "id": "DEC-079",
+      "question": "In Angular, is the component container (DEC-058, DEC-090) a wrapper component, or a host directive applied to each component's host element?",
+      "options": ["Wrapper component", "Host directive (hostDirectives)"],
+      "notes": "Ramy asked to discuss more. Fill and hug (DEC-062) favour a single box. A host directive must be standalone, its selector is ignored, and its inputs and outputs are not exposed unless listed. Layout primitives need the same answer before they are built.",
+      "status": "open",
+      "recordedOn": "2026-11-14"
+    },
+    {
+      "id": "DEC-080",
+      "question": "Which layer holds resizable panes and their window splitter (DEC-050): the layout foundation, or a compound built on it?",
+      "options": ["The layout foundation", "A compound built on it"],
+      "notes": "Asked after DEC-089, where a sidebar was called a compound. The window splitter and its keys, the alternative to dragging, and the remembered size left the layout rules (they were L-C6, L-C7 and L-C8) and wait for the compound layer; what they rest on stays recorded in DEC-047, DEC-049, DEC-050 and DEC-056, and the sources S-APG-SPLITTER and S-WCAG-2.5.7 stay listed. The layout foundation keeps the general behaviour: minimum and maximum, pushing, and what gives way (L-C2 to L-C5).",
+      "status": "answered",
+      "recordedOn": "2026-11-14",
+      "answer": "A compound built on it, later.",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-14"
+    },
+    {
+      "id": "DEC-081",
+      "question": "Where do the layout primitives live in the library, and when does the layout agent's write scope extend from the knowledge base to that code?",
+      "options": [],
+      "notes": "The layout manifest's write scope is the layout rules and sources only. Building primitives also waits on the token contract (DEC-023, DEC-026) and on Playwright with axe-core (DEC-043).",
+      "status": "open",
+      "recordedOn": "2026-11-14"
+    },
+    {
+      "id": "DEC-082",
+      "question": "Who settles text sizing, including whether spacing follows the browser text-size setting (DEC-071)?",
+      "options": ["The layout agent, now", "The typography agent"],
+      "answer": "The typography agent: text sizing is held for it.",
+      "notes": "Ramy held text sizing for the typography agent. Layout does not wait: its rules keep the rem model already decided (DEC-007, DEC-013) until typography answers DEC-071.",
+      "status": "answered",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-14",
+      "recordedOn": "2026-11-14"
+    },
+    {
+      "id": "DEC-083",
+      "question": "When are the scale and size of components settled?",
+      "options": ["With the layout foundation", "After the foundations"],
+      "answer": "After the foundations: the scale and size of components are learned then.",
+      "notes": "Decided when the layout agent's open questions were reviewed. Held until then: the minimum height of a control (DEC-072, L-C14), the inset of a container with no text (DEC-078), and, as read on recording, the sizes of the navigation and of panes (DEC-022) and the levels of component density (part of DEC-069).",
+      "status": "answered",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-14",
+      "recordedOn": "2026-11-14"
+    },
+    {
+      "id": "DEC-084",
+      "question": "Do the layout foundation's token names wait for the general token contract (DEC-023, DEC-026)?",
+      "options": ["Wait for the contract", "Name them now"],
+      "answer": "No: the tokens specific to scale, space and layout can be named now.",
+      "notes": "Decided when the layout agent's open questions were reviewed. Names are proposed for his approval; naming a token sets no value. The existing design inputs already group their variables as Size, Spacing and Layout.",
+      "status": "answered",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-14",
+      "recordedOn": "2026-11-14"
+    },
+    {
+      "id": "DEC-085",
+      "question": "What does the space token group cover?",
+      "options": [
+        "The empty distance between and inside elements",
+        "Something wider, such as the space a container takes up"
+      ],
+      "answer": "Gap, margins, padding and the like: the white space outside and inside elements.",
+      "notes": "Given when asked what the group covers. His words are the CSS property names. L-L5 still holds: between siblings inside a primitive the white space is a gap, not a margin.",
+      "status": "answered",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-14",
+      "recordedOn": "2026-11-14"
+    },
+    {
+      "id": "DEC-086",
+      "question": "How strict is naming, and why?",
+      "answer": "Naming is critical: names must be standard and global. An AI agent that meets an ambiguous name may drift or invent: it assumes a meaning and acts on its own understanding.",
+      "notes": "Given during the review of token names. Gives DEC-061 its reason. First applied to \"inset\": in CSS it is the offset of a positioned box, a border style, an inner shadow or a shape function, never padding; the CSS Box Model does not use the word. The other names it puts in question are DEC-087.",
+      "status": "answered",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-14",
+      "recordedOn": "2026-11-14"
+    },
+    {
+      "id": "DEC-087",
+      "question": "Which non-standard or ambiguous names in the layout rules are replaced, and by which standard names?",
+      "options": [],
+      "notes": "Found by a naming audit after DEC-086. Until DEC-069, the rules describe the density levels (denser, default, looser) instead of naming them: Material lists default, comfortable, compact, while ours had made comfortable the loosest.",
+      "status": "answered",
+      "recordedOn": "2026-11-14",
+      "answer": "All but one are settled: seven by DEC-088, the primitive names by DEC-089, and the component container by DEC-090. The density levels are named when the levels themselves are decided (DEC-069).",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-14"
+    },
+    {
+      "id": "DEC-088",
+      "question": "Which names found by the naming audit (DEC-087) are replaced by a standard name now?",
+      "answer": "Seven, each reviewed on its own: layer becomes in-flow, with stacking order for what paints in front; floor becomes minimum; hug and fill become fit-content and stretch-fit; divider becomes window splitter; compliance becomes conformance, in CLAUDE.md too; floating becomes overlay; shell becomes page layout, with page regions.",
+      "notes": "Where each standard name comes from: in-flow and out-of-flow, CSS Display 3; stacking contexts and the top layer, CSS Positioned Layout 4; minimum, WCAG 2.2 (Target Size (Minimum)) and CSS (min-inline-size, max()); fit-content and stretch fit, CSS Box Sizing 3; window splitter and the separator role, the WAI-ARIA Authoring Practices; conformance level, WCAG 2.2; overlay, Angular CDK (in CSS, float is a property that makes content wrap around a box); page and page regions, the WAI Page Structure tutorial and the APG (in Angular, the app shell is a build-time rendering pattern). Earlier decisions keep their original wording as history.",
+      "status": "answered",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-14",
+      "recordedOn": "2026-11-14"
+    },
+    {
+      "id": "DEC-089",
+      "question": "How are the layout foundation's primitives named, and which belong to it?",
+      "answer": "They are CSS layout mechanisms, named as CSS names them: stack becomes flex column, cluster becomes flex row, and the switcher is an option of the flex row. A sidebar is a compound and is not part of the layout foundation layer. An invented name is never kept: always follow the standards.",
+      "notes": "Given during the name-by-name review. An example offered to help understanding is not to be saved as a rule or turned into a name. Applied the same way, without asking: reel becomes scroll container (CSS Overflow 3); frame becomes aspect-ratio box (the CSS aspect-ratio property); center is no longer a primitive, only max-inline-size (HTML's center element is obsolete); grid stays, as CSS Grid Layout, not the ARIA grid role that @angular/aria implements. Confirmed by Ramy the same day: the page layout is also a compound, so it left the primitive list, while its page-region rules (landmarks, skip link, focus not covered) stay in the layout rules.",
+      "status": "answered",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-14",
+      "recordedOn": "2026-11-14"
+    },
+    {
+      "id": "DEC-090",
+      "question": "What is the container component of DEC-058 called, given that in CSS a container is a query container?",
+      "options": ["Box, as in the CSS Box Model", "Container, as in Angular Material"],
+      "answer": "Component container: always written in full, never bare.",
+      "notes": "Ramy chose container over box. The option shown to him was labelled with Angular Material, whose tokens use the word; Material is a reference, not a basis (DEC-096), so the name does not rest on it. It follows CSS's own pattern, which always qualifies a container: flex container, grid container, query container, scroll container. In the layout rules a bare \"container\" always means a query container (L-T19). DEC-058, DEC-059 and DEC-060 keep their original wording as history.",
+      "status": "answered",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-14",
+      "recordedOn": "2026-11-14"
+    },
+    {
+      "id": "DEC-091",
+      "question": "How are the open items of the token-names proposal settled: what the first group covers, the names of the nine spacing steps, and their sizes?",
+      "answer": "Follow the standards.",
+      "notes": "Given for the items still open in the token-names proposal. Applied on recording. Step names: no standard names spacing steps, and the standards number their own graded series (HTML heading levels are given by the number in the element name, h1 to h6, and ARIA's aria-level is an integer; CSS gives size words to font sizes only, eight of them, spelled out), so the nine steps are numbered 1 to 9 and the invented names 3xs to 3xl are gone. Group names: scale is a CSS property, a transform, so the proposal uses the words CSS uses for these things, size (inline-size, block-size) and spacing (letter-spacing, border-spacing), with layout. Sizes: the layout agent proposes them from the standards and the evidence (DEC-073).",
+      "status": "answered",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-14",
+      "recordedOn": "2026-11-14"
+    },
+    {
+      "id": "DEC-092",
+      "question": "What is the first token group called, given that scale is a CSS transform property?",
+      "options": ["size", "scale"],
+      "answer": "size.",
+      "notes": "Asked after DEC-091. scale is a CSS property, a transform (Baseline since 2022). size is the CSS word for dimensions (inline-size, block-size, min-inline-size) and the name of this group in the existing design inputs. In the naming proposal the group holds the nine numbered steps and the parameters that generate them; the rest of the proposal (the spacing and layout names) is not approved yet. DEC-084 keeps its original wording as history.",
+      "status": "answered",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-14",
+      "recordedOn": "2026-11-14"
+    },
+    {
+      "id": "DEC-093",
+      "question": "What is the test for a name, and are standard names put to Ramy one by one?",
+      "answer": "Any developer or AI agent reads the name and understands it as the standard, even without a glossary. Following the standards is the instruction: a name the standards decide is applied, not sent back for approval.",
+      "notes": "Given after names the standards had already decided were put to Ramy for approval: the instruction to follow the standards, to avoid drift, needed no further approval. Applied the same day without asking: the spacing and layout token names are the CSS property names (L-T20); the words that still needed a glossary left the rules (base, wireframe, type scale, scale ratio, reading width); and step now means only the 0.25rem granularity, as the HTML step attribute does, while the nine values are sizes.",
+      "status": "answered",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-14",
+      "recordedOn": "2026-11-14"
+    },
+    {
+      "id": "DEC-094",
+      "question": "What are the parameters of the size formula and the density levels called?",
+      "answer": "The best names for an AI agent to understand without drifting or confusion, based on the standards: size.step, size.growth-ratio, size.range-start and size.range-end for the parameters; less, normal and more for the density levels.",
+      "notes": "Ramy asked for the names to be found from the standards. Found and applied on recording. step: HTML, the step attribute is the granularity a value must follow. growth-ratio: in CSS a single number is a valid ratio, and CSS Grid speaks of a size that grows toward its growth limit. range-start and range-end: CSS Values 5, progress() measures how far a value is from the progress start value to the progress end value. more and less: Media Queries 5, prefers-contrast: more | less, a higher or lower level of a quality. normal: the initial value of CSS spacing properties such as letter-spacing. Material's integer scale was not used: Material is a reference, not a basis (DEC-096), and its numbers mean something else there.",
+      "status": "answered",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-15",
+      "recordedOn": "2026-11-15"
+    },
+    {
+      "id": "DEC-095",
+      "question": "What is a default?",
+      "answer": "A default is set by us per component, as its normal, active state, or by the system or the device.",
+      "notes": "A default is therefore a choice of level, not a level, and no density level is called default (L-D14). In the rules the middle density level is `normal` and the choice in effect is the default; the default is never called the normal state, so each word keeps one meaning. An explicit choice by the user or the tenant still overrides a default (DEC-006, L-D5, L-D9).",
+      "status": "answered",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-15",
+      "recordedOn": "2026-11-15"
+    },
+    {
+      "id": "DEC-096",
+      "question": "Is Material Design a basis for the design system?",
+      "answer": "No. Material is just another design system: its references are shared for understanding and learning. We are not limited by it or based on it.",
+      "notes": "Stated after Material had been cited as the reason for some names. Applied on recording: names and rules rest on the DOM, HTML, CSS, ARIA, WCAG, DTCG and Angular; Material and Angular Material stay only as learn-from sources. Corrected where they had been used as a basis: the notes of DEC-090, DEC-091, DEC-092 and DEC-094, and rule L-D11, which no longer quotes Material's advice. Rules that came from reading Material stay proposed until Ramy decides each (L-L10, L-D13, L-R7).",
+      "status": "answered",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-15",
+      "recordedOn": "2026-11-15"
     }
   ]
 }
