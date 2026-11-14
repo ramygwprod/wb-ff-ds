@@ -1,0 +1,141 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ramygwprod.github.io/wb-ff-ds/registry/0.1/agent.schema.json",
+  "title": "WB-FF-DS registry: an agent manifest",
+  "description": "What one agent may do and how its work is checked. Its Claude Code agent file is generated from this manifest; hooks and CI enforce it.",
+  "type": "object",
+  "required": ["contractVersion", "name", "role", "description", "tools", "writeScope", "gate"],
+  "additionalProperties": false,
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "contractVersion": {
+      "$ref": "common.schema.json#/$defs/semver"
+    },
+    "name": {
+      "description": "The Claude Code agent name. Hooks receive it as agent_type. \"unregistered\" is reserved for the run log.",
+      "allOf": [
+        {
+          "$ref": "common.schema.json#/$defs/slug"
+        },
+        {
+          "not": {
+            "const": "unregistered"
+          }
+        }
+      ]
+    },
+    "role": {
+      "description": "foundation: owns one foundation's rules and sources. reviewer: reviews other agents' work against the rules tagged for it.",
+      "enum": ["foundation", "reviewer"]
+    },
+    "foundation": {
+      "description": "The foundation folder a foundation agent owns. Foundation agents only.",
+      "$ref": "common.schema.json#/$defs/slug"
+    },
+    "consumer": {
+      "description": "The consumer tag whose rules a reviewer loads, e.g. a11y. Reviewers only.",
+      "$ref": "common.schema.json#/$defs/consumer"
+    },
+    "description": {
+      "description": "When to hand work to this agent. Becomes the agent file's description.",
+      "$ref": "common.schema.json#/$defs/text"
+    },
+    "tools": {
+      "description": "The tools the agent may use. Bash is not offered (DEC-040); the web tools only read (DEC-041).",
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "enum": ["Read", "Grep", "Glob", "Edit", "Write", "WebFetch", "WebSearch"]
+      }
+    },
+    "writeScope": {
+      "description": "Paths the agent may write, relative to the repository: a file, or a folder ending in /**. Every other write is refused. No segment may start with a dot, so .claude, .github and .. can't be named.",
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "pattern": "^[A-Za-z0-9_-][A-Za-z0-9_.-]*(/[A-Za-z0-9_-][A-Za-z0-9_.-]*)*(/\\*\\*)?$"
+      }
+    },
+    "gate": {
+      "description": "What runs when the agent tries to finish.",
+      "type": "object",
+      "required": ["checks", "maxRetries"],
+      "additionalProperties": false,
+      "properties": {
+        "checks": {
+          "description": "npm scripts to run. Each must exist in package.json.",
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9:-]*$"
+          }
+        },
+        "maxRetries": {
+          "description": "How many times the agent may fix and retry after a failed check before it must stop as blocked.",
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "reviewedBy": {
+      "description": "Reviewer agents that check this agent's work.",
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "$ref": "common.schema.json#/$defs/slug"
+      }
+    },
+    "model": {
+      "description": "The model alias for the agent file. Omit it to inherit the session's model.",
+      "enum": ["inherit", "sonnet", "opus", "haiku", "fable"]
+    },
+    "effort": {
+      "description": "The effort level for the agent file. Omit it to inherit the session's level.",
+      "enum": ["low", "medium", "high", "xhigh", "max"]
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "role": {
+            "const": "foundation"
+          }
+        }
+      },
+      "then": {
+        "required": ["foundation"],
+        "properties": {
+          "consumer": false
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "role": {
+            "const": "reviewer"
+          }
+        }
+      },
+      "then": {
+        "required": ["consumer"],
+        "properties": {
+          "foundation": false
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "outcome": {
+      "description": "passed: every gate check passed. blocked: a check still fails after the allowed retries. needs-decision: the work waits on a decision only a person can make. cancelled: stopped before finishing.",
+      "enum": ["passed", "blocked", "needs-decision", "cancelled"]
+    }
+  }
+}

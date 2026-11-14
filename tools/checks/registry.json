@@ -1,0 +1,80 @@
+{
+  "contractVersion": "0.1.0",
+  "checks": [
+    {
+      "id": "chk-root-font-size",
+      "kind": "source",
+      "rules": ["L-T7"],
+      "description": "If html or :root sets a font size (font-size or the font shorthand), it is 100%.",
+      "files": ["projects/**/*.css"],
+      "eslint": { "wbff/root-font-size": ["error"] }
+    },
+    {
+      "id": "chk-fluid-clamp-mix",
+      "kind": "source",
+      "rules": ["L-F1"],
+      "description": "A clamp() whose middle term uses a viewport or container unit also has a rem term there.",
+      "files": ["projects/**/*.css"],
+      "eslint": { "wbff/fluid-clamp-mix": ["error"] }
+    },
+    {
+      "id": "chk-no-viewport-media",
+      "kind": "source",
+      "rules": ["L-L1"],
+      "description": "Component styles have no @media width or height features (including min-, max-, device- and range forms). Global styles.css files are outside the rule.",
+      "files": ["projects/**/*.css"],
+      "ignores": ["projects/*/src/styles.css"],
+      "eslint": { "wbff/no-viewport-media": ["error"] }
+    },
+    {
+      "id": "chk-flexible-tracks",
+      "kind": "source",
+      "rules": ["L-L3"],
+      "description": "Every fr track in a grid track list is the maximum of a minmax() whose minimum is 0 or a length, never a bare fr or an intrinsic minimum.",
+      "files": ["projects/**/*.css"],
+      "eslint": { "wbff/flexible-tracks": ["error"] }
+    },
+    {
+      "id": "chk-logical-properties",
+      "kind": "source",
+      "rules": ["L-L6"],
+      "description": "Physical properties and units are rejected in favour of logical ones. dvh, svh and lvh stay allowed, as L-L8 requires them.",
+      "files": ["projects/**/*.css"],
+      "eslint": {
+        "css/prefer-logical-properties": ["error", { "allowUnits": ["dvh", "svh", "lvh"] }]
+      }
+    },
+    {
+      "id": "chk-no-100vh",
+      "kind": "source",
+      "rules": ["L-L8"],
+      "description": "No 100vh anywhere.",
+      "files": ["projects/**/*.css"],
+      "eslint": { "wbff/no-100vh": ["error"] }
+    },
+    {
+      "id": "chk-no-visual-reorder",
+      "kind": "source",
+      "rules": ["L-O1"],
+      "description": "No order property, and no row-reverse or column-reverse in flex-direction or flex-flow.",
+      "files": ["projects/**/*.css"],
+      "eslint": { "wbff/no-visual-reorder": ["error"] }
+    },
+    {
+      "id": "chk-dir-pseudo",
+      "kind": "source",
+      "rules": ["L-R4"],
+      "description": "No [dir] attribute selectors; :dir() is used instead.",
+      "files": ["projects/**/*.css"],
+      "eslint": { "wbff/no-dir-attribute": ["error"] }
+    },
+    {
+      "id": "chk-baseline",
+      "kind": "source",
+      "rules": ["L-E1", "L-E2"],
+      "description": "Every feature is Baseline (newly or widely available) unless it sits inside a matching @supports.",
+      "files": ["projects/**/*.css"],
+      "eslint": { "css/use-baseline": ["error", { "available": "newly" }] }
+    }
+  ]
+}

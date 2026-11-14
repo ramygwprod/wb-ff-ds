@@ -1,0 +1,23 @@
+{
+  "contractVersion": "0.1.0",
+  "decisions": [
+    {
+      "id": "DEC-001",
+      "question": "Fixture: which base size?",
+      "status": "answered",
+      "options": ["16px", "18px"],
+      "answer": "16px",
+      "decidedBy": "Fixture owner",
+      "decidedOn": "2026-01-02",
+      "recordedOn": "2026-01-02"
+    },
+    {
+      "id": "DEC-002",
+      "question": "Fixture: which growth ratio?",
+      "status": "open",
+      "options": ["1.5", "2"],
+      "recordedOn": "2026-01-03",
+      "blocks": ["X-A2"]
+    }
+  ]
+}

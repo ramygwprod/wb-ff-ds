@@ -1,0 +1,15 @@
+.split {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+}
+
+.cards {
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+}
+
+.rows {
+  grid-auto-rows: minmax(0, 1fr);
+}
+
+.sidebar {
+  grid-template-columns: 10rem minmax(0, 1fr);
+}

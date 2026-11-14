@@ -1,0 +1,762 @@
+{
+  "contractVersion": "0.1.0",
+  "foundation": "layout",
+  "title": "Layout system",
+  "scope": "Grid, spacing, density, containers, aspect ratios, and the layout primitives (stack, cluster, switcher, sidebar, grid, shell, frame, reel, center).",
+  "sources": [
+    {
+      "id": "S-WCAG-1.3.2",
+      "role": "judged-by",
+      "title": "WCAG 2.2, Meaningful Sequence",
+      "edition": "Level A",
+      "checked": "2026-11-11",
+      "urls": [
+        "https://www.w3.org/TR/WCAG22/",
+        "https://www.w3.org/WAI/WCAG22/wcag.json",
+        "https://www.w3.org/WAI/WCAG22/Understanding/"
+      ],
+      "uses": "Visual order never contradicts reading order",
+      "verification": "read"
+    },
+    {
+      "id": "S-WCAG-1.3.1",
+      "role": "judged-by",
+      "title": "WCAG 2.2, Info and Relationships",
+      "edition": "Level A",
+      "checked": "2026-11-11",
+      "urls": [
+        "https://www.w3.org/TR/WCAG22/",
+        "https://www.w3.org/WAI/WCAG22/wcag.json",
+        "https://www.w3.org/WAI/WCAG22/Understanding/"
+      ],
+      "uses": "The app shell exposes its regions (landmarks), not only a visual layout",
+      "verification": "read"
+    },
+    {
+      "id": "S-WCAG-2.4.1",
+      "role": "judged-by",
+      "title": "WCAG 2.2, Bypass Blocks",
+      "edition": "Level A",
+      "checked": "2026-11-11",
+      "urls": [
+        "https://www.w3.org/TR/WCAG22/",
+        "https://www.w3.org/WAI/WCAG22/wcag.json",
+        "https://www.w3.org/WAI/WCAG22/Understanding/"
+      ],
+      "uses": "The shell provides a way to skip repeated navigation",
+      "verification": "read"
+    },
+    {
+      "id": "S-WCAG-2.1.1",
+      "role": "judged-by",
+      "title": "WCAG 2.2, Keyboard",
+      "edition": "Level A",
+      "checked": "2026-11-11",
+      "urls": [
+        "https://www.w3.org/TR/WCAG22/",
+        "https://www.w3.org/WAI/WCAG22/wcag.json",
+        "https://www.w3.org/WAI/WCAG22/Understanding/"
+      ],
+      "uses": "Scroll regions and hover affordances work from the keyboard",
+      "verification": "read"
+    },
+    {
+      "id": "S-WCAG-1.3.4",
+      "role": "judged-by",
+      "title": "WCAG 2.2, Orientation",
+      "edition": "Level AA",
+      "checked": "2026-11-11",
+      "urls": [
+        "https://www.w3.org/TR/WCAG22/",
+        "https://www.w3.org/WAI/WCAG22/wcag.json",
+        "https://www.w3.org/WAI/WCAG22/Understanding/"
+      ],
+      "uses": "Layout works in both orientations, including folded and unfolded",
+      "verification": "read"
+    },
+    {
+      "id": "S-WCAG-1.4.4",
+      "role": "judged-by",
+      "title": "WCAG 2.2, Resize Text",
+      "edition": "Level AA",
+      "checked": "2026-11-11",
+      "urls": [
+        "https://www.w3.org/TR/WCAG22/",
+        "https://www.w3.org/WAI/WCAG22/wcag.json",
+        "https://www.w3.org/WAI/WCAG22/Understanding/"
+      ],
+      "uses": "Fluid sizes still respond to 200% zoom",
+      "verification": "read"
+    },
+    {
+      "id": "S-WCAG-1.4.8",
+      "role": "judged-by",
+      "title": "WCAG 2.2, Visual Presentation",
+      "edition": "Level AAA",
+      "checked": "2026-11-11",
+      "urls": [
+        "https://www.w3.org/TR/WCAG22/",
+        "https://www.w3.org/WAI/WCAG22/wcag.json",
+        "https://www.w3.org/WAI/WCAG22/Understanding/"
+      ],
+      "uses": "Line length, line spacing and alignment in the AAA theme",
+      "verification": "read"
+    },
+    {
+      "id": "S-WCAG-1.4.10",
+      "role": "judged-by",
+      "title": "WCAG 2.2, Reflow",
+      "edition": "Level AA",
+      "checked": "2026-11-11",
+      "urls": [
+        "https://www.w3.org/TR/WCAG22/",
+        "https://www.w3.org/WAI/WCAG22/wcag.json",
+        "https://www.w3.org/WAI/WCAG22/Understanding/"
+      ],
+      "uses": "No sideways scrolling at 320 CSS px",
+      "verification": "read"
+    },
+    {
+      "id": "S-WCAG-1.4.12",
+      "role": "judged-by",
+      "title": "WCAG 2.2, Text Spacing",
+      "edition": "Level AA",
+      "checked": "2026-11-11",
+      "urls": [
+        "https://www.w3.org/TR/WCAG22/",
+        "https://www.w3.org/WAI/WCAG22/wcag.json",
+        "https://www.w3.org/WAI/WCAG22/Understanding/"
+      ],
+      "uses": "Layouts survive user-increased line, letter and word spacing",
+      "verification": "read"
+    },
+    {
+      "id": "S-WCAG-2.4.3",
+      "role": "judged-by",
+      "title": "WCAG 2.2, Focus Order",
+      "edition": "Level A",
+      "checked": "2026-11-11",
+      "urls": [
+        "https://www.w3.org/TR/WCAG22/",
+        "https://www.w3.org/WAI/WCAG22/wcag.json",
+        "https://www.w3.org/WAI/WCAG22/Understanding/"
+      ],
+      "uses": "Tab order follows a meaningful sequence",
+      "verification": "read"
+    },
+    {
+      "id": "S-WCAG-2.4.11",
+      "role": "judged-by",
+      "title": "WCAG 2.2, Focus Not Obscured (Minimum)",
+      "edition": "Level AA",
+      "checked": "2026-11-11",
+      "urls": [
+        "https://www.w3.org/TR/WCAG22/",
+        "https://www.w3.org/WAI/WCAG22/wcag.json",
+        "https://www.w3.org/WAI/WCAG22/Understanding/"
+      ],
+      "uses": "Sticky headers and footers never fully cover the focused element",
+      "verification": "read"
+    },
+    {
+      "id": "S-WCAG-2.4.12",
+      "role": "judged-by",
+      "title": "WCAG 2.2, Focus Not Obscured (Enhanced)",
+      "edition": "Level AAA",
+      "checked": "2026-11-11",
+      "urls": [
+        "https://www.w3.org/TR/WCAG22/",
+        "https://www.w3.org/WAI/WCAG22/wcag.json",
+        "https://www.w3.org/WAI/WCAG22/Understanding/"
+      ],
+      "uses": "No part of the focused element is covered",
+      "verification": "read"
+    },
+    {
+      "id": "S-WCAG-2.5.8",
+      "role": "judged-by",
+      "title": "WCAG 2.2, Target Size (Minimum)",
+      "edition": "Level AA, 24 × 24 CSS px",
+      "checked": "2026-11-11",
+      "urls": [
+        "https://www.w3.org/TR/WCAG22/",
+        "https://www.w3.org/WAI/WCAG22/wcag.json",
+        "https://www.w3.org/WAI/WCAG22/Understanding/"
+      ],
+      "uses": "Floor for density in the AA theme",
+      "verification": "read"
+    },
+    {
+      "id": "S-WCAG-2.5.5",
+      "role": "judged-by",
+      "title": "WCAG 2.2, Target Size (Enhanced)",
+      "edition": "Level AAA, 44 × 44 CSS px",
+      "checked": "2026-11-11",
+      "urls": [
+        "https://www.w3.org/TR/WCAG22/",
+        "https://www.w3.org/WAI/WCAG22/wcag.json",
+        "https://www.w3.org/WAI/WCAG22/Understanding/"
+      ],
+      "uses": "Floor for density in the AAA theme",
+      "verification": "read"
+    },
+    {
+      "id": "S-EN301549",
+      "role": "judged-by",
+      "title": "EN 301 549",
+      "edition": "V4.1.1 (Sep 2026)",
+      "checked": "2026-11-11",
+      "urls": ["https://www.etsi.org/deliver/etsi_en/301500_301599/301549/"],
+      "uses": "References WCAG 2.2 A/AA for web content",
+      "verification": "read"
+    },
+    {
+      "id": "S-DTCG",
+      "role": "judged-by",
+      "title": "Design Tokens Format Module",
+      "edition": "2025.10",
+      "checked": "2026-11-13",
+      "urls": [
+        "https://www.designtokens.org/tr/2025.10/format/",
+        "https://github.com/design-tokens/community-group"
+      ],
+      "uses": "`dimension` is `{ value, unit }` in `px` or `rem` only. Fluid formulas are generated in the build, not stored as values",
+      "note": "designtokens.org didn't load on 2026-11-13, so the dimension rule was read from the spec's source on GitHub (the editor's draft, not the 2025.10 snapshot). Earlier record: checked 2026-11-08.",
+      "verification": "read"
+    },
+    {
+      "id": "S-BASELINE",
+      "role": "judged-by",
+      "title": "web-features (Baseline data)",
+      "edition": "3.45.0",
+      "checked": "2026-11-11",
+      "urls": ["https://github.com/web-platform-dx/web-features"],
+      "uses": "Which CSS features are core and which are enhancement-only",
+      "verification": "read"
+    },
+    {
+      "id": "S-APG-LANDMARKS",
+      "role": "judged-by",
+      "title": "WAI-ARIA Authoring Practices, Landmark Regions",
+      "edition": "W3C Note (living)",
+      "checked": "2026-11-13",
+      "urls": ["https://www.w3.org/WAI/ARIA/apg/practices/landmark-regions/"],
+      "uses": "Which landmark each shell region uses (banner, navigation, main, complementary, contentinfo)",
+      "verification": "reachable"
+    },
+    {
+      "id": "S-WAI-STRUCTURE",
+      "role": "judged-by",
+      "title": "W3C WAI Page Structure tutorial",
+      "edition": "Living",
+      "checked": "2026-11-13",
+      "urls": ["https://www.w3.org/WAI/tutorials/page-structure/"],
+      "uses": "Headings, regions and skip links in the shell",
+      "verification": "reachable"
+    },
+    {
+      "id": "S-CSS-GRID",
+      "role": "spec",
+      "title": "CSS Grid Layout Level 2",
+      "edition": "Candidate Recommendation Draft",
+      "checked": "2026-11-11",
+      "urls": ["https://www.w3.org/TR/css-grid-2/"],
+      "uses": "`fr`, `minmax()`, `auto-fit`, `subgrid`",
+      "verification": "read"
+    },
+    {
+      "id": "S-CSS-FLEX",
+      "role": "spec",
+      "title": "CSS Flexible Box Layout Level 1",
+      "edition": "Candidate Recommendation Draft",
+      "checked": "2026-11-11",
+      "urls": ["https://www.w3.org/TR/css-flexbox-1/"],
+      "uses": "Stack, cluster, switcher, sidebar, reel",
+      "verification": "read"
+    },
+    {
+      "id": "S-CSS-ALIGN",
+      "role": "spec",
+      "title": "CSS Box Alignment Level 3",
+      "edition": "Working Draft",
+      "checked": "2026-11-11",
+      "urls": ["https://www.w3.org/TR/css-align-3/"],
+      "uses": "`gap`, alignment",
+      "verification": "read"
+    },
+    {
+      "id": "S-CSS-CONTAIN",
+      "role": "spec",
+      "title": "CSS Containment Level 3",
+      "edition": "Working Draft",
+      "checked": "2026-11-11",
+      "urls": ["https://www.w3.org/TR/css-contain-3/"],
+      "uses": "Container queries and container units (`cqi`)",
+      "verification": "read"
+    },
+    {
+      "id": "S-CSS-COND",
+      "role": "spec",
+      "title": "CSS Conditional Rules Level 5",
+      "edition": "Working Draft",
+      "checked": "2026-11-11",
+      "urls": ["https://www.w3.org/TR/css-conditional-5/"],
+      "uses": "Container style queries, `@supports`",
+      "verification": "read"
+    },
+    {
+      "id": "S-CSS-LOGICAL",
+      "role": "spec",
+      "title": "CSS Logical Properties and Values Level 1",
+      "edition": "Working Draft",
+      "checked": "2026-11-11",
+      "urls": ["https://www.w3.org/TR/css-logical-1/"],
+      "uses": "Direction-independent spacing and sizing",
+      "verification": "read"
+    },
+    {
+      "id": "S-CSS-VALUES",
+      "role": "spec",
+      "title": "CSS Values and Units Level 4 and 5",
+      "edition": "Working Draft",
+      "checked": "2026-11-11",
+      "urls": ["https://www.w3.org/TR/css-values-4/", "https://www.w3.org/TR/css-values-5/"],
+      "uses": "`clamp()`, `round()`, `progress()`, `dvh`/`svh`/`lvh`",
+      "verification": "read"
+    },
+    {
+      "id": "S-CSS-SIZING",
+      "role": "spec",
+      "title": "CSS Box Sizing Level 4",
+      "edition": "Working Draft",
+      "checked": "2026-11-11",
+      "urls": ["https://www.w3.org/TR/css-sizing-4/"],
+      "uses": "`aspect-ratio`, intrinsic sizes",
+      "verification": "read"
+    },
+    {
+      "id": "S-CSS-CASCADE",
+      "role": "spec",
+      "title": "CSS Cascading and Inheritance Level 6",
+      "edition": "Working Draft",
+      "checked": "2026-11-11",
+      "urls": ["https://www.w3.org/TR/css-cascade-6/"],
+      "uses": "`@layer` order, `@scope`",
+      "verification": "read"
+    },
+    {
+      "id": "S-CSS-MQ",
+      "role": "spec",
+      "title": "Media Queries Level 5",
+      "edition": "Working Draft",
+      "checked": "2026-11-11",
+      "urls": ["https://www.w3.org/TR/mediaqueries-5/"],
+      "uses": "`pointer`, `hover`, `prefers-contrast`",
+      "verification": "read"
+    },
+    {
+      "id": "S-CSS-ENV",
+      "role": "spec",
+      "title": "CSS Environment Variables Level 1",
+      "edition": "First Public Working Draft",
+      "checked": "2026-11-11",
+      "urls": ["https://www.w3.org/TR/css-env-1/"],
+      "uses": "`safe-area-inset-*`",
+      "verification": "read"
+    },
+    {
+      "id": "S-CSS-PROPS",
+      "role": "spec",
+      "title": "CSS Properties and Values API Level 1",
+      "edition": "Working Draft",
+      "checked": "2026-11-11",
+      "urls": ["https://www.w3.org/TR/css-properties-values-api-1/"],
+      "uses": "`@property` typed layout tokens",
+      "verification": "read"
+    },
+    {
+      "id": "S-NG-STYLE",
+      "role": "platform",
+      "title": "angular.dev, component styling guide",
+      "edition": "Angular 22",
+      "checked": "2026-11-13",
+      "urls": ["https://angular.dev/guide/components/styling"],
+      "uses": "Emulated encapsulation, `:host`, CSS variable namespacing (`provideCssVarNamespacing`)",
+      "verification": "reachable"
+    },
+    {
+      "id": "S-NG-BIDI",
+      "role": "platform",
+      "title": "`@angular/cdk/bidi`",
+      "edition": "@angular/cdk 22.2.6 (installed)",
+      "checked": "2026-11-13",
+      "urls": ["https://material.angular.dev/cdk/bidi/overview"],
+      "uses": "Direction at run time. Layout itself uses logical properties",
+      "note": "The docs site is a single-page app: the URL loads, but this check couldn't confirm the page's content.",
+      "verification": "reachable"
+    },
+    {
+      "id": "S-NG-A11Y",
+      "role": "platform",
+      "title": "angular.dev, accessibility best practices",
+      "edition": "Angular 22",
+      "checked": "2026-11-13",
+      "urls": ["https://angular.dev/best-practices/a11y"],
+      "uses": "Focus management on route changes",
+      "verification": "reachable"
+    },
+    {
+      "id": "S-ALREQ",
+      "role": "judged-by",
+      "title": "W3C Arabic & Persian Layout Requirements",
+      "edition": "Group Draft Note, 2 Oct 2025",
+      "checked": "2026-11-13",
+      "urls": ["https://www.w3.org/TR/alreq/"],
+      "uses": "Direction, alignment and line rules for Arabic",
+      "verification": "read"
+    },
+    {
+      "id": "R-EVERYLAYOUT",
+      "role": "learn-from",
+      "title": "Every Layout (Pickering, Bell)",
+      "checked": "2026-11-13",
+      "urls": ["https://every-layout.dev"],
+      "uses": "Primitive concepts: stack, cluster, switcher, sidebar, reel, frame, center",
+      "note": "Paid book: concepts only, no code copied",
+      "verification": "unreachable"
+    },
+    {
+      "id": "R-UTOPIA",
+      "role": "learn-from",
+      "title": "Utopia",
+      "checked": "2026-11-13",
+      "urls": ["https://utopia.fyi"],
+      "uses": "Fluid type and space maths between a minimum and maximum width",
+      "note": "`utopia-core` is ISC per package.json, but the repo has no licence file. The maths is reimplemented, nothing copied",
+      "verification": "unreachable"
+    },
+    {
+      "id": "R-MDN",
+      "role": "learn-from",
+      "title": "MDN CSS guides: grid, flexbox, containment, logical properties",
+      "checked": "2026-11-13",
+      "urls": ["https://developer.mozilla.org/en-US/docs/Web/CSS/Guides"],
+      "uses": "Concepts and pitfalls (`minmax(0, 1fr)`, `min-width: 0`)",
+      "note": "CC-BY-SA docs, linked not copied",
+      "verification": "reachable"
+    },
+    {
+      "id": "R-DEFENSIVE",
+      "role": "learn-from",
+      "title": "Defensive CSS (Ahmad Shadeed)",
+      "checked": "2026-11-13",
+      "urls": ["https://defensivecss.dev"],
+      "uses": "Patterns that survive unknown content lengths (Arabic/English, AI-generated content)",
+      "note": "Linked, not copied",
+      "verification": "reachable"
+    },
+    {
+      "id": "R-TAILWIND",
+      "role": "learn-from",
+      "title": "Tailwind v4 theme",
+      "checked": "2026-11-13",
+      "urls": ["https://tailwindcss.com/docs/theme"],
+      "uses": "A single spacing base (`--spacing`) that every size multiplies",
+      "note": "Linked, not copied",
+      "verification": "reachable"
+    },
+    {
+      "id": "R-CARBON",
+      "role": "learn-from",
+      "title": "Carbon 2x grid",
+      "uses": "Grid geometry ideas",
+      "note": "**Never install Carbon packages** (telemetry dependency)",
+      "verification": "search-only"
+    },
+    {
+      "id": "R-M3",
+      "role": "learn-from",
+      "title": "Material 3 adaptive layout (window size classes, panes)",
+      "uses": "Why classes describe the window, not the device",
+      "note": "Concept only; we use calculated thresholds instead",
+      "verification": "search-only"
+    },
+    {
+      "id": "R-FLUID-A11Y",
+      "role": "learn-from",
+      "title": "Maxwell Barvian, \"Addressing Accessibility Concerns With Using Fluid Type\", Smashing Magazine, 7 Nov 2023",
+      "checked": "2026-11-11",
+      "urls": [
+        "https://smashingmagazine.com/2023/11/addressing-accessibility-concerns-fluid-type/"
+      ],
+      "uses": "**Fluid text passes WCAG 1.4.4 on modern browsers when its largest size is at most 2.5× its smallest.** The article derives this for a 320–1280px range and points to fluid.style/type for checking other cases. Our range is 320–1440",
+      "verification": "read"
+    },
+    {
+      "id": "R-ROSELLI-ZOOM",
+      "role": "learn-from",
+      "title": "Adrian Roselli, \"Responsive Type and Zoom\", Dec 2019",
+      "checked": "2026-11-11",
+      "urls": ["https://adrianroselli.com/2019/12/responsive-type-and-zoom.html"],
+      "uses": "Why viewport-only units fail zoom, and how to test it",
+      "verification": "reachable"
+    },
+    {
+      "id": "R-EIGHTSHAPES",
+      "role": "learn-from",
+      "title": "Nathan Curtis, \"Space in Design Systems\", EightShapes, 2016",
+      "checked": "2026-11-11",
+      "urls": ["https://eightshapes.com/articles/space-in-design-systems/"],
+      "uses": "Spacing vocabulary: inset (with squish and stretch variants), stack, inline, grid. Concepts named apart from CSS properties",
+      "note": "eightshapes.com returned an error when checked.",
+      "verification": "search-only"
+    },
+    {
+      "id": "R-BRAID",
+      "role": "learn-from",
+      "title": "SEEK Braid design system, layout foundations",
+      "checked": "2026-11-11",
+      "urls": ["https://seek-oss.github.io/braid-design-system/foundations/layout"],
+      "uses": "Box, Stack, Inline, Columns, Tiles: a proven agent-friendly primitive set with one `space` scale",
+      "verification": "reachable"
+    },
+    {
+      "id": "R-ATLASSIAN-PRIM",
+      "role": "learn-from",
+      "title": "Atlassian Design System, layout primitives",
+      "checked": "2026-11-11",
+      "urls": ["https://atlassian.design/foundations/spacing/primitives"],
+      "uses": "Primitives as \"opinionated solutions to common layout problems\", tied to spacing tokens",
+      "verification": "reachable"
+    },
+    {
+      "id": "R-PRIMER-STACK",
+      "role": "learn-from",
+      "title": "GitHub Primer, Stack component",
+      "checked": "2026-11-11",
+      "urls": ["https://primer.style/product/components/stack/"],
+      "uses": "A production Stack primitive with gap and direction settings",
+      "verification": "reachable"
+    },
+    {
+      "id": "R-WEBDEV-LEARN",
+      "role": "learn-from",
+      "title": "web.dev, Learn Responsive Design: macro layouts, micro layouts; \"The new responsive\"",
+      "checked": "2026-11-11",
+      "urls": [
+        "https://web.dev/learn/design/macro-layouts",
+        "https://web.dev/learn/design/micro-layouts",
+        "https://web.dev/new-responsive/"
+      ],
+      "uses": "Page layouts without media queries; components that respond to their container",
+      "verification": "reachable"
+    },
+    {
+      "id": "R-RTLSTYLING",
+      "role": "learn-from",
+      "title": "Ahmad Shadeed, RTL Styling 101",
+      "checked": "2026-11-11",
+      "urls": ["https://rtlstyling.com/posts/rtl-styling"],
+      "uses": "Practical RTL layout cases: what flips, what doesn't, icons, mixed-direction content",
+      "verification": "reachable"
+    },
+    {
+      "id": "R-FOLDABLE",
+      "role": "learn-from",
+      "title": "Chrome, \"Support foldable devices with the Viewport Segments API\" (Chrome and Edge 138), plus MDN Viewport Segments API",
+      "checked": "2026-11-11",
+      "urls": [
+        "https://developer.chrome.com/blog/viewport-segments-api-shipped",
+        "https://developer.mozilla.org/en-US/docs/Web/API/Viewport_segments_API"
+      ],
+      "uses": "Enhancement-only foldable handling: segment sizes and the hinge gap",
+      "verification": "reachable"
+    },
+    {
+      "id": "R-GRIDBYEXAMPLE",
+      "role": "learn-from",
+      "title": "Rachel Andrew, Grid by Example",
+      "checked": "2026-11-11",
+      "urls": ["https://gridbyexample.com"],
+      "uses": "Grid patterns and fallbacks",
+      "verification": "reachable"
+    },
+    {
+      "id": "R-COMEAU",
+      "role": "learn-from",
+      "title": "Josh W. Comeau, interactive guides to grid and flexbox",
+      "checked": "2026-11-11",
+      "urls": [
+        "https://www.joshwcomeau.com/css/interactive-guide-to-grid/",
+        "https://www.joshwcomeau.com/css/interactive-guide-to-flexbox/"
+      ],
+      "uses": "Mental models for `fr`, `minmax()`, flex basis and shrink",
+      "verification": "reachable"
+    },
+    {
+      "id": "R-CLS",
+      "role": "learn-from",
+      "title": "web.dev, Cumulative Layout Shift",
+      "checked": "2026-11-11",
+      "urls": ["https://web.dev/articles/cls"],
+      "uses": "Layout stability: reserve space with `aspect-ratio`, avoid late-loading shifts. A candidate performance target for the layout system",
+      "verification": "reachable"
+    },
+    {
+      "id": "R-GOVUK",
+      "role": "learn-from",
+      "title": "GOV.UK Design System, spacing and layout",
+      "checked": "2026-11-11",
+      "urls": ["https://design-system.service.gov.uk/styles/spacing/"],
+      "uses": "A responsive spacing scale used across a large public service",
+      "note": "Found in earlier research.",
+      "verification": "unreachable"
+    },
+    {
+      "id": "R-DENSITY-SAP",
+      "role": "learn-from",
+      "title": "SAP Fiori, Content Density (Cozy and Compact)",
+      "checked": "2026-11-12",
+      "urls": [
+        "https://www.sap.com/design-system/fiori-design-web/v1-151/foundations/visual/cozy-compact"
+      ],
+      "uses": "Cozy for touch (2.75rem targets), compact for mouse (2rem rows); set at app level and never mixed in one hierarchy; users can override",
+      "verification": "search-only"
+    },
+    {
+      "id": "R-DENSITY-MATERIAL",
+      "role": "learn-from",
+      "title": "Material Design, \"Using Material Density on the Web\" and \"Applying density\"",
+      "checked": "2026-11-12",
+      "urls": [
+        "https://m2.material.io/blog/material-density-web",
+        "https://material.io/design/layout/applying-density.html"
+      ],
+      "uses": "Each density step removes height; padding and horizontal spacing don't change",
+      "verification": "search-only"
+    },
+    {
+      "id": "R-DENSITY-SALESFORCE",
+      "role": "learn-from",
+      "title": "Salesforce Lightning, display density (Winter '19)",
+      "checked": "2026-11-12",
+      "urls": [
+        "https://developer.salesforce.com/blogs/2018/08/new-density-settings-for-the-lightning-experience-ui-in-winter-19"
+      ],
+      "uses": "Spacing tokens change with density (a medium token 1rem comfy, 0.5rem compact); users choose and admins can't override",
+      "verification": "search-only"
+    },
+    {
+      "id": "R-DENSITY-CLOUDSCAPE",
+      "role": "learn-from",
+      "title": "AWS Cloudscape, density settings pattern",
+      "checked": "2026-11-12",
+      "urls": ["https://cloudscape.design/patterns/general/density-settings/"],
+      "uses": "Comfortable/compact as a user preference stored across pages",
+      "verification": "search-only"
+    },
+    {
+      "id": "U-TOKENS",
+      "role": "reuse",
+      "title": "`_incoming/design-tokens.json` (old WideBot UI library)",
+      "uses": "Spacing steps, Sass breakpoints, z-layers",
+      "note": "The smallest and largest spacing values become starting parameters for the fluid scale. Breakpoints are retired",
+      "verification": "local"
+    },
+    {
+      "id": "U-FIGMA",
+      "role": "reuse",
+      "title": "`_incoming/fig-index/` (Figma file index)",
+      "uses": "Breakpoint collection (L/M/S), layout grid, Grids & spacing page",
+      "note": "Retired as fixed lists. Values become calibration samples. 1440px frame width confirms the fluid maximum",
+      "verification": "local"
+    },
+    {
+      "id": "U-LIVE",
+      "role": "reuse",
+      "title": "Live platform pack (local only, confidential)",
+      "uses": "The spacing and grid the current product uses",
+      "note": "Mapping reference only, so existing screens can migrate. Its details are never published",
+      "verification": "local"
+    }
+  ],
+  "baseline": {
+    "dataset": "web-features 3.45.0",
+    "checked": "2026-11-11",
+    "features": [
+      {
+        "name": "Grid, flexbox, `gap`, logical properties, `aspect-ratio`, `subgrid`",
+        "status": "widely",
+        "use": "core"
+      },
+      {
+        "name": "Container queries",
+        "status": "widely",
+        "since": "2025-08",
+        "use": "core"
+      },
+      {
+        "name": "`dvh` / `svh` / `lvh`, `safe-area-inset`",
+        "status": "widely",
+        "use": "core"
+      },
+      {
+        "name": "`pointer` / `hover` media features, `prefers-contrast`",
+        "status": "widely",
+        "use": "core"
+      },
+      {
+        "name": "Cascade layers",
+        "status": "widely",
+        "use": "core"
+      },
+      {
+        "name": "`round()` / `mod()` / `rem()`",
+        "status": "newly",
+        "since": "2024-05",
+        "use": "core"
+      },
+      {
+        "name": "`@property`",
+        "status": "newly",
+        "since": "2024-07",
+        "use": "core"
+      },
+      {
+        "name": "`@scope`",
+        "status": "newly",
+        "since": "2026-03",
+        "use": "core"
+      },
+      {
+        "name": "Container style queries",
+        "status": "newly",
+        "since": "2026-05",
+        "use": "core"
+      },
+      {
+        "name": "`progress()`",
+        "status": "newly",
+        "since": "2026-09",
+        "use": "core"
+      },
+      {
+        "name": "Viewport segments (foldables)",
+        "status": "limited",
+        "note": "Chromium only.",
+        "use": "enhancement"
+      },
+      {
+        "name": "`reading-flow`",
+        "status": "limited",
+        "note": "Chromium only.",
+        "use": "not-relied-on"
+      },
+      {
+        "name": "Gap decorations",
+        "status": "limited",
+        "use": "not-used"
+      }
+    ]
+  }
+}

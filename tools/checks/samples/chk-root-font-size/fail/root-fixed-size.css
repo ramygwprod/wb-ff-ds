@@ -1,0 +1,11 @@
+html {
+  font-size: 16px; /* fail */
+}
+
+:root {
+  font-size: 62.5%; /* fail */
+}
+
+html {
+  font: 16px/1.5 sans-serif; /* fail */
+}

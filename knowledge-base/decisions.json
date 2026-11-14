@@ -1,0 +1,482 @@
+{
+  "contractVersion": "0.1.0",
+  "decisions": [
+    {
+      "id": "DEC-001",
+      "question": "Which widths do fluid sizes scale between?",
+      "status": "answered",
+      "options": ["320 to 1440px", "320 to 1920px", "360 to 1280px"],
+      "answer": "320 to 1440px. 320px is the WCAG reflow test width; 1440px is the width the existing screen designs use.",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-11",
+      "recordedOn": "2026-11-13"
+    },
+    {
+      "id": "DEC-002",
+      "question": "What does the first foundation agent own: grid only, grid and layout, or the whole layout system?",
+      "status": "answered",
+      "options": ["Grid only", "Grid and layout, without spacing", "Whole layout system"],
+      "answer": "The whole layout system: grid, spacing, density, containers, aspect ratios and layout primitives.",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-11",
+      "recordedOn": "2026-11-13"
+    },
+    {
+      "id": "DEC-003",
+      "question": "What does density mean?",
+      "status": "answered",
+      "options": [
+        "One multiplier on spacing and control heights",
+        "Spacing only",
+        "No density for now"
+      ],
+      "answer": "One multiplier on spacing and control heights. Accessibility floors always win.",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-11",
+      "recordedOn": "2026-11-13",
+      "notes": "Replaced on 2026-11-12 by the fuller density model in DEC-015."
+    },
+    {
+      "id": "DEC-004",
+      "question": "Does the layout system use named breakpoints?",
+      "status": "answered",
+      "options": [
+        "Window classes for the page shell",
+        "No breakpoints: fr grid, flexbox primitives and container queries",
+        "Keep the old breakpoint ladder"
+      ],
+      "answer": "No named breakpoints. Layout uses fr grid, flexbox primitives and container queries, with thresholds calculated from minimum track sizes.",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-11",
+      "recordedOn": "2026-11-13",
+      "notes": "Ramy proposed fr-based grid in place of window classes. Angular CDK's BreakpointObserver is deliberately not used."
+    },
+    {
+      "id": "DEC-005",
+      "question": "Which browser support policy does the design system follow?",
+      "status": "answered",
+      "options": ["Baseline + enhancement", "Widely available only"],
+      "answer": "Baseline + enhancement: core features must be Baseline (newly or widely available); anything else sits behind @supports with a working fallback.",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-11",
+      "recordedOn": "2026-11-13"
+    },
+    {
+      "id": "DEC-006",
+      "question": "Should user preferences set the defaults: a coarse pointer selects comfortable density, a request for more contrast selects the AAA theme, and an explicit user or tenant choice always overrides both?",
+      "status": "answered",
+      "options": ["Yes, use these defaults", "No, defaults come only from tenant settings"],
+      "answer": "Yes: a coarse pointer selects comfortable density, a request for more contrast selects the AAA theme, and an explicit user or tenant choice always overrides both.",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-13",
+      "recordedOn": "2026-11-13",
+      "notes": "Proposed on 2026-11-11 together with DEC-004; confirmed explicitly on 2026-11-13."
+    },
+    {
+      "id": "DEC-007",
+      "question": "What is the base size?",
+      "status": "answered",
+      "options": ["1rem = 16px"],
+      "answer": "1rem = 16px, the browser default.",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-12",
+      "recordedOn": "2026-11-13"
+    },
+    {
+      "id": "DEC-008",
+      "question": "What is the smallest spacing step under 1rem?",
+      "status": "answered",
+      "options": ["4px (0.25rem)", "8px (0.5rem)"],
+      "answer": "4px (0.25rem).",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-12",
+      "recordedOn": "2026-11-13"
+    },
+    {
+      "id": "DEC-009",
+      "question": "How does the spacing scale grow from the step?",
+      "status": "answered",
+      "options": ["Linear multiples", "Curated fluid steps", "Fixed curated steps"],
+      "answer": "Curated fluid steps: a short named set that grows between the fluid minimum and maximum.",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-12",
+      "recordedOn": "2026-11-13"
+    },
+    {
+      "id": "DEC-010",
+      "question": "How many spacing steps?",
+      "status": "answered",
+      "options": ["9 steps", "7 steps"],
+      "answer": "9 steps.",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-12",
+      "recordedOn": "2026-11-13"
+    },
+    {
+      "id": "DEC-011",
+      "question": "Are some spacing steps fixed while others are fluid?",
+      "status": "answered",
+      "options": ["Small steps fixed, large steps fluid", "All steps fluid from one formula"],
+      "answer": "All steps come from one formula; fixed values would break the concept and multiply tokens per component. Insets inside a component relate to its own text size.",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-12",
+      "recordedOn": "2026-11-13"
+    },
+    {
+      "id": "DEC-012",
+      "question": "How are accessibility floors (minimum target sizes) stored?",
+      "status": "answered",
+      "options": ["As fixed px values", "As ratio aliases of the base"],
+      "answer": "As ratio aliases of the base under the compliance level, never as raw px, applied inside the formula so nothing is generated below them.",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-12",
+      "recordedOn": "2026-11-13"
+    },
+    {
+      "id": "DEC-013",
+      "question": "Should floors still hold when a user sets their browser text smaller than 16px?",
+      "status": "answered",
+      "options": ["Respect the user", "Always hold the floors"],
+      "answer": "Respect the user: floors follow the user's text size, with no px safety value.",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-12",
+      "recordedOn": "2026-11-13"
+    },
+    {
+      "id": "DEC-014",
+      "question": "How much does the largest spacing step grow across the fluid range?",
+      "status": "answered",
+      "options": ["1.5 (moderate)", "2 (strong)"],
+      "answer": "1.5: the largest step at 1440px is 1.5 times its size at 320px.",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-12",
+      "recordedOn": "2026-11-13"
+    },
+    {
+      "id": "DEC-015",
+      "question": "What does density control, and how do rem and em relate?",
+      "status": "answered",
+      "options": ["Adopt the density and rem:em model", "Discuss changes"],
+      "answer": "Density is one value (compact 0.75, default 1, comfortable 1.25) that adjusts growth, gaps between elements and block insets only. One density per page or scope; the user's choice wins. rem owns the system, em owns the inside of a component, one level deep, bridged by unitless ratio tokens.",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-12",
+      "recordedOn": "2026-11-13",
+      "supersedes": ["DEC-003"]
+    },
+    {
+      "id": "DEC-016",
+      "question": "Should every component publish a catalog schema of its API?",
+      "status": "answered",
+      "options": ["Yes", "Discuss first"],
+      "answer": "Yes. Every component publishes a JSON Schema of its API, usable as an A2UI catalog entry, as the source for its docs and agent instructions, and as a test contract.",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-12",
+      "recordedOn": "2026-11-13"
+    },
+    {
+      "id": "DEC-017",
+      "question": "Build the pipeline spine before the first specialised agent?",
+      "status": "answered",
+      "options": ["Spine first, with layout as its test case", "Discuss first"],
+      "answer": "Spine first, with the layout foundation as its test case.",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-13",
+      "recordedOn": "2026-11-13"
+    },
+    {
+      "id": "DEC-018",
+      "question": "May agents add pipeline scripts under tools/?",
+      "status": "answered",
+      "options": ["Yes, via PRs", "Propose only"],
+      "answer": "Yes, reviewed and merged through PRs like everything else.",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-13",
+      "recordedOn": "2026-11-13"
+    },
+    {
+      "id": "DEC-019",
+      "question": "Which data format does the registry use?",
+      "status": "answered",
+      "options": ["JSON", "YAML"],
+      "answer": "JSON, with the Markdown generated from it.",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-13",
+      "recordedOn": "2026-11-13"
+    },
+    {
+      "id": "DEC-020",
+      "question": "Which schema validator does the registry use?",
+      "status": "answered",
+      "options": ["ajv as a dev dependency", "Our own small checker"],
+      "answer": "ajv as a dev dependency.",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-13",
+      "recordedOn": "2026-11-13"
+    },
+    {
+      "id": "DEC-021",
+      "question": "Where is the pipeline's run log stored?",
+      "status": "answered",
+      "options": ["Local, git-ignored", "Committed to the repo"],
+      "answer": "Committed to the repo. Because the repo is public, the log may hold only structured fields and IDs, and is scanned before commit.",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-13",
+      "recordedOn": "2026-11-13"
+    },
+    {
+      "id": "DEC-022",
+      "question": "What are the minimum track sizes for a pane, the navigation and the content area?",
+      "status": "open",
+      "options": [],
+      "recordedOn": "2026-11-13",
+      "blocks": ["L-L2", "L-S4"],
+      "notes": "The layout agent proposes values with evidence; Ramy approves."
+    },
+    {
+      "id": "DEC-023",
+      "question": "What are the token names?",
+      "status": "open",
+      "options": [],
+      "recordedOn": "2026-11-13",
+      "blocks": [
+        "L-T1",
+        "L-T2",
+        "L-T3",
+        "L-T4",
+        "L-T5",
+        "L-T6",
+        "L-T7",
+        "L-T8",
+        "L-T9",
+        "L-T10",
+        "L-T11",
+        "L-T12",
+        "L-T13",
+        "L-T14",
+        "L-T15",
+        "L-T16",
+        "L-T17",
+        "L-T18"
+      ],
+      "notes": "Comes from the token architect's naming contract, which isn't written yet. The spacing step names 3xs to 3xl are working names until then."
+    },
+    {
+      "id": "DEC-024",
+      "question": "Should docs-site pages keep Cumulative Layout Shift at or below 0.1?",
+      "status": "answered",
+      "options": ["Yes, as a check on the docs site", "No layout stability target"],
+      "answer": "Yes: docs-site pages keep Cumulative Layout Shift at or below 0.1, checked on the docs site. 0.1 is web.dev's threshold for a good score (R-CLS).",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-14",
+      "recordedOn": "2026-11-13"
+    },
+    {
+      "id": "DEC-025",
+      "question": "How are knowledge-base entries reviewed and approved?",
+      "status": "answered",
+      "options": [
+        "Agent drafts, approved through the milestone PR",
+        "Agent drafts, approved in chat first",
+        "Only Ramy writes"
+      ],
+      "answer": "Through the milestone PR: agents draft, CI checks, Ramy approves in the PR. Decisions answered in chat are recorded right away.",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-14",
+      "recordedOn": "2026-11-13"
+    },
+    {
+      "id": "DEC-026",
+      "question": "Is the token architect's shared contract designed alone first, or together with the first foundation?",
+      "status": "answered",
+      "options": ["Alone, first", "Together with the first foundation"],
+      "answer": "Alone, first, as a general standard: one shared schema that every foundation follows, the common language and map of the design system's elements, so no foundation duplicates it, drifts from it or misses it. It isn't attached to any one foundation.",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-14",
+      "recordedOn": "2026-11-13",
+      "notes": "The question offered designing it with layout as the test case; that tied a general contract to one foundation, and Ramy rejected it."
+    },
+    {
+      "id": "DEC-027",
+      "question": "Do sound and AI presence ship in the first foundation release?",
+      "status": "answered",
+      "options": ["Yes", "No, in a later release"],
+      "answer": "No, a later release. They come last in the agreed foundation order because they build on motion, colour and writing.",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-14",
+      "recordedOn": "2026-11-13"
+    },
+    {
+      "id": "DEC-028",
+      "question": "Where does the theme engine run?",
+      "status": "answered",
+      "options": [
+        "Build time",
+        "Run time",
+        "Both: build time for the default theme, run time for tenant themes"
+      ],
+      "answer": "Both: build time for the default theme, run time for tenant themes, so a tenant can change colours without a rebuild.",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-14",
+      "recordedOn": "2026-11-13",
+      "notes": "Both was suggested."
+    },
+    {
+      "id": "DEC-029",
+      "question": "What contrast floor do disabled controls keep, and are state shifts the same for every colour role?",
+      "status": "open",
+      "options": [],
+      "recordedOn": "2026-11-13",
+      "notes": "WCAG 2.2 doesn't require contrast for inactive controls; the floor is ours to set. Decided at the colour foundation stage with computed examples. Ramy's direction from planning: disabled is one unified style across all states, not opacity."
+    },
+    {
+      "id": "DEC-030",
+      "question": "When a tenant's brand colour must move to pass contrast, what happens?",
+      "status": "answered",
+      "options": ["Adjust silently", "Adjust and show a preview", "Reject the colour"],
+      "answer": "The brand colour doesn't move. Text uses neutral colours: on a coloured surface it switches between the dark and light neutral (default or inverted), whichever passes. If a mid-scale colour fails with both, it's shown as a warning (fails AA).",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-14",
+      "recordedOn": "2026-11-13",
+      "notes": "Computed on 2026-11-14 over all 16,777,216 sRGB colours: with pure black and white text, none fails AA (worst case 4.58:1). In general the worst background gets the square root of the contrast between the two text neutrals, so AA holds for every colour only if they have at least 20.25:1 contrast with each other. AAA (7:1) cannot be reached by switching alone; see DEC-042."
+    },
+    {
+      "id": "DEC-031",
+      "question": "Should the design system also export a Tailwind-compatible theme file?",
+      "status": "answered",
+      "options": ["Yes, as an extra output", "No"],
+      "answer": "Not now. Tokens are data, so a Tailwind export can be generated later without redesign; revisit when a customer needs it.",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-14",
+      "recordedOn": "2026-11-13"
+    },
+    {
+      "id": "DEC-032",
+      "question": "Which CSS lint tool is approved as a dev dependency for spine step S4?",
+      "status": "answered",
+      "options": [
+        "@eslint/css 2.0.1 (official ESLint plugin, alongside the ESLint already used)",
+        "Stylelint 17.16.0 with stylelint-use-logical 2.1.3 and stylelint-plugin-use-baseline 1.4.8",
+        "Stylelint 18.0.0 with our own logical-property and Baseline rules"
+      ],
+      "answer": "@eslint/css 2.0.1, used through the ESLint already in the project. It is added in S4, with its own audit, and every rule it enforces is proven with must-pass and must-fail samples.",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-14",
+      "recordedOn": "2026-11-13",
+      "notes": "Narrowed on 2026-11-14: the tools not needed yet are covered by DEC-043. Checked on 2026-11-14 (registry metadata only, nothing installed): neither Stylelint plugin supports Stylelint 18, and 17.16.0 is likely the last 17.x release."
+    },
+    {
+      "id": "DEC-033",
+      "question": "May third-party brand logos from the incoming assets be published?",
+      "status": "answered",
+      "options": ["Publish", "Keep local only"],
+      "answer": "Keep local only: they're other companies' trademarks and the repo is public.",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-14",
+      "recordedOn": "2026-11-13"
+    },
+    {
+      "id": "DEC-034",
+      "question": "Do some agent roles merge to start with, and is each role its own agent or a skill?",
+      "status": "answered",
+      "options": [],
+      "answer": "Every role that writes files is its own sub-agent, so its tools and write scope are enforced by its name. Shared procedures are skills preloaded into the agents that need them. Start with the agents current work needs: token architect, layout, and the a11y and RTL reviewers; the others are created when their work starts.",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-14",
+      "recordedOn": "2026-11-13",
+      "notes": "The manifest schema has the roles foundation and reviewer; the token architect needs its own role when its manifest is written."
+    },
+    {
+      "id": "DEC-035",
+      "question": "Which licence does the repository use?",
+      "status": "answered",
+      "options": [],
+      "answer": "All rights reserved, stated explicitly: \"Copyright © 2026 ramygwprod. All rights reserved.\" in the README, and \"license\": \"UNLICENSED\" in both package.json files. The code is public to read only.",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-14",
+      "recordedOn": "2026-11-13"
+    },
+    {
+      "id": "DEC-036",
+      "question": "Which check rules are enforced by lint (Stylelint) and which by browser tests (Playwright)?",
+      "status": "answered",
+      "options": [],
+      "answer": "Approved rule by rule: 17 token-data checks (our scripts), 17 source-CSS checks (@eslint/css and local lint rules) and 19 rendered-page checks (Playwright with axe-core). A check runs at the earliest point that can decide it. Each check rule records its kind as checkKind in rules.json.",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-14",
+      "recordedOn": "2026-11-13",
+      "notes": "Raised as a layout gap on 2026-11-11, to be settled in layout checklist step G5."
+    },
+    {
+      "id": "DEC-037",
+      "question": "How are hairline (1px) borders expressed, given that no raw px values are stored (L-T14)?",
+      "status": "answered",
+      "options": [],
+      "answer": "No exception: a hairline is a ratio of the base, like the accessibility floors. It is a unitless ratio token times 1rem, so no raw px is stored and it scales with the user's text size. The shape agent sets the exact ratio.",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-14",
+      "recordedOn": "2026-11-13",
+      "notes": "Checked in the specs on 2026-11-14: border-width accepts no percentages (CSS Backgrounds 3), so the ratio applies to rem. Border widths are snapped to whole device pixels, and anything above 0 but under one device pixel rounds up to 1 (CSS Values 4), so a hairline never disappears."
+    },
+    {
+      "id": "DEC-038",
+      "question": "Where does each agent's manifest live?",
+      "status": "answered",
+      "options": ["Next to its foundation", "One agents folder"],
+      "answer": "Next to its foundation: knowledge-base/foundations/<name>/agent.json. Reviewer agents, which have no foundation, go in knowledge-base/agents/.",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-13",
+      "recordedOn": "2026-11-13"
+    },
+    {
+      "id": "DEC-039",
+      "question": "Are the generated Claude Code agent files (.claude/agents/) published?",
+      "status": "answered",
+      "options": ["Publish them", "Keep them local"],
+      "answer": "Keep them local. Only the JSON manifests are published; .gitignore is unchanged, so CI cannot check the agent files.",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-13",
+      "recordedOn": "2026-11-13"
+    },
+    {
+      "id": "DEC-040",
+      "question": "Do foundation agents get the Bash tool?",
+      "status": "answered",
+      "options": ["No Bash", "Bash with a command allowlist"],
+      "answer": "No Bash: shell commands can write anywhere and run git. Checks run in the finish gate and CI instead.",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-13",
+      "recordedOn": "2026-11-13"
+    },
+    {
+      "id": "DEC-041",
+      "question": "May foundation agents read the web to verify sources?",
+      "status": "answered",
+      "options": ["Read-only web", "No web"],
+      "answer": "Read-only web: WebFetch and WebSearch, with no downloads to disk. Every source still records how it was verified.",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-13",
+      "recordedOn": "2026-11-13"
+    },
+    {
+      "id": "DEC-042",
+      "question": "In the AAA theme, what happens to a colour surface carrying text when neither text neutral reaches 7:1? With black and white text that is 38.6% of all colours, e.g. #808080.",
+      "status": "open",
+      "options": [
+        "Adjust its lightness (same hue) in the AAA theme until 7:1",
+        "Show a 'fails AAA' warning"
+      ],
+      "recordedOn": "2026-11-14",
+      "notes": "Raised by DEC-030. To be decided at the colour foundation stage."
+    },
+    {
+      "id": "DEC-043",
+      "question": "When are the pipeline tools that nothing needs yet approved: Playwright with axe-core, Terrazzo, colorjs.io and svgo?",
+      "status": "answered",
+      "options": ["Each when needed", "All now"],
+      "answer": "Each when its work starts, with its own audit and decision: Playwright with axe-core at the first layout primitive, Terrazzo at the token contract, colorjs.io at the colour foundation, svgo at iconography.",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-14",
+      "recordedOn": "2026-11-14"
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "contractVersion": "0.1.0",
+  "foundation": "demo",
+  "scope": "Fixture foundation used only by the validator tests.",
+  "sources": [
+    {
+      "id": "S-DEMO-1",
+      "role": "judged-by",
+      "title": "Demo standard",
+      "edition": "Level AA",
+      "checked": "2026-01-01",
+      "urls": ["https://example.org/standard"],
+      "uses": "Governs demo sizing.",
+      "verification": "read"
+    },
+    {
+      "id": "U-DEMO",
+      "role": "reuse",
+      "title": "Demo local input",
+      "uses": "Starting values.",
+      "verification": "local"
+    }
+  ],
+  "baseline": {
+    "dataset": "demo-features 1.0",
+    "checked": "2026-01-01",
+    "features": [{ "name": "Demo feature", "status": "widely", "use": "core" }]
+  }
+}

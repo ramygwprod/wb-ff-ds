@@ -1,0 +1,8 @@
+.title {
+  font-size: clamp(1rem, 2vw, 2rem); /* fail */
+}
+
+.card {
+  inline-size: clamp(10rem, 50cqi, 40rem); /* fail */
+  margin-block: clamp(1rem, 1px + 2vw, 3rem); /* fail */
+}

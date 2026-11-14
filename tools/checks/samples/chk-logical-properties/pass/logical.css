@@ -1,0 +1,13 @@
+.box {
+  margin-inline-start: 1rem;
+  padding-block: 0.5rem;
+  inline-size: 50%;
+  inset-inline-end: 0;
+}
+
+/* dvh, svh and lvh stay allowed (L-L8). */
+.screen {
+  block-size: 100dvh;
+  min-block-size: 100svh;
+  max-block-size: 100lvh;
+}

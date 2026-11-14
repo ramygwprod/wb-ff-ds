@@ -76,6 +76,16 @@ jobs:
       - name: Lint
         run: npm run lint
 
+      # The knowledge registry: schemas and cross-references, generated Markdown matches its JSON,
+      # and the public run log contains only structured, published fields
+      - name: Registry check
+        run: npm run registry:check
+
+      # The pipeline tools' own tests: validator cases, generator golden files, every CSS check on
+      # its must-pass and must-fail samples, and the agent hooks
+      - name: Tools tests
+        run: npm run test:tools
+
       # The library first: the docs site consumes its build output (dist/wb-ff-ds)
       - name: Build library (wb-ff-ds)
         run: npm run build:lib

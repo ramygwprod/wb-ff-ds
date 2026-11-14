@@ -1,0 +1,7 @@
+.box {
+  margin-left: 1rem; /* fail */
+  padding-top: 0.5rem; /* fail */
+  width: 50%; /* fail */
+  right: 0; /* fail */
+  inline-size: 50vw; /* fail */
+}

@@ -1,0 +1,17 @@
+.panel {
+  container-type: inline-size;
+  aspect-ratio: 16 / 9;
+}
+
+@property --step {
+  syntax: '<length>';
+  inherits: true;
+  initial-value: 0.25rem;
+}
+
+/* Not Baseline, but guarded: L-E2. */
+@supports (reading-flow: grid-order) {
+  .grid {
+    reading-flow: grid-order;
+  }
+}

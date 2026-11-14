@@ -1,0 +1,15 @@
+{
+  "contractVersion": "0.1.0",
+  "checks": [
+    {
+      "id": "chk-demo-size",
+      "kind": "source",
+      "rules": ["X-A1"],
+      "description": "Fixture: no !important flags.",
+      "files": ["**/*.css"],
+      "eslint": {
+        "css/no-important": ["error"]
+      }
+    }
+  ]
+}

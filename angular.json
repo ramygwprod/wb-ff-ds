@@ -34,7 +34,11 @@
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
-            "lintFilePatterns": ["projects/wb-ff-ds/**/*.ts", "projects/wb-ff-ds/**/*.html"],
+            "lintFilePatterns": [
+              "projects/wb-ff-ds/**/*.ts",
+              "projects/wb-ff-ds/**/*.html",
+              "projects/wb-ff-ds/**/*.css"
+            ],
             "eslintConfig": "projects/wb-ff-ds/eslint.config.js"
           }
         }
@@ -104,7 +108,8 @@
           "options": {
             "lintFilePatterns": [
               "projects/ferrofluid-ds/**/*.ts",
-              "projects/ferrofluid-ds/**/*.html"
+              "projects/ferrofluid-ds/**/*.html",
+              "projects/ferrofluid-ds/**/*.css"
             ],
             "eslintConfig": "projects/ferrofluid-ds/eslint.config.js"
           }

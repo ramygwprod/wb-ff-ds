@@ -1,0 +1,12 @@
+html {
+  font-size: 100%;
+}
+
+:root {
+  color-scheme: light dark;
+}
+
+/* Not the root: other rules govern text sizes. */
+.label {
+  font-size: 1rem;
+}

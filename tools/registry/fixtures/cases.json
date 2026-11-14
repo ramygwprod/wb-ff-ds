@@ -1,0 +1,934 @@
+{
+  "description": "Each case applies small changes to the valid fixture and lists the exact issue codes it must produce. The valid fixture itself must produce none.",
+  "cases": [
+    {
+      "name": "unknown property on a rule",
+      "file": "rules",
+      "ops": [
+        {
+          "op": "add",
+          "path": "/rules/0/colour",
+          "value": "red"
+        }
+      ],
+      "expect": ["SCHEMA"]
+    },
+    {
+      "name": "kind outside the allowed values",
+      "file": "rules",
+      "ops": [
+        {
+          "op": "replace",
+          "path": "/rules/0/kind",
+          "value": "maybe"
+        }
+      ],
+      "expect": ["SCHEMA"]
+    },
+    {
+      "name": "rule with no sources, decisions or rules it depends on",
+      "file": "rules",
+      "ops": [
+        {
+          "op": "remove",
+          "path": "/rules/0/sources"
+        },
+        {
+          "op": "remove",
+          "path": "/rules/0/decisions"
+        }
+      ],
+      "expect": ["SCHEMA"]
+    },
+    {
+      "name": "text with trailing whitespace",
+      "file": "rules",
+      "ops": [
+        {
+          "op": "replace",
+          "path": "/rules/0/text",
+          "value": "Bad "
+        }
+      ],
+      "expect": ["SCHEMA"]
+    },
+    {
+      "name": "source that doesn't exist",
+      "file": "rules",
+      "ops": [
+        {
+          "op": "replace",
+          "path": "/rules/0/sources/0",
+          "value": "S-NOPE"
+        }
+      ],
+      "expect": ["UNRESOLVED_SOURCE", "UNUSED_SOURCE"]
+    },
+    {
+      "name": "two rules with the same ID",
+      "file": "rules",
+      "ops": [
+        {
+          "op": "add",
+          "path": "/rules/-",
+          "value": {
+            "id": "X-A1",
+            "group": "A",
+            "text": "A copy.",
+            "kind": "reference",
+            "sources": ["S-DEMO-1"],
+            "consumers": ["ci"],
+            "status": "draft"
+          }
+        }
+      ],
+      "expect": ["DUPLICATE_ID"]
+    },
+    {
+      "name": "rule ID doesn't match its group",
+      "file": "rules",
+      "ops": [
+        {
+          "op": "add",
+          "path": "/groups/-",
+          "value": {
+            "id": "B",
+            "title": "Second group"
+          }
+        },
+        {
+          "op": "replace",
+          "path": "/rules/1/group",
+          "value": "B"
+        }
+      ],
+      "expect": ["PREFIX_MISMATCH"]
+    },
+    {
+      "name": "group not listed",
+      "file": "rules",
+      "ops": [
+        {
+          "op": "replace",
+          "path": "/rules/1/group",
+          "value": "C"
+        }
+      ],
+      "expect": ["UNKNOWN_GROUP", "PREFIX_MISMATCH"]
+    },
+    {
+      "name": "rule depends on itself",
+      "file": "rules",
+      "ops": [
+        {
+          "op": "replace",
+          "path": "/rules/1/dependsOn/0",
+          "value": "X-A2"
+        }
+      ],
+      "expect": ["SELF_REFERENCE"]
+    },
+    {
+      "name": "rule depends on an unknown rule",
+      "file": "rules",
+      "ops": [
+        {
+          "op": "replace",
+          "path": "/rules/1/dependsOn/0",
+          "value": "X-A9"
+        }
+      ],
+      "expect": ["UNRESOLVED_RULE"]
+    },
+    {
+      "name": "decision that doesn't exist",
+      "file": "rules",
+      "ops": [
+        {
+          "op": "replace",
+          "path": "/rules/0/decisions/0",
+          "value": "DEC-099"
+        }
+      ],
+      "expect": ["UNRESOLVED_DECISION"]
+    },
+    {
+      "name": "approved rule resting on an open decision",
+      "file": "rules",
+      "ops": [
+        {
+          "op": "replace",
+          "path": "/rules/1/status",
+          "value": "approved"
+        }
+      ],
+      "expect": ["DECISION_OPEN"]
+    },
+    {
+      "name": "rule resting on an abandoned decision",
+      "file": "decisions",
+      "ops": [
+        {
+          "op": "replace",
+          "path": "/decisions/0/status",
+          "value": "abandoned"
+        }
+      ],
+      "expect": ["DECISION_CLOSED"]
+    },
+    {
+      "name": "check rule whose checkId was removed, while its check still lists it",
+      "file": "rules",
+      "ops": [
+        {
+          "op": "remove",
+          "path": "/rules/0/checkId"
+        }
+      ],
+      "expect": ["CHECK_LINK_MISMATCH", "UNMAPPED_CHECK"]
+    },
+    {
+      "name": "gap restating what its decision blocks",
+      "file": "rules",
+      "expect": ["SCHEMA"],
+      "ops": [
+        {
+          "op": "add",
+          "path": "/gaps/0/blocks",
+          "value": ["X-A2"]
+        }
+      ]
+    },
+    {
+      "name": "answered decision without its answer",
+      "file": "decisions",
+      "ops": [
+        {
+          "op": "remove",
+          "path": "/decisions/0/answer"
+        }
+      ],
+      "expect": ["SCHEMA", "UNRESOLVED_DECISION"]
+    },
+    {
+      "name": "open decision that already has an answer",
+      "file": "decisions",
+      "ops": [
+        {
+          "op": "add",
+          "path": "/decisions/1/answer",
+          "value": "2"
+        }
+      ],
+      "expect": ["SCHEMA", "UNRESOLVED_DECISION"]
+    },
+    {
+      "name": "impossible date",
+      "file": "decisions",
+      "ops": [
+        {
+          "op": "replace",
+          "path": "/decisions/0/decidedOn",
+          "value": "2026-13-01"
+        }
+      ],
+      "expect": ["SCHEMA", "UNRESOLVED_DECISION"]
+    },
+    {
+      "name": "decision blocks an unknown rule",
+      "file": "decisions",
+      "ops": [
+        {
+          "op": "replace",
+          "path": "/decisions/1/blocks/0",
+          "value": "X-A9"
+        }
+      ],
+      "expect": ["UNRESOLVED_RULE"]
+    },
+    {
+      "name": "source nobody cites",
+      "file": "sources",
+      "ops": [
+        {
+          "op": "add",
+          "path": "/sources/-",
+          "value": {
+            "id": "S-DEMO-2",
+            "role": "spec",
+            "title": "Unused spec",
+            "uses": "Nothing yet.",
+            "verification": "reachable"
+          }
+        }
+      ],
+      "expect": ["UNUSED_SOURCE"]
+    },
+    {
+      "name": "local source with a public address",
+      "file": "sources",
+      "ops": [
+        {
+          "op": "add",
+          "path": "/sources/1/urls",
+          "value": ["https://example.org/private"]
+        }
+      ],
+      "expect": ["SCHEMA"]
+    },
+    {
+      "name": "feature with limited support used as core",
+      "file": "sources",
+      "ops": [
+        {
+          "op": "replace",
+          "path": "/baseline/features/0/status",
+          "value": "limited"
+        }
+      ],
+      "expect": ["SCHEMA"]
+    },
+    {
+      "name": "contract versions disagree",
+      "file": "sources",
+      "ops": [
+        {
+          "op": "replace",
+          "path": "/contractVersion",
+          "value": "0.2.0"
+        }
+      ],
+      "expect": ["CONTRACT_MISMATCH"]
+    },
+    {
+      "name": "foundation name doesn't match its folder",
+      "file": "rules",
+      "ops": [
+        {
+          "op": "replace",
+          "path": "/foundation",
+          "value": "other"
+        }
+      ],
+      "expect": ["FOUNDATION_MISMATCH"]
+    },
+    {
+      "name": "rules without sources",
+      "file": "sources",
+      "drop": true,
+      "expect": ["MISSING_PAIR"]
+    },
+    {
+      "name": "rule resting only on another rule",
+      "file": "rules",
+      "ops": [
+        {
+          "op": "remove",
+          "path": "/rules/1/sources"
+        },
+        {
+          "op": "remove",
+          "path": "/rules/1/decisions"
+        }
+      ],
+      "expect": ["UNUSED_SOURCE"]
+    },
+    {
+      "name": "rule cites a decision that was replaced",
+      "file": "decisions",
+      "ops": [
+        {
+          "op": "add",
+          "path": "/decisions/-",
+          "value": {
+            "id": "DEC-003",
+            "question": "Fixture: which base size, revisited?",
+            "status": "answered",
+            "options": ["16px", "18px"],
+            "answer": "16px, confirmed",
+            "decidedBy": "Fixture owner",
+            "decidedOn": "2026-01-04",
+            "recordedOn": "2026-01-04",
+            "supersedes": ["DEC-001"]
+          }
+        }
+      ],
+      "expect": ["DECISION_SUPERSEDED"]
+    },
+    {
+      "name": "decision replaces one that doesn't exist",
+      "file": "decisions",
+      "ops": [
+        {
+          "op": "add",
+          "path": "/decisions/0/supersedes",
+          "value": ["DEC-099"]
+        }
+      ],
+      "expect": ["UNRESOLVED_DECISION"]
+    },
+    {
+      "name": "decision replaces itself",
+      "file": "decisions",
+      "ops": [
+        {
+          "op": "add",
+          "path": "/decisions/0/supersedes",
+          "value": ["DEC-001"]
+        }
+      ],
+      "expect": ["SELF_REFERENCE"]
+    },
+    {
+      "name": "gap with no decision",
+      "file": "rules",
+      "expect": ["SCHEMA"],
+      "ops": [
+        {
+          "op": "remove",
+          "path": "/gaps/0/decision"
+        }
+      ]
+    },
+    {
+      "name": "gap whose decision was answered",
+      "file": "decisions",
+      "expect": ["GAP_DECISION_CLOSED", "PROPOSED_NOT_WAITING"],
+      "ops": [
+        {
+          "op": "replace",
+          "path": "/decisions/1/status",
+          "value": "answered"
+        },
+        {
+          "op": "add",
+          "path": "/decisions/1/answer",
+          "value": "1.5"
+        },
+        {
+          "op": "add",
+          "path": "/decisions/1/decidedBy",
+          "value": "Fixture owner"
+        },
+        {
+          "op": "add",
+          "path": "/decisions/1/decidedOn",
+          "value": "2026-01-05"
+        },
+        {
+          "op": "remove",
+          "path": "/decisions/1/blocks"
+        }
+      ]
+    },
+    {
+      "name": "answered decision still listing what it blocks",
+      "file": "decisions",
+      "expect": ["SCHEMA", "UNRESOLVED_DECISION"],
+      "ops": [
+        {
+          "op": "add",
+          "path": "/decisions/0/blocks",
+          "value": ["X-A1"]
+        }
+      ]
+    },
+    {
+      "name": "approved rule that an open decision blocks without being cited",
+      "file": "rules",
+      "expect": ["DECISION_OPEN"],
+      "ops": [
+        {
+          "op": "remove",
+          "path": "/rules/1/decisions"
+        },
+        {
+          "op": "replace",
+          "path": "/rules/1/status",
+          "value": "approved"
+        }
+      ]
+    },
+    {
+      "name": "proposed rule with no open decision to wait on",
+      "file": "rules",
+      "expect": ["PROPOSED_NOT_WAITING"],
+      "ops": [
+        {
+          "op": "replace",
+          "path": "/rules/0/status",
+          "value": "proposed"
+        }
+      ]
+    },
+    {
+      "name": "rules file approved while a rule is not",
+      "file": "rules",
+      "expect": ["RULES_NOT_APPROVED"],
+      "ops": [
+        {
+          "op": "replace",
+          "path": "/status",
+          "value": "approved"
+        }
+      ]
+    },
+    {
+      "name": "open decision past its expiry date",
+      "file": "decisions",
+      "expect": ["DECISION_EXPIRED"],
+      "ops": [
+        {
+          "op": "add",
+          "path": "/decisions/1/expiresOn",
+          "value": "2026-05-31"
+        }
+      ]
+    },
+    {
+      "name": "open decision on its expiry day still passes",
+      "file": "decisions",
+      "expect": [],
+      "ops": [
+        {
+          "op": "add",
+          "path": "/decisions/1/expiresOn",
+          "value": "2026-06-01"
+        }
+      ]
+    },
+    {
+      "name": "agent granted Bash",
+      "file": "agent",
+      "expect": ["SCHEMA"],
+      "ops": [
+        {
+          "op": "add",
+          "path": "/tools/-",
+          "value": "Bash"
+        }
+      ]
+    },
+    {
+      "name": "write scope naming a dot folder",
+      "file": "agent",
+      "expect": ["SCHEMA"],
+      "ops": [
+        {
+          "op": "add",
+          "path": "/writeScope/-",
+          "value": ".claude/settings.json"
+        }
+      ]
+    },
+    {
+      "name": "write scope climbing out with ..",
+      "file": "agent",
+      "expect": ["SCHEMA"],
+      "ops": [
+        {
+          "op": "add",
+          "path": "/writeScope/-",
+          "value": "knowledge-base/../tools/x.mjs"
+        }
+      ]
+    },
+    {
+      "name": "write scope covering the agent's own manifest",
+      "file": "agent",
+      "expect": ["SCOPE_PROTECTED"],
+      "ops": [
+        {
+          "op": "replace",
+          "path": "/writeScope/0",
+          "value": "knowledge-base/foundations/demo/**"
+        }
+      ]
+    },
+    {
+      "name": "write scope reaching the checks",
+      "file": "agent",
+      "expect": ["SCOPE_PROTECTED"],
+      "ops": [
+        {
+          "op": "add",
+          "path": "/writeScope/-",
+          "value": "tools/registry/validate.mjs"
+        }
+      ]
+    },
+    {
+      "name": "write scope reaching the decision register",
+      "file": "agent",
+      "expect": ["SCOPE_PROTECTED"],
+      "ops": [
+        {
+          "op": "add",
+          "path": "/writeScope/-",
+          "value": "knowledge-base/**"
+        }
+      ]
+    },
+    {
+      "name": "gate running a script that doesn't exist",
+      "file": "agent",
+      "expect": ["UNKNOWN_SCRIPT"],
+      "ops": [
+        {
+          "op": "replace",
+          "path": "/gate/checks/0",
+          "value": "registry:chek"
+        }
+      ]
+    },
+    {
+      "name": "reviewed by an unknown agent",
+      "file": "agent",
+      "expect": ["UNRESOLVED_AGENT"],
+      "ops": [
+        {
+          "op": "replace",
+          "path": "/reviewedBy/0",
+          "value": "nobody"
+        }
+      ]
+    },
+    {
+      "name": "reviewed by an agent that is not a reviewer",
+      "file": "reviewer",
+      "expect": ["UNRESOLVED_AGENT"],
+      "ops": [
+        {
+          "op": "add",
+          "path": "/reviewedBy",
+          "value": ["foundation-demo"]
+        }
+      ]
+    },
+    {
+      "name": "reviewer reviewing itself",
+      "file": "reviewer",
+      "expect": ["SELF_REFERENCE"],
+      "ops": [
+        {
+          "op": "add",
+          "path": "/reviewedBy",
+          "value": ["demo-reviewer"]
+        }
+      ]
+    },
+    {
+      "name": "foundation agent naming another foundation",
+      "file": "agent",
+      "expect": ["FOUNDATION_MISMATCH"],
+      "ops": [
+        {
+          "op": "replace",
+          "path": "/foundation",
+          "value": "other"
+        }
+      ]
+    },
+    {
+      "name": "foundation agent without a foundation",
+      "file": "agent",
+      "expect": ["SCHEMA"],
+      "ops": [
+        {
+          "op": "remove",
+          "path": "/foundation"
+        }
+      ]
+    },
+    {
+      "name": "reviewer with a foundation",
+      "file": "reviewer",
+      "expect": ["SCHEMA"],
+      "ops": [
+        {
+          "op": "add",
+          "path": "/foundation",
+          "value": "demo"
+        }
+      ]
+    },
+    {
+      "name": "reviewer manifest inside a foundation folder",
+      "file": "agent",
+      "expect": ["AGENT_LOCATION"],
+      "ops": [
+        {
+          "op": "replace",
+          "path": "/role",
+          "value": "reviewer"
+        },
+        {
+          "op": "remove",
+          "path": "/foundation"
+        },
+        {
+          "op": "add",
+          "path": "/consumer",
+          "value": "layout"
+        }
+      ]
+    },
+    {
+      "name": "foundation agent manifest in the agents folder",
+      "file": "reviewer",
+      "expect": ["AGENT_LOCATION", "UNRESOLVED_AGENT"],
+      "ops": [
+        {
+          "op": "replace",
+          "path": "/role",
+          "value": "foundation"
+        },
+        {
+          "op": "remove",
+          "path": "/consumer"
+        },
+        {
+          "op": "add",
+          "path": "/foundation",
+          "value": "demo"
+        }
+      ]
+    },
+    {
+      "name": "two agents with the same name",
+      "file": "reviewer",
+      "expect": ["DUPLICATE_ID", "UNRESOLVED_AGENT"],
+      "ops": [
+        {
+          "op": "replace",
+          "path": "/name",
+          "value": "foundation-demo"
+        }
+      ]
+    },
+    {
+      "name": "model outside the allowed aliases",
+      "file": "reviewer",
+      "expect": ["SCHEMA"],
+      "ops": [
+        {
+          "op": "replace",
+          "path": "/model",
+          "value": "gpt"
+        }
+      ]
+    },
+    {
+      "name": "agent contract version differs",
+      "file": "agent",
+      "expect": ["CONTRACT_MISMATCH"],
+      "ops": [
+        {
+          "op": "replace",
+          "path": "/contractVersion",
+          "value": "0.2.0"
+        }
+      ]
+    },
+    {
+      "name": "foundation with an agent and sources but no rules",
+      "file": "rules",
+      "expect": ["MISSING_PAIR"],
+      "drop": true
+    },
+    {
+      "name": "check rule without its kind of check",
+      "file": "rules",
+      "expect": ["SCHEMA"],
+      "ops": [
+        {
+          "op": "remove",
+          "path": "/rules/0/checkKind"
+        }
+      ]
+    },
+    {
+      "name": "guidance rule with a kind of check",
+      "file": "rules",
+      "expect": ["SCHEMA"],
+      "ops": [
+        {
+          "op": "add",
+          "path": "/rules/1/checkKind",
+          "value": "source"
+        }
+      ]
+    },
+    {
+      "name": "kind of check outside the allowed values",
+      "file": "rules",
+      "expect": ["SCHEMA"],
+      "ops": [
+        {
+          "op": "replace",
+          "path": "/rules/0/checkKind",
+          "value": "manual"
+        }
+      ]
+    },
+    {
+      "name": "rule pointing to a check that does not exist",
+      "file": "rules",
+      "expect": ["CHECK_LINK_MISMATCH", "UNRESOLVED_CHECK"],
+      "ops": [
+        {
+          "op": "replace",
+          "path": "/rules/0/checkId",
+          "value": "chk-nope"
+        }
+      ]
+    },
+    {
+      "name": "rule and its check disagree on the kind of check",
+      "file": "rules",
+      "expect": ["CHECK_KIND_MISMATCH"],
+      "ops": [
+        {
+          "op": "replace",
+          "path": "/rules/0/checkKind",
+          "value": "data"
+        }
+      ]
+    },
+    {
+      "name": "check listing a rule that points elsewhere",
+      "file": "checks",
+      "expect": ["CHECK_LINK_MISMATCH"],
+      "ops": [
+        {
+          "op": "add",
+          "path": "/checks/0/rules/-",
+          "value": "X-A2"
+        }
+      ]
+    },
+    {
+      "name": "check listing an unknown rule",
+      "file": "checks",
+      "expect": ["CHECK_LINK_MISMATCH", "UNRESOLVED_RULE"],
+      "ops": [
+        {
+          "op": "replace",
+          "path": "/checks/0/rules/0",
+          "value": "X-A9"
+        }
+      ]
+    },
+    {
+      "name": "check downgraded to a warning",
+      "file": "checks",
+      "expect": ["SCHEMA", "UNRESOLVED_CHECK"],
+      "ops": [
+        {
+          "op": "replace",
+          "path": "/checks/0/eslint/css~1no-important",
+          "value": ["warn"]
+        }
+      ]
+    },
+    {
+      "name": "check switched off",
+      "file": "checks",
+      "expect": ["SCHEMA", "UNRESOLVED_CHECK"],
+      "ops": [
+        {
+          "op": "replace",
+          "path": "/checks/0/eslint/css~1no-important",
+          "value": ["off"]
+        }
+      ]
+    },
+    {
+      "name": "check using a rule outside css/ and wbff/",
+      "file": "checks",
+      "expect": ["SCHEMA", "UNRESOLVED_CHECK"],
+      "ops": [
+        {
+          "op": "add",
+          "path": "/checks/0/eslint/other~1rule",
+          "value": ["error"]
+        }
+      ]
+    },
+    {
+      "name": "two checks with the same ID",
+      "file": "checks",
+      "expect": ["DUPLICATE_ID"],
+      "ops": [
+        {
+          "op": "add",
+          "path": "/checks/-",
+          "value": {
+            "id": "chk-demo-size",
+            "kind": "source",
+            "rules": ["X-A1"],
+            "description": "A copy.",
+            "files": ["**/*.css"],
+            "eslint": {
+              "css/no-important": ["error"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "guidance rule with a checkId",
+      "file": "rules",
+      "expect": ["SCHEMA"],
+      "ops": [
+        {
+          "op": "add",
+          "path": "/rules/1/checkId",
+          "value": "chk-demo-size"
+        }
+      ]
+    },
+    {
+      "name": "check rule pointing to a check with no check registry",
+      "file": "checks",
+      "expect": ["UNRESOLVED_CHECK"],
+      "drop": true
+    },
+    {
+      "name": "check registry contract version differs",
+      "file": "checks",
+      "expect": ["CONTRACT_MISMATCH"],
+      "ops": [
+        {
+          "op": "replace",
+          "path": "/contractVersion",
+          "value": "0.2.0"
+        }
+      ]
+    },
+    {
+      "name": "agent named with the reserved word unregistered",
+      "file": "reviewer",
+      "expect": ["SCHEMA"],
+      "ops": [
+        {
+          "op": "replace",
+          "path": "/name",
+          "value": "unregistered"
+        }
+      ]
+    },
+    {
+      "name": "write scope reaching the run log",
+      "file": "agent",
+      "expect": ["SCOPE_PROTECTED"],
+      "ops": [
+        {
+          "op": "add",
+          "path": "/writeScope/-",
+          "value": "knowledge-base/runs/2026-11.jsonl"
+        }
+      ]
+    }
+  ]
+}
