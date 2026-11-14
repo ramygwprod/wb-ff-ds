@@ -1,0 +1,13 @@
+.title {
+  font-size: clamp(1rem, 0.5rem + 2vw, 2rem);
+}
+
+.card {
+  inline-size: clamp(10rem, 1rem + 20cqi, 30rem);
+  gap: clamp(1rem, calc(0.25rem + 1vi), 2rem);
+}
+
+/* No viewport or container unit: not fluid, nothing to mix. */
+.inset {
+  padding-block: clamp(0.5rem, 1rem, 2rem);
+}

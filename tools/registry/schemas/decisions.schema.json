@@ -1,0 +1,132 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ramygwprod.github.io/wb-ff-ds/registry/0.1/decisions.schema.json",
+  "title": "WB-FF-DS registry: the decision register",
+  "description": "Every decision that work depends on. Silence never counts as an answer. This file is public: no confidential detail.",
+  "type": "object",
+  "required": ["contractVersion", "decisions"],
+  "additionalProperties": false,
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "contractVersion": {
+      "$ref": "common.schema.json#/$defs/semver"
+    },
+    "decisions": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/decision"
+      }
+    }
+  },
+  "$defs": {
+    "decision": {
+      "type": "object",
+      "required": ["id", "question", "status", "recordedOn"],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "$ref": "common.schema.json#/$defs/decisionId"
+        },
+        "question": {
+          "$ref": "common.schema.json#/$defs/text"
+        },
+        "status": {
+          "description": "open: waiting. answered: decided. abandoned: deliberately dropped. expired: no longer answerable.",
+          "enum": ["open", "answered", "abandoned", "expired"]
+        },
+        "options": {
+          "type": "array",
+          "items": {
+            "$ref": "common.schema.json#/$defs/text"
+          },
+          "uniqueItems": true
+        },
+        "answer": {
+          "$ref": "common.schema.json#/$defs/text"
+        },
+        "decidedBy": {
+          "$ref": "common.schema.json#/$defs/text"
+        },
+        "decidedOn": {
+          "$ref": "common.schema.json#/$defs/date"
+        },
+        "recordedOn": {
+          "$ref": "common.schema.json#/$defs/date"
+        },
+        "expiresOn": {
+          "$ref": "common.schema.json#/$defs/date",
+          "description": "The last day the question can still be answered. After it, an open decision fails the check until it is answered, extended or marked expired."
+        },
+        "blocks": {
+          "description": "Rules this decision blocks while it is open. Only an open decision may list them: once it is answered, abandoned or expired, the rules must be updated instead.",
+          "type": "array",
+          "items": {
+            "$ref": "common.schema.json#/$defs/ruleId"
+          },
+          "uniqueItems": true
+        },
+        "supersedes": {
+          "description": "Earlier decisions this one replaces. They stay in the register as history; rules must cite this one instead.",
+          "type": "array",
+          "items": {
+            "$ref": "common.schema.json#/$defs/decisionId"
+          },
+          "uniqueItems": true
+        },
+        "notes": {
+          "$ref": "common.schema.json#/$defs/text"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "answered"
+              }
+            }
+          },
+          "then": {
+            "required": ["answer", "decidedBy", "decidedOn"]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "open"
+              }
+            }
+          },
+          "then": {
+            "required": ["options"],
+            "properties": {
+              "answer": false,
+              "decidedBy": false,
+              "decidedOn": false
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "not": {
+                  "const": "open"
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "blocks": false
+            }
+          }
+        }
+      ]
+    }
+  }
+}

@@ -3,6 +3,8 @@ const eslint = require('@eslint/js');
 const { defineConfig } = require('eslint/config');
 const tseslint = require('typescript-eslint');
 const angular = require('angular-eslint');
+// CSS checks come from tools/checks/registry.json: one source for what the lint enforces.
+const { cssConfigs } = require('./tools/checks/css/eslint-config.mjs');
 
 module.exports = defineConfig([
   {
@@ -38,4 +40,5 @@ module.exports = defineConfig([
     extends: [angular.configs.templateRecommended, angular.configs.templateAccessibility],
     rules: {},
   },
+  ...cssConfigs(),
 ]);

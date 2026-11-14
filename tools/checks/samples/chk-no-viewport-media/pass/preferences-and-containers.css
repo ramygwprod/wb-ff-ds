@@ -1,0 +1,23 @@
+@media (prefers-contrast: more) {
+  .button {
+    outline-width: 0.125rem;
+  }
+}
+
+@media (pointer: coarse) {
+  .row {
+    gap: 1rem;
+  }
+}
+
+@media print {
+  .nav {
+    display: none;
+  }
+}
+
+@container (inline-size > 40rem) {
+  .panel {
+    display: grid;
+  }
+}

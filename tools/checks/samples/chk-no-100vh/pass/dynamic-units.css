@@ -1,0 +1,9 @@
+.screen {
+  block-size: 100dvh;
+  min-block-size: 100svh;
+}
+
+/* Only 100vh is ruled out by L-L8. */
+.hero {
+  max-block-size: 50vh;
+}

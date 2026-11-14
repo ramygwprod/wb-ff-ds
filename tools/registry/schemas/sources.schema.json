@@ -1,0 +1,151 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ramygwprod.github.io/wb-ff-ds/registry/0.1/sources.schema.json",
+  "title": "WB-FF-DS registry: a foundation's sources",
+  "description": "What a foundation agent is judged by, learns from and reuses. Rules cite these by ID.",
+  "type": "object",
+  "required": ["contractVersion", "foundation", "scope", "sources"],
+  "additionalProperties": false,
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "contractVersion": {
+      "$ref": "common.schema.json#/$defs/semver"
+    },
+    "foundation": {
+      "$ref": "common.schema.json#/$defs/slug"
+    },
+    "title": {
+      "description": "Display name used in generated documents, e.g. 'Layout system'.",
+      "$ref": "common.schema.json#/$defs/text"
+    },
+    "scope": {
+      "$ref": "common.schema.json#/$defs/text"
+    },
+    "sources": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/source"
+      }
+    },
+    "baseline": {
+      "description": "Browser support of the features this foundation relies on.",
+      "type": "object",
+      "required": ["dataset", "checked", "features"],
+      "additionalProperties": false,
+      "properties": {
+        "dataset": {
+          "$ref": "common.schema.json#/$defs/text"
+        },
+        "checked": {
+          "$ref": "common.schema.json#/$defs/date"
+        },
+        "features": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/feature"
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "source": {
+      "type": "object",
+      "required": ["id", "role", "title", "uses", "verification"],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "$ref": "common.schema.json#/$defs/sourceId"
+        },
+        "role": {
+          "description": "judged-by: a standard the work is checked against. spec: defines a feature. platform: Angular guidance. learn-from: reference only, no code copied. reuse: an existing WideBot input, kept local and never published.",
+          "enum": ["judged-by", "spec", "platform", "learn-from", "reuse"]
+        },
+        "title": {
+          "$ref": "common.schema.json#/$defs/text"
+        },
+        "edition": {
+          "description": "Version, level or status as published, e.g. 'Level AA' or 'Working Draft'.",
+          "$ref": "common.schema.json#/$defs/text"
+        },
+        "checked": {
+          "$ref": "common.schema.json#/$defs/date"
+        },
+        "urls": {
+          "type": "array",
+          "items": {
+            "$ref": "common.schema.json#/$defs/httpsUrl"
+          },
+          "uniqueItems": true
+        },
+        "uses": {
+          "description": "What this source governs or what we take from it.",
+          "$ref": "common.schema.json#/$defs/text"
+        },
+        "note": {
+          "$ref": "common.schema.json#/$defs/text"
+        },
+        "verification": {
+          "description": "read: the content was read. reachable: the page loaded. search-only: seen in search results only. unreachable: could not be loaded. local: a local file, not published.",
+          "enum": ["read", "reachable", "search-only", "unreachable", "local"]
+        }
+      },
+      "if": {
+        "properties": {
+          "verification": {
+            "const": "local"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "urls": false
+        }
+      }
+    },
+    "feature": {
+      "type": "object",
+      "required": ["name", "status", "use"],
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "$ref": "common.schema.json#/$defs/text"
+        },
+        "status": {
+          "enum": ["widely", "newly", "limited"],
+          "description": "widely: Baseline, widely available. newly: Baseline, newly available. limited: not Baseline."
+        },
+        "since": {
+          "$ref": "common.schema.json#/$defs/month"
+        },
+        "use": {
+          "enum": ["core", "enhancement", "not-relied-on", "not-used"],
+          "description": "core: the core layout relies on it. enhancement: used only behind @supports, with a working fallback. not-relied-on: may appear, but nothing depends on it. not-used: not used."
+        },
+        "note": {
+          "$ref": "common.schema.json#/$defs/text"
+        }
+      },
+      "if": {
+        "properties": {
+          "status": {
+            "const": "limited"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "use": {
+            "not": {
+              "const": "core"
+            }
+          }
+        }
+      }
+    }
+  }
+}

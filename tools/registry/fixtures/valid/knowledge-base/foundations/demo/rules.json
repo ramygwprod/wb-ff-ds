@@ -1,0 +1,44 @@
+{
+  "contractVersion": "0.1.0",
+  "foundation": "demo",
+  "idPrefix": "X",
+  "status": "draft",
+  "groups": [
+    {
+      "id": "A",
+      "title": "Demo group"
+    }
+  ],
+  "rules": [
+    {
+      "id": "X-A1",
+      "group": "A",
+      "text": "Demo rule enforced by a check.",
+      "kind": "check",
+      "checkKind": "source",
+      "sources": ["S-DEMO-1"],
+      "decisions": ["DEC-001"],
+      "consumers": ["ci"],
+      "status": "approved",
+      "checkId": "chk-demo-size"
+    },
+    {
+      "id": "X-A2",
+      "group": "A",
+      "text": "Demo rule waiting for a decision.",
+      "kind": "guidance",
+      "sources": ["U-DEMO"],
+      "decisions": ["DEC-002"],
+      "dependsOn": ["X-A1"],
+      "consumers": ["layout"],
+      "status": "proposed"
+    }
+  ],
+  "gaps": [
+    {
+      "gap": "Demo gap.",
+      "owner": "Fixture owner",
+      "decision": "DEC-002"
+    }
+  ]
+}

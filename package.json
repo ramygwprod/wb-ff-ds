@@ -1,6 +1,7 @@
 {
   "name": "wb-ff-ds",
-  "version": "0.3.1",
+  "version": "0.4.0",
+  "license": "UNLICENSED",
   "scripts": {
     "ng": "ng",
     "start": "ng serve ferrofluid-ds",
@@ -11,7 +12,10 @@
     "build:docs": "ng build ferrofluid-ds",
     "watch:lib": "ng build wb-ff-ds --watch --configuration development",
     "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "registry:check": "node tools/registry/validate.mjs && node tools/registry/generate.mjs --check && node tools/hooks/check-run-log.mjs",
+    "registry:generate": "node tools/registry/generate.mjs",
+    "test:tools": "node --test \"tools/**/*.test.mjs\""
   },
   "private": true,
   "packageManager": "npm@11.20.0",
@@ -31,7 +35,9 @@
     "@angular/build": "^22.2.6",
     "@angular/cli": "^22.2.6",
     "@angular/compiler-cli": "^22.2.0",
+    "@eslint/css": "2.0.1",
     "@eslint/js": "10.0.1",
+    "ajv": "8.20.0",
     "angular-eslint": "22.6.0",
     "eslint": "10.14.0",
     "jsdom": "^30.0.0",

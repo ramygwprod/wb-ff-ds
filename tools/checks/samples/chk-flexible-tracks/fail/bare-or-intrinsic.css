@@ -1,0 +1,15 @@
+.split {
+  grid-template-columns: 1fr 2fr; /* fail */
+}
+
+.cards {
+  grid-template-columns: repeat(3, 1fr); /* fail */
+}
+
+.rows {
+  grid-template-rows: minmax(auto, 1fr); /* fail */
+}
+
+.auto {
+  grid-auto-columns: minmax(min-content, 1fr); /* fail */
+}

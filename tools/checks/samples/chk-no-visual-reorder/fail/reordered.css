@@ -1,0 +1,11 @@
+.first {
+  order: -1; /* fail */
+}
+
+.row {
+  flex-direction: row-reverse; /* fail */
+}
+
+.column {
+  flex-flow: column-reverse wrap; /* fail */
+}

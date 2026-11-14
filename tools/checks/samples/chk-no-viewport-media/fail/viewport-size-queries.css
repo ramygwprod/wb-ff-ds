@@ -1,0 +1,27 @@
+/* fail-next */
+@media (min-width: 40rem) {
+  .a {
+    display: grid;
+  }
+}
+
+/* fail-next */
+@media (width < 60rem) {
+  .b {
+    display: block;
+  }
+}
+
+/* fail-next */
+@media screen and (max-height: 30rem) {
+  .c {
+    display: none;
+  }
+}
+
+/* fail-next */
+@media (40rem <= width <= 60rem) {
+  .d {
+    display: flex;
+  }
+}

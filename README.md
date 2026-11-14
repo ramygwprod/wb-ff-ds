@@ -8,21 +8,21 @@ WideBot's AI-native, white-label design system for Angular, with WCAG AA/AAA the
 
 ## Status
 
-**v0.3.x: the pipeline is in place, with no tokens or components yet.** The workspace, library build, linting, CI, branch protection and docs deployment all work end to end. Design content comes next.
+**v0.4.x: the pipeline spine is in place, with no tokens or components yet.** The design knowledge is checked data, the layout foundation is its first content, layout rules are enforced by tested CSS checks, and agent permissions are enforced by hooks. Tokens and components come next.
 
 Every release has a changelog in [`releases/`](releases/).
 
 ## What's inside
 
-| Path                     | What it is                                                                       |
-| ------------------------ | -------------------------------------------------------------------------------- |
-| `projects/wb-ff-ds`      | The design system library (Angular, `@angular/cdk` + `@angular/aria`)            |
-| `projects/ferrofluid-ds` | The **Ferrofluid Design System** docs site, an Angular app that uses the library |
-| `releases/`              | One changelog per release (semver)                                               |
-| `knowledge-base/`        | Design knowledge, turned into guidelines over time (added once it has content)   |
-| `tools/`                 | Design-system pipeline tools (added once it has content)                         |
-| `.claude/skills/`        | The official Angular agent skill, vendored and SHA-256 pinned                    |
-| `CLAUDE.md`              | Rules and commands for AI agents working in this repo                            |
+| Path                     | What it is                                                                                                                               |
+| ------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| `projects/wb-ff-ds`      | The design system library (Angular, `@angular/cdk` + `@angular/aria`)                                                                    |
+| `projects/ferrofluid-ds` | The **Ferrofluid Design System** docs site, an Angular app that uses the library                                                         |
+| `releases/`              | One changelog per release (semver)                                                                                                       |
+| `knowledge-base/`        | Design knowledge as checked JSON: rules, sources, decisions, agent manifests. The Markdown is generated from it. Also the public run log |
+| `tools/`                 | The pipeline: registry schemas, validator and generator, CSS checks with their samples, agent hooks                                      |
+| `.claude/skills/`        | The official Angular agent skill, vendored and SHA-256 pinned                                                                            |
+| `CLAUDE.md`              | Rules and commands for AI agents working in this repo                                                                                    |
 
 ## Goals
 
@@ -43,6 +43,8 @@ npm start           # docs site dev server
 npm test            # unit tests
 npm run lint        # lint, including template accessibility rules
 npm run format      # format the code
+npm run registry:check  # validate the knowledge registry
+npm run test:tools  # test the pipeline tools
 ```
 
 The full list is in [`CLAUDE.md`](CLAUDE.md#3-commands).
@@ -50,11 +52,13 @@ The full list is in [`CLAUDE.md`](CLAUDE.md#3-commands).
 ## How changes land
 
 1. Every change goes through a **pull request**. `main` is protected, with no direct pushes and no bypass.
-2. **CI decides:** a clean install from the lockfile, signature verification, a dependency audit (only explicitly accepted advisories pass), format check, lint, build, unit tests, plus dependency review on PRs.
+2. **CI decides:** a clean install from the lockfile, signature verification, a dependency audit (only explicitly accepted advisories pass), format check, lint (including the CSS checks), the registry check, the tools tests, build, unit tests, plus dependency review on PRs.
 3. A maintainer merges once CI is green. Each merge to `main` deploys the docs site.
 
 Supply-chain rules: exact dependency versions, only releases at least 7 days old, install scripts blocked unless reviewed, and GitHub Actions pinned by commit SHA.
 
 ## Licence
 
-Not decided yet. Until a licence is added, all rights are reserved.
+Copyright © 2026 ramygwprod. All rights reserved.
+
+The code is public to read only. No licence is granted to use, copy, modify or distribute it.

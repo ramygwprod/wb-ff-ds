@@ -1,0 +1,12 @@
+{
+  "contractVersion": "0.1.0",
+  "name": "demo-reviewer",
+  "role": "reviewer",
+  "consumer": "layout",
+  "description": "Fixture: reviews work against the rules tagged layout.",
+  "tools": ["Read", "Grep", "Glob"],
+  "writeScope": [],
+  "gate": { "checks": ["registry:check"], "maxRetries": 0 },
+  "model": "inherit",
+  "effort": "medium"
+}

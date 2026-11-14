@@ -1,0 +1,108 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ramygwprod.github.io/wb-ff-ds/registry/0.1/checks.schema.json",
+  "title": "WB-FF-DS registry: the checks",
+  "description": "Every check that enforces a rule. Rules point here by checkId; the lint configuration is built from this file, and each check is proven on samples it must pass and must fail.",
+  "type": "object",
+  "required": ["contractVersion", "checks"],
+  "additionalProperties": false,
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "contractVersion": {
+      "$ref": "common.schema.json#/$defs/semver"
+    },
+    "checks": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/check"
+      }
+    }
+  },
+  "$defs": {
+    "check": {
+      "type": "object",
+      "required": ["id", "kind", "rules", "description", "files", "eslint"],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^chk-[a-z0-9-]+$"
+        },
+        "kind": {
+          "description": "source: lint of the CSS source, run by ESLint with @eslint/css. Data and rendered checks are added with their engines.",
+          "enum": ["source"]
+        },
+        "rules": {
+          "description": "The rules this check enforces. Each of them points back here with its checkId.",
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "common.schema.json#/$defs/ruleId"
+          }
+        },
+        "description": {
+          "description": "What the check actually tests, including any reading of its rule.",
+          "$ref": "common.schema.json#/$defs/text"
+        },
+        "files": {
+          "description": "Glob patterns of the files the check applies to.",
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9_*{}.,/-]+$"
+          }
+        },
+        "ignores": {
+          "description": "Glob patterns excluded from files.",
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9_*{}.,/-]+$"
+          }
+        },
+        "eslint": {
+          "description": "The ESLint rules that implement the check. Each is an error: a check is never a warning or switched off.",
+          "type": "object",
+          "minProperties": 1,
+          "propertyNames": {
+            "pattern": "^(css|wbff)/[a-z0-9-]+$"
+          },
+          "additionalProperties": {
+            "description": "[\"error\"] or [\"error\", { options }].",
+            "type": "array",
+            "anyOf": [
+              {
+                "prefixItems": [
+                  {
+                    "const": "error"
+                  }
+                ],
+                "minItems": 1,
+                "maxItems": 1
+              },
+              {
+                "prefixItems": [
+                  {
+                    "const": "error"
+                  },
+                  {
+                    "type": "object"
+                  }
+                ],
+                "minItems": 2,
+                "maxItems": 2
+              }
+            ]
+          }
+        }
+      }
+    }
+  }
+}

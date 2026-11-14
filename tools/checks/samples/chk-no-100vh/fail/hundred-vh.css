@@ -1,0 +1,7 @@
+.screen {
+  block-size: 100vh; /* fail */
+}
+
+.page {
+  min-block-size: calc(100vh - 4rem); /* fail */
+}

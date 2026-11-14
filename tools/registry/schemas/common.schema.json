@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ramygwprod.github.io/wb-ff-ds/registry/0.1/common.schema.json",
+  "title": "WB-FF-DS registry: shared definitions",
+  "description": "Identifiers and value shapes shared by every registry file. These IDs are names, never fetched.",
+  "$defs": {
+    "date": {
+      "description": "A calendar date, YYYY-MM-DD.",
+      "type": "string",
+      "pattern": "^\\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01])$"
+    },
+    "month": {
+      "description": "A year, or a year and month: YYYY or YYYY-MM.",
+      "type": "string",
+      "pattern": "^\\d{4}(-(0[1-9]|1[0-2]))?$"
+    },
+    "httpsUrl": {
+      "description": "A public https address.",
+      "type": "string",
+      "pattern": "^https://[^\\s]+$"
+    },
+    "semver": {
+      "description": "A contract version, MAJOR.MINOR.PATCH.",
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$"
+    },
+    "text": {
+      "description": "Plain text with no leading or trailing whitespace.",
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 800,
+      "pattern": "^\\S(.*\\S)?$"
+    },
+    "slug": {
+      "description": "A lowercase name: letters, digits and hyphens.",
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]*$"
+    },
+    "sourceId": {
+      "description": "S- judged by or specification, R- learn from, U- reuse input. Example: S-WCAG-1.4.10.",
+      "type": "string",
+      "pattern": "^[SRU]-[A-Z0-9]+([.-][A-Z0-9]+)*$"
+    },
+    "ruleId": {
+      "description": "Foundation prefix, a hyphen, the group letter and a number. Example: L-T1.",
+      "type": "string",
+      "pattern": "^[A-Z]{1,3}-[A-Z][0-9]+$"
+    },
+    "decisionId": {
+      "description": "DEC- and three digits. Example: DEC-001.",
+      "type": "string",
+      "pattern": "^DEC-[0-9]{3}$"
+    },
+    "consumer": {
+      "description": "Who uses a rule. layout: the layout agent. a11y: the accessibility reviewer. rtl: the RTL and i18n reviewer. ci: automated checks. qa: the QA engineer. docs: the documentation writer. platform: the platform engineer.",
+      "enum": ["layout", "a11y", "rtl", "ci", "qa", "docs", "platform"]
+    }
+  }
+}

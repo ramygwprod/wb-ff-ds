@@ -1,0 +1,14 @@
+{
+  "contractVersion": "0.1.0",
+  "name": "foundation-demo",
+  "role": "foundation",
+  "foundation": "demo",
+  "description": "Fixture: owns the demo foundation's rules and sources.",
+  "tools": ["Read", "Grep", "Glob", "Edit", "Write", "WebFetch", "WebSearch"],
+  "writeScope": [
+    "knowledge-base/foundations/demo/rules.json",
+    "knowledge-base/foundations/demo/sources.json"
+  ],
+  "gate": { "checks": ["registry:check"], "maxRetries": 2 },
+  "reviewedBy": ["demo-reviewer"]
+}
