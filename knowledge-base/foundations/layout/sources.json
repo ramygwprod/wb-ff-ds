@@ -2,7 +2,7 @@
   "contractVersion": "0.1.0",
   "foundation": "layout",
   "title": "Layout system",
-  "scope": "Grid, spacing, density, containers, aspect ratios, and the layout primitives (stack, cluster, switcher, sidebar, grid, shell, frame, reel, center).",
+  "scope": "Grid, spacing, density, containers, aspect ratios, and the layout primitives (flex column, flex row, grid, scroll container, aspect-ratio box).",
   "sources": [
     {
       "id": "S-WCAG-1.3.2",
@@ -29,7 +29,7 @@
         "https://www.w3.org/WAI/WCAG22/wcag.json",
         "https://www.w3.org/WAI/WCAG22/Understanding/"
       ],
-      "uses": "The app shell exposes its regions (landmarks), not only a visual layout",
+      "uses": "The page layout exposes its regions (landmarks), not only a visual layout",
       "verification": "read"
     },
     {
@@ -43,7 +43,7 @@
         "https://www.w3.org/WAI/WCAG22/wcag.json",
         "https://www.w3.org/WAI/WCAG22/Understanding/"
       ],
-      "uses": "The shell provides a way to skip repeated navigation",
+      "uses": "The page provides a way to skip repeated navigation",
       "verification": "read"
     },
     {
@@ -183,7 +183,7 @@
         "https://www.w3.org/WAI/WCAG22/wcag.json",
         "https://www.w3.org/WAI/WCAG22/Understanding/"
       ],
-      "uses": "Floor for density in the AA theme",
+      "uses": "Minimum target size in the AA theme, whatever the density",
       "verification": "read"
     },
     {
@@ -197,7 +197,21 @@
         "https://www.w3.org/WAI/WCAG22/wcag.json",
         "https://www.w3.org/WAI/WCAG22/Understanding/"
       ],
-      "uses": "Floor for density in the AAA theme",
+      "uses": "Minimum target size in the AAA theme, whatever the density",
+      "verification": "read"
+    },
+    {
+      "id": "S-WCAG-2.5.7",
+      "role": "judged-by",
+      "title": "WCAG 2.2, Dragging Movements",
+      "edition": "Level AA",
+      "checked": "2026-11-14",
+      "urls": [
+        "https://www.w3.org/TR/WCAG22/",
+        "https://www.w3.org/WAI/WCAG22/wcag.json",
+        "https://www.w3.org/WAI/WCAG22/Understanding/dragging-movements.html"
+      ],
+      "uses": "Anything operated by dragging, such as a window splitter, also works with a single pointer without dragging",
       "verification": "read"
     },
     {
@@ -239,20 +253,35 @@
       "role": "judged-by",
       "title": "WAI-ARIA Authoring Practices, Landmark Regions",
       "edition": "W3C Note (living)",
-      "checked": "2026-11-13",
+      "checked": "2026-11-14",
       "urls": ["https://www.w3.org/WAI/ARIA/apg/practices/landmark-regions/"],
-      "uses": "Which landmark each shell region uses (banner, navigation, main, complementary, contentinfo)",
-      "verification": "reachable"
+      "uses": "Which landmark each page region uses (banner, navigation, main, complementary, contentinfo)",
+      "verification": "read"
+    },
+    {
+      "id": "S-APG-SPLITTER",
+      "role": "judged-by",
+      "title": "WAI-ARIA Authoring Practices, Window Splitter pattern",
+      "edition": "W3C Note (living)",
+      "checked": "2026-11-14",
+      "urls": ["https://www.w3.org/WAI/ARIA/apg/patterns/windowsplitter/"],
+      "uses": "The window splitter between resizable panes: role, value properties, name and keys",
+      "note": "The APG task force has not finished reviewing this pattern (its issue 129), and it has no working example yet (issue 130). Its arrow keys are physical: Left Arrow moves a vertical splitter to the left",
+      "verification": "read"
     },
     {
       "id": "S-WAI-STRUCTURE",
       "role": "judged-by",
       "title": "W3C WAI Page Structure tutorial",
       "edition": "Living",
-      "checked": "2026-11-13",
-      "urls": ["https://www.w3.org/WAI/tutorials/page-structure/"],
-      "uses": "Headings, regions and skip links in the shell",
-      "verification": "reachable"
+      "checked": "2026-11-14",
+      "urls": [
+        "https://www.w3.org/WAI/tutorials/page-structure/",
+        "https://www.w3.org/WAI/tutorials/page-structure/regions/"
+      ],
+      "uses": "Page regions (header, footer, navigation, main, complementary), their labels and headings in the page layout",
+      "note": "The tutorial does not cover skip links; those rest on WCAG 2.4.1 alone",
+      "verification": "read"
     },
     {
       "id": "S-CSS-GRID",
@@ -335,6 +364,27 @@
       "verification": "read"
     },
     {
+      "id": "S-CSS-IMAGES",
+      "role": "spec",
+      "title": "CSS Images Module Level 3",
+      "edition": "Candidate Recommendation Draft, 18 December 2023",
+      "checked": "2026-11-14",
+      "urls": ["https://www.w3.org/TR/css-images-3/"],
+      "uses": "`object-fit` and `object-position`. The initial value of `object-fit` is `fill`, which stretches the content to the box",
+      "verification": "read"
+    },
+    {
+      "id": "S-CSS-OVERFLOW",
+      "role": "spec",
+      "title": "CSS Overflow Module Level 3",
+      "edition": "Working Draft, 7 October 2025",
+      "checked": "2026-11-14",
+      "urls": ["https://www.w3.org/TR/css-overflow-3/"],
+      "uses": "The term scroll container: a box whose overflow can be scrolled",
+      "note": "Only the definition of a scroll container was read",
+      "verification": "reachable"
+    },
+    {
       "id": "S-CSS-CASCADE",
       "role": "spec",
       "title": "CSS Cascading and Inheritance Level 6",
@@ -404,6 +454,15 @@
       "urls": ["https://angular.dev/best-practices/a11y"],
       "uses": "Focus management on route changes",
       "verification": "reachable"
+    },
+    {
+      "id": "S-NG-IMAGE",
+      "role": "platform",
+      "title": "angular.dev, image optimization guide (`NgOptimizedImage`)",
+      "checked": "2026-11-14",
+      "urls": ["https://angular.dev/guide/image-optimization"],
+      "uses": "Fill mode: the image takes its parent's size, with no width and height, and the parent must be positioned",
+      "verification": "read"
     },
     {
       "id": "S-ALREQ",
@@ -480,6 +539,37 @@
       "uses": "Why classes describe the window, not the device",
       "note": "Concept only; we use calculated thresholds instead",
       "verification": "search-only"
+    },
+    {
+      "id": "R-M3-LAYOUT",
+      "role": "learn-from",
+      "title": "Material 3, layout: density, applying spacing, parts of layout",
+      "checked": "2026-11-14",
+      "urls": [
+        "https://m3.material.io/foundations/layout/grids-spacing/density",
+        "https://m3.material.io/styles/spacing/applying-spacing",
+        "https://m3.material.io/foundations/layout/layout-overview/parts-of-layout"
+      ],
+      "uses": "Information density and component scaling as two separate ideas (DEC-066), and which components should not get denser (DEC-067)",
+      "note": "Concepts only. Its window size classes are not used: we measure on the nearest query container (DEC-054)",
+      "verification": "read"
+    },
+    {
+      "id": "R-M2-LAYOUT",
+      "role": "learn-from",
+      "title": "Material Design 2, Layout: understanding layout, responsive layout grid, spacing methods, component behavior, pixel density",
+      "edition": "No longer maintained",
+      "checked": "2026-11-14",
+      "urls": [
+        "https://m2.material.io/design/layout/understanding-layout.html",
+        "https://m2.material.io/design/layout/responsive-layout-grid.html",
+        "https://m2.material.io/design/layout/spacing-methods.html",
+        "https://m2.material.io/design/layout/component-behavior.html",
+        "https://m2.material.io/design/layout/pixel-density.html"
+      ],
+      "uses": "Containment by spacing, gutters that carry meaning, swapping only functionally equivalent components, and the split between dp spacing and sp text",
+      "note": "Concepts only. Its screen breakpoints, column counts and dp values are not used",
+      "verification": "read"
     },
     {
       "id": "R-FLUID-A11Y",
@@ -573,6 +663,15 @@
       "verification": "reachable"
     },
     {
+      "id": "R-CLAUDE-DESKTOP",
+      "role": "learn-from",
+      "title": "Claude Code desktop docs, \"Arrange your workspace\" and \"Minimize a pane\"",
+      "checked": "2026-11-14",
+      "urls": ["https://code.claude.com/docs/en/desktop.md"],
+      "uses": "A worked example of resizable panes: drag an edge to resize, minimize to a small overlay, controls that move into a menu when the window is narrow",
+      "verification": "read"
+    },
+    {
       "id": "R-GRIDBYEXAMPLE",
       "role": "learn-from",
       "title": "Rachel Andrew, Grid by Example",
@@ -626,14 +725,13 @@
     {
       "id": "R-DENSITY-MATERIAL",
       "role": "learn-from",
-      "title": "Material Design, \"Using Material Density on the Web\" and \"Applying density\"",
-      "checked": "2026-11-12",
-      "urls": [
-        "https://m2.material.io/blog/material-density-web",
-        "https://material.io/design/layout/applying-density.html"
-      ],
-      "uses": "Each density step removes height; padding and horizontal spacing don't change",
-      "verification": "search-only"
+      "title": "Material Design 2, \"Applying density\"",
+      "edition": "No longer maintained",
+      "checked": "2026-11-14",
+      "urls": ["https://m2.material.io/design/layout/applying-density.html"],
+      "uses": "Each density step removes height (4dp) while padding and alignment stay; dense components need looser margins and gutters; focused tasks and alerts don't get denser; users opt in to dense levels",
+      "note": "The blog post \"Using Material Density on the Web\" was seen in search results only",
+      "verification": "read"
     },
     {
       "id": "R-DENSITY-SALESFORCE",

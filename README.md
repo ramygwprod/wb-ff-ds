@@ -8,7 +8,7 @@ WideBot's AI-native, white-label design system for Angular, with WCAG AA/AAA the
 
 ## Status
 
-**v0.4.x: the pipeline spine is in place, with no tokens or components yet.** The design knowledge is checked data, the layout foundation is its first content, layout rules are enforced by tested CSS checks, and agent permissions are enforced by hooks. Tokens and components come next.
+**v0.5.x: the layout foundation has its agent, with no tokens or components yet.** The design knowledge is checked data. The layout rules cover every recorded layout decision, in names taken from the standards (CSS, HTML, ARIA, WCAG and Angular). The layout agent is defined by a manifest that the hooks enforce. The other foundations come next, then tokens and components.
 
 Every release has a changelog in [`releases/`](releases/).
 
@@ -44,6 +44,7 @@ npm test            # unit tests
 npm run lint        # lint, including template accessibility rules
 npm run format      # format the code
 npm run registry:check  # validate the knowledge registry
+npm run registry:format # format the knowledge base (the finish gate runs it for agents)
 npm run test:tools  # test the pipeline tools
 ```
 

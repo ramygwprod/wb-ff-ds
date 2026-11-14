@@ -6,10 +6,19 @@
  */
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
-import { existsSync, mkdirSync, readFileSync, rmSync, symlinkSync, writeFileSync } from 'node:fs';
+import {
+  cpSync,
+  existsSync,
+  mkdirSync,
+  readFileSync,
+  rmSync,
+  symlinkSync,
+  writeFileSync,
+} from 'node:fs';
 import path from 'node:path';
 import { after, test } from 'node:test';
 import { fileURLToPath } from 'node:url';
+import * as prettier from 'prettier';
 
 import { scanRunLog } from './check-run-log.mjs';
 import { hookEntries, merge } from './install.mjs';
@@ -17,6 +26,7 @@ import {
   appendRunLog,
   decideGate,
   decideWrite,
+  GATE_PREPARE,
   parseOutcome,
   validateRunLogEntry,
 } from './lib.mjs';
@@ -318,4 +328,84 @@ test('subagent-stop: a stated, passing outcome stops; a missing one is sent back
     ['--state-dir', stateDir],
   );
   assert.equal(unregistered.out, null, 'agents without a manifest are not gated');
+});
+
+// ---------- What the gate does for agents, who have no Bash ----------
+
+test('subagent-stop: formats and regenerates before the checks, in that order', () => {
+  // A copy of the fixture whose scripts record the order they ran in.
+  const root = path.join(WORK, 'order-root');
+  cpSync(FIXTURE, root, { recursive: true });
+  const pkgFile = path.join(root, 'package.json');
+  const pkg = JSON.parse(readFileSync(pkgFile, 'utf8'));
+  for (const name of Object.keys(pkg.scripts)) pkg.scripts[name] = `echo ${name} >> order.txt`;
+  writeFileSync(pkgFile, JSON.stringify(pkg));
+
+  const r = spawnSync(
+    process.execPath,
+    [
+      path.join(HERE, 'subagent-stop.mjs'),
+      '--root',
+      root,
+      '--log-dir',
+      path.join(WORK, 'order-log'),
+      '--state-dir',
+      path.join(WORK, 'order-state'),
+    ],
+    {
+      input: JSON.stringify({
+        hook_event_name: 'SubagentStop',
+        agent_type: 'foundation-demo',
+        agent_id: 'agent-order-1',
+        stop_hook_active: false,
+        last_assistant_message: 'Outcome: passed',
+      }),
+      encoding: 'utf8',
+    },
+  );
+  assert.equal(r.status, 0, r.stderr);
+  assert.equal(r.stdout, '', 'allowed to stop');
+  assert.deepEqual(readFileSync(path.join(root, 'order.txt'), 'utf8').trim().split(/\s+/), [
+    ...GATE_PREPARE,
+    'registry:check',
+  ]);
+  assert.deepEqual(GATE_PREPARE, ['registry:format', 'registry:generate']);
+});
+
+test('every script the gate runs first exists, here and in the fixture', () => {
+  for (const file of [path.join(REPO, 'package.json'), path.join(FIXTURE, 'package.json')]) {
+    const { scripts } = JSON.parse(readFileSync(file, 'utf8'));
+    for (const name of GATE_PREPARE) assert.ok(scripts[name], `${name} is missing from ${file}`);
+  }
+});
+
+test('registry:format formats knowledge-base JSON as format:check expects, and nothing else', async () => {
+  const { scripts } = JSON.parse(readFileSync(path.join(REPO, 'package.json'), 'utf8'));
+  assert.equal(scripts['registry:format'], 'prettier --write --ignore-unknown knowledge-base');
+  const [, ...args] = scripts['registry:format'].split(' ');
+
+  const root = path.join(WORK, 'format-root');
+  mkdirSync(path.join(root, 'knowledge-base', 'runs'), { recursive: true });
+  mkdirSync(path.join(root, 'elsewhere'), { recursive: true });
+  const messy = '{"rules":[{"id":"X-A1",\n"consumers":["layout",   "ci"]}]}';
+  const inside = path.join(root, 'knowledge-base', 'rules.json');
+  const outside = path.join(root, 'elsewhere', 'rules.json');
+  const runLog = path.join(root, 'knowledge-base', 'runs', '2026-11.jsonl');
+  const lines = '{"v":1,"event":"gate"}\n{"v":1,"event":"gate"}\n';
+  writeFileSync(inside, messy);
+  writeFileSync(outside, messy);
+  writeFileSync(runLog, lines);
+
+  const cli = path.join(REPO, 'node_modules', 'prettier', 'bin', 'prettier.cjs');
+  const r = spawnSync(process.execPath, [cli, ...args], { cwd: root, encoding: 'utf8' });
+  assert.equal(r.status, 0, r.stderr);
+
+  const expected = await prettier.format(messy, {
+    ...(await prettier.resolveConfig(inside)),
+    filepath: inside,
+  });
+  assert.notEqual(expected, messy);
+  assert.equal(readFileSync(inside, 'utf8'), expected);
+  assert.equal(readFileSync(outside, 'utf8'), messy, 'files outside knowledge-base are untouched');
+  assert.equal(readFileSync(runLog, 'utf8'), lines, 'the run log is never rewritten');
 });

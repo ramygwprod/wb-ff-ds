@@ -27,17 +27,23 @@ Only these paths. Every other write is refused.
 
 ## Guidance to apply while working
 
-- **X-A2:** Demo rule waiting for a decision.
+None yet.
+
+## Proposed guidance, not decided yet
+
+Don't apply these, and don't treat them as rules: each waits on the decision named with it.
+
+- **X-A2** (waits on DEC-002): Demo rule waiting for a decision.
 
 ## Open decisions
 
-Your rules wait on these. Don't answer them yourself: finish with `needs-decision` and name the decision.
+Your rules and gaps wait on these. Don't answer them yourself: finish with `needs-decision` and name the decision.
 
 - **DEC-002:** Fixture: which growth ratio?
 
 ## How your work is checked
 
-When you finish, these run: `npm run registry:check`. After a failed check you may fix it and retry up to 2 times; then stop as `blocked`. Then your work is reviewed by `demo-reviewer`.
+When you finish, your JSON is formatted and the Markdown is regenerated for you, then these run: `npm run registry:check`. After a failed check you may fix it and retry up to 2 times; then stop as `blocked`. Then your work is reviewed by `demo-reviewer`.
 
 End your final message with exactly one line `Outcome: <outcome>`, using one of these outcomes. The finish gate reads it:
 

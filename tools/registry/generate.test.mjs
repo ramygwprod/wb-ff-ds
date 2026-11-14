@@ -143,6 +143,63 @@ test('an agent file carries exactly the manifest tools, and no Bash', () => {
   assert.ok(!tools.includes('Bash'));
 });
 
+test('proposed guidance is listed apart from the guidance to apply, with what it waits on', () => {
+  const section = (content, title) => content.split(`## ${title}\n`)[1]?.split('\n## ')[0] ?? null;
+  for (const name of ['foundation-demo.md', 'demo-reviewer.md']) {
+    const { content } = renderRegistry(valid, schemas).find((o) => o.file.endsWith(name));
+    assert.ok(!section(content, 'Guidance to apply while working').includes('X-A2'), name);
+    assert.match(
+      section(content, 'Proposed guidance, not decided yet'),
+      /Don't apply these.*\n\n- \*\*X-A2\*\* \(waits on DEC-002\)/,
+      name,
+    );
+  }
+
+  // Once its decision is answered and the rule is no longer proposed, it is guidance to apply.
+  const decided = structuredClone(valid);
+  const dec = decided.decisions.data.decisions.find((d) => d.id === 'DEC-002');
+  delete dec.blocks;
+  Object.assign(dec, {
+    status: 'answered',
+    answer: '1.5',
+    decidedBy: 'Fixture owner',
+    decidedOn: '2026-01-05',
+  });
+  decided.foundations[0].rules.data.rules.find((r) => r.id === 'X-A2').status = 'draft';
+  decided.foundations[0].rules.data.gaps = [];
+  assert.deepEqual(validateRegistryData(decided, validators), []);
+  const { content } = renderRegistry(decided, schemas).find((o) =>
+    o.file.endsWith('foundation-demo.md'),
+  );
+  assert.match(section(content, 'Guidance to apply while working'), /\*\*X-A2:\*\*/);
+  assert.equal(section(content, 'Proposed guidance, not decided yet'), null);
+});
+
+test("a foundation agent's open decisions include its gaps; a reviewer's don't", () => {
+  const gapped = structuredClone(valid);
+  gapped.decisions.data.decisions.push({
+    id: 'DEC-003',
+    question: 'Fixture: a question no rule covers yet?',
+    options: [],
+    status: 'open',
+    recordedOn: '2026-01-04',
+  });
+  gapped.foundations[0].rules.data.gaps.push({
+    gap: 'Demo gap with no rule.',
+    owner: 'Fixture owner',
+    decision: 'DEC-003',
+  });
+  assert.deepEqual(validateRegistryData(gapped, validators), []);
+  const open = (name) =>
+    renderRegistry(gapped, schemas)
+      .find((o) => o.file.endsWith(name))
+      .content.split('## Open decisions\n')[1]
+      .split('\n## ')[0];
+  assert.match(open('foundation-demo.md'), /\*\*DEC-003:\*\*/);
+  assert.match(open('foundation-demo.md'), /\*\*DEC-002:\*\*/);
+  assert.ok(!open('demo-reviewer.md').includes('DEC-003'));
+});
+
 test("the repository's generated Markdown matches its JSON", async () => {
   const { registry, issues } = await loadRegistry(REPO);
   const outputs = await build(

@@ -3,6 +3,7 @@
   "description": "Fixture for the registry tests: only the script names are read.",
   "scripts": {
     "registry:check": "echo fixture",
+    "registry:format": "echo fixture",
     "registry:generate": "echo fixture"
   }
 }

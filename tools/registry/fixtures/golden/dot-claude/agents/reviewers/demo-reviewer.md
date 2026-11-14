@@ -30,7 +30,13 @@ Nothing. You read and report.
 
 ## Guidance to apply while working
 
-- **X-A2:** Demo rule waiting for a decision.
+None yet.
+
+## Proposed guidance, not decided yet
+
+Don't apply these, and don't treat them as rules: each waits on the decision named with it.
+
+- **X-A2** (waits on DEC-002): Demo rule waiting for a decision.
 
 ## Open decisions
 
@@ -40,7 +46,7 @@ The rules you review wait on these. Don't answer them yourself: finish with `nee
 
 ## How your work is checked
 
-When you finish, these run: `npm run registry:check`. If a check fails, stop as `blocked`: no retries.
+When you finish, your JSON is formatted and the Markdown is regenerated for you, then these run: `npm run registry:check`. If a check fails, stop as `blocked`: no retries.
 
 End your final message with exactly one line `Outcome: <outcome>`, using one of these outcomes. The finish gate reads it:
 

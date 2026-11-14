@@ -1,0 +1,13 @@
+{
+  "contractVersion": "0.1.0",
+  "name": "layout",
+  "role": "foundation",
+  "foundation": "layout",
+  "description": "The assignee for every layout and spacing task: grid and tracks, spacing steps, fluid sizing, density, containers and resizable panes, aspect ratios, the app shell and the layout primitives. Hand it work that drafts or changes layout rules and sources, proposes values with evidence (track sizes, spacing steps), checks whether a design or a component follows the layout rules, or answers a layout question from the knowledge base. It never answers an open decision itself.",
+  "tools": ["Read", "Grep", "Glob", "Edit", "Write", "WebFetch", "WebSearch"],
+  "writeScope": [
+    "knowledge-base/foundations/layout/rules.json",
+    "knowledge-base/foundations/layout/sources.json"
+  ],
+  "gate": { "checks": ["registry:check"], "maxRetries": 2 }
+}
