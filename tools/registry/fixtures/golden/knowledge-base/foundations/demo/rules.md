@@ -13,6 +13,7 @@ One testable sentence per rule, with its kind, sources, decisions and consumers.
 - **Basis:** the sources ([sources.md](sources.md)), decisions ([decisions.md](../../decisions.md)) and other rules the rule rests on.
 - **Consumers**
   - `layout`: the layout agent.
+  - `typography`: the typography agent.
   - `a11y`: the accessibility reviewer.
   - `rtl`: the RTL and i18n reviewer.
   - `ci`: automated checks.

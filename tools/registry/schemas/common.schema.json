@@ -52,8 +52,8 @@
       "pattern": "^DEC-[0-9]{3}$"
     },
     "consumer": {
-      "description": "Who uses a rule. layout: the layout agent. a11y: the accessibility reviewer. rtl: the RTL and i18n reviewer. ci: automated checks. qa: the QA engineer. docs: the documentation writer. platform: the platform engineer.",
-      "enum": ["layout", "a11y", "rtl", "ci", "qa", "docs", "platform"]
+      "description": "Who uses a rule. layout: the layout agent. typography: the typography agent. a11y: the accessibility reviewer. rtl: the RTL and i18n reviewer. ci: automated checks. qa: the QA engineer. docs: the documentation writer. platform: the platform engineer.",
+      "enum": ["layout", "typography", "a11y", "rtl", "ci", "qa", "docs", "platform"]
     }
   }
 }

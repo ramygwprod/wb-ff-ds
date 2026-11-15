@@ -769,11 +769,15 @@
       "question": "Under the browser's text-size setting (not zoom), does spacing grow with the text, or stay fixed while the text grows?",
       "options": [
         "Spacing grows with the text: rem everywhere, as L-T8, L-T14 and L-T16 say today",
-        "Spacing stays fixed while the text grows"
+        "Spacing stays fixed while the text grows",
+        "Block-axis spacing grows with the text; inline-axis spacing stays fixed"
       ],
-      "notes": "Held for the typography agent (DEC-082). Raised on 2026-11-14 when zoom and text size were told apart: zoom already reflows layouts on its own (DEC-054). Ramy shares text-related spacing and sizing material before this is decided, to avoid rework. A data point: Material 2 on Android scales text (sp) with the user's setting but not spacing (dp). The second option would also change L-T13 and L-T14.",
-      "status": "open",
-      "recordedOn": "2026-11-14"
+      "notes": "Held for the typography agent (DEC-082), and decided after a test on 2026-11-15: a sample page in English and Arabic, at 320px, 768px and 1280px and at 150 and 200 percent text. No option clipped text or scrolled sideways. With all spacing growing, the page was 5 to 20 percent taller, and at 320px and 200 percent a line held two fewer characters; with all spacing fixed, the gap between paragraphs fell to half the font size. Applied on recording: L-T13, L-F1 and T-S6. Only spacing between components is split by axis: sizes (minimums, tracks) stay in rem (L-T14, L-T16), padding inside a component stays in em, and the px values are generated from the same sizes, so no px value is stored.",
+      "status": "answered",
+      "recordedOn": "2026-11-14",
+      "answer": "Block-axis spacing grows with the text; inline-axis spacing stays fixed.",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-15"
     },
     {
       "id": "DEC-072",
@@ -1034,6 +1038,299 @@
       "question": "Is Material Design a basis for the design system?",
       "answer": "No. Material is just another design system: its references are shared for understanding and learning. We are not limited by it or based on it.",
       "notes": "Stated after Material had been cited as the reason for some names. Applied on recording: names and rules rest on the DOM, HTML, CSS, ARIA, WCAG, DTCG and Angular; Material and Angular Material stay only as learn-from sources. Corrected where they had been used as a basis: the notes of DEC-090, DEC-091, DEC-092 and DEC-094, and rule L-D11, which no longer quotes Material's advice. Rules that came from reading Material stay proposed until Ramy decides each (L-L10, L-D13, L-R7).",
+      "status": "answered",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-15",
+      "recordedOn": "2026-11-15"
+    },
+    {
+      "id": "DEC-097",
+      "question": "What may an artifact say, and where are meaning and objective discussed?",
+      "answer": "Meaning, objective and the definition of done are discussed between Ramy and the LLM he works with. What passes between the LLM, the agents and the artifacts is the standards alone, as the source of truth.",
+      "notes": "Extends DEC-061, DEC-086 and DEC-093. Applied on recording: a rule, source, decision, manifest or table states the standard's own terms with its source. Wording from a conversation, a mapping of such wording to a standard term, and values given only to explain an idea are not written into an artifact. A decision on what the standards leave open is still recorded here, in standard terms.",
+      "status": "answered",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-15",
+      "recordedOn": "2026-11-15"
+    },
+    {
+      "id": "DEC-098",
+      "question": "What names a use case of text?",
+      "options": [
+        "The HTML element that carries the text",
+        "Names of our own for a ladder of sizes"
+      ],
+      "answer": "The HTML element that carries the text, provided any developer or AI agent reads it with no drift and no confusion.",
+      "notes": "Applied on recording: each use case is an HTML element with the HTML Standard's definition of what it represents (T-E1), and it is chosen by what the text is, never by how it should look (T-E2). Text that no standard names is DEC-111.",
+      "status": "answered",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-15",
+      "recordedOn": "2026-11-15"
+    },
+    {
+      "id": "DEC-099",
+      "question": "What decides the font weight of a use case?",
+      "answer": "Its importance. Each use case has an importance level, and the more important the information, the bolder it is, so that the user sees it sooner.",
+      "notes": "HTML defines importance: the strong element represents strong importance, seriousness or urgency, and urgency is content the user needs to see sooner; its default rendering is bolder (T-W1). How many levels there are, which use case sits at which, and the weight of each are DEC-106.",
+      "status": "answered",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-15",
+      "recordedOn": "2026-11-15"
+    },
+    {
+      "id": "DEC-100",
+      "question": "When two use cases land on the same font face, what tells them apart?",
+      "answer": "Importance is shown by font size, font weight, colour and white space, so the other variables carry the difference.",
+      "notes": "A shared face is therefore not an error (T-W2). Of the four, typography sets font size and font weight; white space is layout's spacing (DEC-085) and colour is DEC-101.",
+      "status": "answered",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-15",
+      "recordedOn": "2026-11-15"
+    },
+    {
+      "id": "DEC-101",
+      "question": "Which foundation sets the colour of text, and when?",
+      "options": ["Typography", "Colour, after typography"],
+      "answer": "The colour foundation, after the typography agent is final. Typography does not handle colour.",
+      "notes": "Applied on recording: no typography rule sets a colour or a contrast value (T-T4).",
+      "status": "answered",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-15",
+      "recordedOn": "2026-11-15"
+    },
+    {
+      "id": "DEC-102",
+      "question": "A font does not hold every weight, width or style. What happens to a value it lacks?",
+      "answer": "Each font's files are checked, and each value asked for is mapped to the closest one the font has.",
+      "notes": "Fonts differ: not every family has condensed widths, an italic, or the same weight steps. CSS Fonts 4, section 5.2, defines the closest face (width first, then style, then weight; bold weights look to heavier faces first and light weights to lighter ones), and the browser applies it on its own. The check makes the result known before a value is used (T-F2, T-F3).",
+      "status": "answered",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-15",
+      "recordedOn": "2026-11-15"
+    },
+    {
+      "id": "DEC-103",
+      "question": "Arabic needs a larger line height than English. Does a component's block size differ between the two languages?",
+      "options": [
+        "The block size stays the same: the space moves between the block padding and the line box",
+        "The block size grows with the line height"
+      ],
+      "answer": "It can stay the same: the space moves from the block padding to the line box, and back.",
+      "notes": "For a single line, block size = line box + 2 × block padding, so a taller line box takes half the difference from each block padding (T-L5). No value was decided. Bears on L-T17, which sets block padding as a ratio of the font size, and on L-C14 and DEC-072: which of the block size and the block padding is stored is settled with the height of a control, after the foundations (DEC-083).",
+      "status": "answered",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-15",
+      "recordedOn": "2026-11-15"
+    },
+    {
+      "id": "DEC-104",
+      "question": "Which font families does the design system use for English, Arabic and code, and does it ship them as defaults or leave every family to the tenant?",
+      "options": [
+        "Ship default families, which a tenant can replace",
+        "Ship no family: rules only, and every tenant brings its own"
+      ],
+      "notes": "Which families they are is DEC-115.",
+      "status": "answered",
+      "recordedOn": "2026-11-15",
+      "answer": "It ships default families, which a tenant can replace.",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-15"
+    },
+    {
+      "id": "DEC-105",
+      "question": "How many font sizes are there, what are their values at the start and the end of the range, and which of them grow with the query container?",
+      "options": [],
+      "notes": "Proposed with evidence and approved. The start values are the CSS Fonts 4 scaling factors for the keywords (3/5, 3/4, 8/9, 1, 6/5, 3/2, 2, 3) times 1rem, rounded to 0.125rem; each is a size already in the local design inputs. Each size above medium grows to the next size's start value, and xxx-large by the same ratio as xx-large: the ratios are 1.2, 1.33, 1.5 and 1.5, inside the limit of 2.5 (L-F2), over the range of L-T3. Applied on recording: T-S7 and T-S8.",
+      "status": "answered",
+      "recordedOn": "2026-11-15",
+      "answer": "Eight sizes, named by the CSS absolute-size keywords. At the start of the range: xx-small 0.625rem, x-small 0.75rem, small 0.875rem, medium 1rem, large 1.25rem, x-large 1.5rem, xx-large 2rem, xxx-large 3rem. The four above medium grow with the query container: at the end of the range large is 1.5rem, x-large 2rem, xx-large 3rem and xxx-large 4.5rem. Headings follow the CSS mapping: h1 xx-large, h2 x-large, h3 large, h4 medium, h5 small, h6 xx-small.",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-15"
+    },
+    {
+      "id": "DEC-106",
+      "question": "How many importance levels does text have, which use case sits at which level, and which font weight does each level take?",
+      "options": [],
+      "notes": "Proposed with evidence and approved. The local design inputs use these three weights, HTML renders the first group bold by default, and the default family holds all three as real faces for both languages (DEC-115). No level has a name: the weight identifies it (T-W3). The faces included (DEC-112) are therefore Rubik 400, 500 and 600 with its italic at 400, and IBM Plex Mono 400. Applied on recording: T-W6; T-W4 and T-W5 are no longer proposed.",
+      "status": "answered",
+      "recordedOn": "2026-11-15",
+      "answer": "Three levels, each identified by its font weight: 600 for headings (h1 to h6), strong and table header cells (th); 500 for label, button, a, caption and legend; 400 for all other text. A level takes the same weight in both languages.",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-15"
+    },
+    {
+      "id": "DEC-107",
+      "question": "What is the line height of each font size in each language, and what is the space between paragraphs?",
+      "options": [],
+      "notes": "Proposed with evidence and approved. Measured in macOS's text engine on the default family at weights 400 to 700: English needs 1.15; Arabic needs 1.48 to 1.55 with no vowel marks, 1.62 to 1.66 for the ink of one line never to reach the next, and 1.93 to 1.97 for no ink to leave its own line box, set by a mark under a deep letter. The English values are those of the local design inputs: at the start of the range each line box is a whole multiple of 0.25rem. Applied on recording: T-L7, T-L8, T-P2 and L-T9. A single-line control is therefore at least the Arabic line box high (DEC-072, DEC-103).",
+      "status": "answered",
+      "recordedOn": "2026-11-15",
+      "answer": "English takes one line height per size: xx-small 1.4, x-small 1.333, small 1.429, medium 1.5, large 1.4, x-large 1.333, xx-large 1.25, xxx-large 1.167. Arabic takes 2 at every size. The space between paragraphs is one line box of the paragraph's own text, and one and a half in the AAA theme.",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-15"
+    },
+    {
+      "id": "DEC-108",
+      "question": "Which digits does the Arabic interface show, and who chooses?",
+      "options": [
+        "European digits (0 to 9)",
+        "Arabic-Indic digits (٠ to ٩)",
+        "The tenant or the user chooses"
+      ],
+      "notes": "Unicode CLDR names the numbering systems: `latn` (Latin digits), `arab` (Arabic-Indic digits) and `arabext` (Extended Arabic-Indic digits). Applied on recording: T-D3. Where the setting is stored is part of DEC-057.",
+      "status": "answered",
+      "recordedOn": "2026-11-15",
+      "answer": "A setting, chosen by the tenant or the user. The default is Latin digits (0 to 9).",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-15"
+    },
+    {
+      "id": "DEC-109",
+      "question": "May the browser synthesize a face a family lacks, and how is stress emphasis (the em element) shown in Arabic when the family has no italic?",
+      "options": [
+        "Never synthesize: stress emphasis in Arabic is shown another way",
+        "Allow a synthesized oblique, for stress emphasis in Arabic only",
+        "Require an Arabic family that has an italic face"
+      ],
+      "notes": "Applied on recording: T-F4 is no longer proposed, and T-F7 states the means. HTML renders em italic by default. CSS Fonts 4: a synthesized face does not meet the level of quality of a face designed for the purpose.",
+      "status": "answered",
+      "recordedOn": "2026-11-15",
+      "answer": "Never: a face the family lacks is not synthesized. Where a family has no italic, stress emphasis is shown by another means, chosen for the case and its importance: text properties, spacing, colour or a component container.",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-15"
+    },
+    {
+      "id": "DEC-110",
+      "question": "Is a font's width (`font-width`) used, and for which use cases?",
+      "options": ["Not used", "Used, for named use cases"],
+      "notes": "Applied on recording: T-F8. Only one of the families in the local design inputs has more than one width, so a width could not be applied the same way in both languages. Files for other widths are not included (DEC-112).",
+      "status": "answered",
+      "recordedOn": "2026-11-15",
+      "answer": "Not used.",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-15"
+    },
+    {
+      "id": "DEC-111",
+      "question": "What names text that no HTML element, ARIA role or attribute, or CSS pseudo-element names, such as text larger than a level-1 heading?",
+      "options": [],
+      "notes": "Applied on recording: T-S4 and T-S5. CSS Fonts 4 maps the headings to the keywords (h1 xx-large, h2 x-large, h3 large, h4 medium, h5 small, h6 xx-small) and gives their scaling factors as user agent guidelines, with medium as the reference middle value. Whether our values follow those factors is part of DEC-105.",
+      "status": "answered",
+      "recordedOn": "2026-11-15",
+      "answer": "The CSS absolute-size keywords name the font sizes: xx-small, x-small, small, medium, large, x-large, xx-large and xxx-large. A size above the level-1 heading is kept, because a website may need text larger than its top heading.",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-15"
+    },
+    {
+      "id": "DEC-112",
+      "question": "How are fonts delivered: files served with the application or a font service, which `font-display` value, and are the files split by `unicode-range`?",
+      "options": [],
+      "notes": "Applied on recording: T-F9. Still open: the `font-display` value, and whether the files are split by `unicode-range` (DEC-116).",
+      "status": "answered",
+      "recordedOn": "2026-11-15",
+      "answer": "Font files are served with the application, not by a font service, and only what is used is included: no file for a weight, a width or a style that is never used, because unused files cost size and performance.",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-15"
+    },
+    {
+      "id": "DEC-113",
+      "question": "Are a font's built-in metrics trimmed or overridden, and what is safe for Arabic marks?",
+      "options": [
+        "Leave the metrics as the font ships them and set only `line-height`",
+        "Trim the line box with `text-box-trim` and `text-box-edge`",
+        "Override the metrics in `@font-face` (`ascent-override`, `descent-override`, `line-gap-override`, `size-adjust`)"
+      ],
+      "notes": "Measured in Chrome 156 and in the macOS text engine, with the same figures: at the line heights of DEC-107 every mark of the default family stays inside its line box, so nothing needs trimming or overriding. The other two options also rest on features that are newly available or not in the Baseline data. Applied on recording: T-L9.",
+      "status": "answered",
+      "recordedOn": "2026-11-15",
+      "answer": "Leave the metrics as the font ships them and set only `line-height`.",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-15"
+    },
+    {
+      "id": "DEC-114",
+      "question": "How is an underline drawn under Arabic text, whose letters and marks reach below the baseline?",
+      "options": [
+        "The browser's default",
+        "`text-underline-position: under`",
+        "A `text-underline-offset` set per language"
+      ],
+      "notes": "Rendered in Chrome 156 with the default family. The browser's default line sits just under the baseline and is broken by every descender; `text-underline-position: under` puts it at the font's descent, 0.25em, where the deep tails still cut it. Arabic letters with no vowel marks reach 0.40 to 0.43em below the baseline, so 0.45em clears them, and the line stays inside the Arabic line box (DEC-107). Only a mark under a deep letter reaches it. At the English line heights an offset of 0.45em would leave the line box. Applied on recording: T-A4.",
+      "status": "answered",
+      "recordedOn": "2026-11-15",
+      "answer": "Under Arabic text the underline is moved 0.45em below the baseline (`text-underline-offset: 0.45em`). English text keeps the default of the browser.",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-15"
+    },
+    {
+      "id": "DEC-115",
+      "question": "Which font families are the defaults for English, Arabic and code?",
+      "options": [],
+      "notes": "Arabic was chosen between two candidates after a rendered test; English and code had one candidate each in the design inputs (U-FONTS). Measured in macOS's text engine at weights 400 to 700, as the smallest line height that keeps the ink inside its own line box. Rubik: 1.13 to 1.15 for English; for Arabic 1.48 to 1.55 with no vowel marks, and 1.93 to 1.97 with a mark under a deep letter. The other candidate: 1.48 to 1.56, and 2.02 to 2.14. The string in DEC-065 holds no mark under a deep letter. Rubik holds Arabic and Persian letters only: a tenant that needs another language in Arabic script replaces the family (DEC-104). Its italic face holds upright Arabic letters (DEC-109). Applied on recording: T-F10; T-F5 is no longer proposed. All three are under the SIL Open Font License 1.1.",
+      "status": "answered",
+      "recordedOn": "2026-11-15",
+      "answer": "Rubik for English and Arabic, and IBM Plex Mono for code.",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-15"
+    },
+    {
+      "id": "DEC-116",
+      "question": "Which `font-display` value do the font faces take, and are the files split by `unicode-range`?",
+      "options": [],
+      "notes": "Measured in Chrome 156 on macOS, by drawing text in a fallback family and then in the default family. Line heights are numbers, so a block changes height only when its line count changes, which was rare. Widths change: a button is 3 to 10 percent wider in English; in Arabic 1 to 7 percent wider than the system family and up to 29 percent wider than Arial. The fallback families of other systems were not measured. Applied on recording: T-F11.",
+      "status": "answered",
+      "recordedOn": "2026-11-15",
+      "answer": "`font-display: swap`. The files stay as they are, not split by `unicode-range`, until a font tool is approved (DEC-117).",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-15"
+    },
+    {
+      "id": "DEC-117",
+      "question": "How are the font files made smaller: a smaller format, and a split by script with `unicode-range`?",
+      "options": [
+        "Prepared WOFF2 files, one per weight and script: the packages @fontsource/rubik and @fontsource/ibm-plex-mono",
+        "Prepared variable WOFF2 files, one per script: the package @fontsource-variable/rubik",
+        "A build tool that subsets our own files: the package subset-font",
+        "No change: the TrueType files as they are"
+      ],
+      "notes": "Approved, then checked after the install. The files: an Arabic and a Latin file for Rubik at 400, 500 and 600, a Latin file for its italic at 400, and a Latin file for IBM Plex Mono at 400. They are 143 KB, against about 965 KB as TrueType. Drawn in Chrome 156 beside the TrueType files, every test string measured the same (width, ink and font box), so the Arabic joining and marks are intact and the line heights of DEC-107 hold. The registry signatures verify and the audit gate reports no new advisory. Both packages are under the SIL Open Font License 1.1, with no dependencies and no install scripts. The Latin files hold Basic Latin and Latin-1 only: letters of Latin Extended are in files that are not included, so they fall back.",
+      "status": "answered",
+      "recordedOn": "2026-11-15",
+      "answer": "Prepared WOFF2 files, one per weight, style and script: the packages @fontsource/rubik and @fontsource/ibm-plex-mono, version 5.3.0, as development dependencies whose files are copied into the library.",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-15"
+    },
+    {
+      "id": "DEC-118",
+      "question": "Does a text value that the DTCG `typography` token does not hold get its own token, named after the CSS property it feeds?",
+      "options": [
+        "Yes: its own token, named after the CSS property it feeds",
+        "Another arrangement, found by testing"
+      ],
+      "notes": "To be settled after testing, once tokens exist. T-T3 is proposed until then. Related: the general token contract (DEC-026).",
+      "status": "open",
+      "recordedOn": "2026-11-15",
+      "blocks": ["T-T3"]
+    },
+    {
+      "id": "DEC-119",
+      "question": "What does text fall back to when its family is missing or still loading?",
+      "options": [
+        "End the list with a generic family (`sans-serif`, `monospace`)",
+        "Name no generic family: the browser's standard font"
+      ],
+      "answer": "The browser's standard font, which the user sets: a `font-family` list names no generic family.",
+      "notes": "CSS Fonts 4: when no family in the list is available, the first available font is \"a user agent's default font\"; it also encourages authors to append a generic family, which is the option not taken. Known when deciding: in most browsers the standard font is a serif, and code loses its fixed width while it falls back. Applied on recording: T-F1.",
+      "status": "answered",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-15",
+      "recordedOn": "2026-11-15"
+    },
+    {
+      "id": "DEC-120",
+      "question": "Where do the values the design system chooses live, and may a rule restate them?",
+      "answer": "In one central place. A rule does not restate a value or name the variables of a setup: it says what must hold and points to that place. A repeated value is a critical risk: once one copy is outdated the copies conflict, and checks and edits are wasted.",
+      "notes": "A setup is loaded whole and mechanically, as a token file is, never read value by value by an agent. Applied on recording to the typography rules: T-S3, T-S7, T-S8, T-W5, T-W6, T-L3, T-L8, T-P2, T-A4, T-D3, T-F10, T-F11, T-F12 and T-B2 now state what must hold and point to the decision or the source that holds the value; T-D2 names no variable. Until the token contract exists (DEC-026), the central place for a chosen value is the decision that set it; after that it is the token file. A limit set by a standard stays in the rule that cites the standard. Not yet applied to the layout rules.",
       "status": "answered",
       "decidedBy": "Ramy",
       "decidedOn": "2026-11-15",

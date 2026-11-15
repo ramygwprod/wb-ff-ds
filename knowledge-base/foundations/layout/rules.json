@@ -132,11 +132,11 @@
     {
       "id": "L-T9",
       "group": "T",
-      "text": "Spacing is a curated set of **9 sizes, numbered 1 to 9** from the smallest (`size.1` to `size.9`), not open multiples. Only these sizes can be used.",
+      "text": "Spacing is a curated set of **9 sizes, numbered 1 to 9** from the smallest (`size.1` to `size.9`), not open multiples. Only these sizes can be used. The space between paragraphs is the one exception: it follows the text's line box (T-P2).",
       "kind": "check",
       "checkKind": "data",
       "sources": ["R-EIGHTSHAPES", "R-UTOPIA"],
-      "decisions": ["DEC-009", "DEC-010", "DEC-091"],
+      "decisions": ["DEC-009", "DEC-010", "DEC-091", "DEC-107"],
       "consumers": ["layout", "ci"],
       "status": "draft"
     },
@@ -175,11 +175,11 @@
     {
       "id": "L-T13",
       "group": "T",
-      "text": "**rem owns the system, em owns the inside of a component.** rem: font sizes, the 9 sizes, gaps between components, layout tracks, container thresholds, minimum sizes. em: block and inline padding, icon size beside text, icon-to-label gap.",
+      "text": "**rem owns the system, em owns the inside of a component, and inline-axis spacing between components stays fixed.** rem: font sizes, the 9 sizes, block-axis spacing between components (`row-gap`, `margin-block`), layout tracks, container thresholds, minimum sizes. px: inline-axis spacing between components (`column-gap`, `margin-inline`), generated from the same 9 sizes at 16px to 1rem, so it does not grow with the browser's font-size setting. em: block and inline padding, icon size beside text, icon-to-label gap.",
       "kind": "check",
       "checkKind": "source",
       "sources": ["R-EIGHTSHAPES"],
-      "decisions": ["DEC-011", "DEC-066"],
+      "decisions": ["DEC-011", "DEC-066", "DEC-071"],
       "consumers": ["layout", "ci"],
       "status": "draft"
     },
@@ -257,13 +257,14 @@
     {
       "id": "L-F1",
       "group": "F",
-      "text": "Every fluid `clamp()` mixes `rem` with a viewport or container unit in its middle term; viewport-only or container-only sizing is not allowed.",
+      "text": "Every fluid `clamp()` mixes `rem` with a viewport or container unit in its middle term; viewport-only or container-only sizing is not allowed. Inline-axis spacing between components mixes `px` instead (L-T13).",
       "kind": "check",
       "checkKind": "source",
       "sources": ["S-WCAG-1.4.4", "R-ROSELLI-ZOOM"],
       "consumers": ["ci"],
       "status": "draft",
-      "checkId": "chk-fluid-clamp-mix"
+      "checkId": "chk-fluid-clamp-mix",
+      "decisions": ["DEC-071"]
     },
     {
       "id": "L-F2",
@@ -949,11 +950,6 @@
       "gap": "The levels of each density setting and what each adjusts",
       "owner": "Ramy",
       "decision": "DEC-069"
-    },
-    {
-      "gap": "Whether spacing grows with the browser text size",
-      "owner": "The typography agent (DEC-082)",
-      "decision": "DEC-071"
     },
     {
       "gap": "The minimum height of a control",

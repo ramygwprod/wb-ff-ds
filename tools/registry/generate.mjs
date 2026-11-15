@@ -156,11 +156,18 @@ function context(registry) {
     groupMembers.set(key, [...(groupMembers.get(key) ?? []), rule.id]);
   }
 
+  // Decisions are one register for every foundation. Sources belong to one foundation, and two
+  // foundations may hold the same source ID, so a source is cited only by its own foundation's rules.
   const citedBy = new Map();
-  const cite = (id, ruleId) => citedBy.set(id, [...(citedBy.get(id) ?? []), ruleId]);
-  for (const rule of rules) {
-    for (const id of rule.decisions ?? []) cite(id, rule.id);
-    for (const id of rule.sources ?? []) cite(id, rule.id);
+  const sourceCitedBy = new Map();
+  const cite = (map, id, ruleId) => map.set(id, [...(map.get(id) ?? []), ruleId]);
+  for (const foundation of registry.foundations) {
+    const own = new Map();
+    for (const rule of foundation.rules.data.rules) {
+      for (const id of rule.decisions ?? []) cite(citedBy, id, rule.id);
+      for (const id of rule.sources ?? []) cite(own, id, rule.id);
+    }
+    sourceCitedBy.set(foundation.name, own);
   }
 
   // The same function the validator uses, so "waits on" here matches what the checks enforce.
@@ -182,7 +189,7 @@ function context(registry) {
     return out.join(', ');
   };
 
-  return { decisions, decisionById, supersededBy, citedBy, waitsOn, ruleList };
+  return { decisions, decisionById, supersededBy, citedBy, sourceCitedBy, waitsOn, ruleList };
 }
 
 // ---------- Documents ----------
@@ -295,7 +302,10 @@ function renderSources(foundation, ctx, legendOf, schemas) {
       value: (s) => (s.checked ? `${s.verification}, ${s.checked}` : s.verification),
     },
     { header: 'Links', value: (s) => links(s.urls), optional: true },
-    { header: 'Cited by', value: (s) => ctx.ruleList(ctx.citedBy.get(s.id)) },
+    {
+      header: 'Cited by',
+      value: (s) => ctx.ruleList(ctx.sourceCitedBy.get(foundation.name)?.get(s.id)),
+    },
   ];
 
   const out = [
