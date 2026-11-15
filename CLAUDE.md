@@ -51,7 +51,8 @@ Requires Node 26 (`.nvmrc`) and npm 11.20 (`packageManager`). `engine-strict` re
 - **Layout:** responsive, desktop and mobile.
 - **Theme axes:** brand × scheme (light/dark) × direction × conformance (AA/AAA) × density. What "density" means is not defined yet; ask before using it.
 - **Standards referenced:** WAI-ARIA Authoring Practices, DTCG 2025.10 (design tokens), EN 301 549 (version still to confirm).
-- Brand colours, fonts and tokens are not set yet. Don't add them.
+- **Fonts:** the default families are Rubik for English and Arabic, and IBM Plex Mono for code (DEC-115). A tenant can replace them. The rules are in `knowledge-base/foundations/typography/`.
+- Brand colours and tokens are not set yet. Don't add them.
 
 ## 5. Supply chain
 

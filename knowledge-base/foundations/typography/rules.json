@@ -1,0 +1,705 @@
+{
+  "contractVersion": "0.1.0",
+  "foundation": "typography",
+  "title": "Typography",
+  "idPrefix": "T",
+  "status": "draft",
+  "groups": [
+    {
+      "id": "T",
+      "title": "Tokens and names"
+    },
+    {
+      "id": "E",
+      "title": "Elements and meaning"
+    },
+    {
+      "id": "F",
+      "title": "Font families and faces"
+    },
+    {
+      "id": "S",
+      "title": "Font size"
+    },
+    {
+      "id": "W",
+      "title": "Font weight"
+    },
+    {
+      "id": "L",
+      "title": "Line height and font metrics"
+    },
+    {
+      "id": "P",
+      "title": "Letter, word and paragraph spacing"
+    },
+    {
+      "id": "A",
+      "title": "Alignment and decoration"
+    },
+    {
+      "id": "O",
+      "title": "Wrapping and overflow"
+    },
+    {
+      "id": "D",
+      "title": "Language and direction"
+    },
+    {
+      "id": "B",
+      "title": "Browser support"
+    }
+  ],
+  "rules": [
+    {
+      "id": "T-T1",
+      "group": "T",
+      "text": "Typography uses the standards' own names, as L-T19 requires. A text property is named as CSS names it: `font-family`, `font-size`, `font-weight`, `font-style`, `font-width`, `line-height`, `letter-spacing`, `word-spacing`, `text-align`, `text-decoration-line`. A use case of text is named by its HTML element (T-E1). Line spacing is written `line-height` and letter spacing `letter-spacing`; no other word stands for them.",
+      "kind": "guidance",
+      "decisions": ["DEC-061", "DEC-093", "DEC-097"],
+      "dependsOn": ["L-T19"],
+      "consumers": ["typography"],
+      "status": "draft"
+    },
+    {
+      "id": "T-T2",
+      "group": "T",
+      "text": "A text style is stored as a DTCG `typography` token. It has exactly five properties: `fontFamily`, `fontSize`, `fontWeight`, `letterSpacing` and `lineHeight`. `lineHeight` is a number, multiplied by `fontSize`.",
+      "kind": "reference",
+      "sources": ["S-DTCG"],
+      "consumers": ["typography"],
+      "status": "draft"
+    },
+    {
+      "id": "T-T3",
+      "group": "T",
+      "text": "A text value the `typography` token does not hold gets its own token, named after the CSS property it feeds, as layout tokens are (L-T20).",
+      "kind": "reference",
+      "sources": ["S-DTCG"],
+      "decisions": ["DEC-091", "DEC-093"],
+      "dependsOn": ["L-T20"],
+      "consumers": ["typography"],
+      "status": "proposed"
+    },
+    {
+      "id": "T-T4",
+      "group": "T",
+      "text": "Typography owns the text properties (T-T1), line height and font metrics (L-C13). It does not set colour, which belongs to the colour foundation; nor the white space between and inside elements, which is layout's `spacing` (L-T20); nor the size of a component, which is settled after the foundations.",
+      "kind": "guidance",
+      "decisions": ["DEC-083", "DEC-085", "DEC-101"],
+      "dependsOn": ["L-C13", "L-T20"],
+      "consumers": ["typography"],
+      "status": "draft"
+    },
+    {
+      "id": "T-E1",
+      "group": "E",
+      "text": "A use case of text is the HTML element that carries it, with the HTML Standard's definition of what the element represents: `h1` to `h6` (headings for their sections), `p` (a paragraph), `figcaption`, `pre`, `strong`, `em`, `small`, `code`, `s`, `a`, `ins`, `del`, `caption`, `th`, `td`, `label`, `button`, `input` and `legend`.",
+      "kind": "guidance",
+      "sources": ["S-HTML"],
+      "decisions": ["DEC-098"],
+      "consumers": ["typography", "a11y"],
+      "status": "draft"
+    },
+    {
+      "id": "T-E2",
+      "group": "E",
+      "text": "An element is chosen by what the text is, never by how it should look. HTML: \"Authors must not use elements, attributes, or attribute values for purposes other than their appropriate intended semantic purpose\".",
+      "kind": "guidance",
+      "sources": ["S-HTML", "S-WCAG-1.3.1"],
+      "decisions": ["DEC-098"],
+      "consumers": ["typography", "a11y"],
+      "status": "draft"
+    },
+    {
+      "id": "T-E3",
+      "group": "E",
+      "text": "A change in the look of text never carries meaning on its own. Importance, stress emphasis and heading level are in the markup (`strong`, `em`, `h1` to `h6`); the style shows them.",
+      "kind": "check",
+      "checkKind": "rendered",
+      "sources": ["S-WCAG-1.3.1", "S-HTML"],
+      "consumers": ["ci", "a11y"],
+      "status": "draft"
+    },
+    {
+      "id": "T-E4",
+      "group": "E",
+      "text": "A heading's level is \"given by the number in\" the element's name, and it follows the structure of the page. Each level is its own use case (T-E1); a level is never chosen to get a font size.",
+      "kind": "guidance",
+      "sources": ["S-HTML"],
+      "dependsOn": ["T-E1", "T-E2"],
+      "consumers": ["typography", "a11y"],
+      "status": "draft"
+    },
+    {
+      "id": "T-E5",
+      "group": "E",
+      "text": "HTML's default rendering is the starting point of each use case: headings and `th` are bold; `strong` and `b` are bolder; `em`, `i`, `cite`, `dfn` and `var` are italic; links, `ins` and `u` are underlined; `del` and `s` have a line through; `code`, `kbd` and `samp` use a monospace family; `small` is smaller.",
+      "kind": "reference",
+      "sources": ["S-HTML"],
+      "consumers": ["typography"],
+      "status": "draft"
+    },
+    {
+      "id": "T-E6",
+      "group": "E",
+      "text": "Text that no HTML element names takes the name the other standards give it: an ARIA role or attribute, or a CSS pseudo-element. No name is made up for it.",
+      "kind": "guidance",
+      "decisions": ["DEC-061", "DEC-093"],
+      "dependsOn": ["L-T19"],
+      "consumers": ["typography"],
+      "status": "draft"
+    },
+    {
+      "id": "T-F1",
+      "group": "F",
+      "text": "A `font-family` list names the family alone, with no generic family after it. When the family is missing or still loading, the browser uses its own standard font, which the user sets.",
+      "kind": "check",
+      "checkKind": "source",
+      "sources": ["S-CSS-FONTS"],
+      "consumers": ["typography", "ci"],
+      "status": "draft",
+      "decisions": ["DEC-119"]
+    },
+    {
+      "id": "T-F2",
+      "group": "F",
+      "text": "Fonts differ in the faces they hold: not every family has an italic or the same weights. Each family's files are read for their faces (weight, width and style), and every `font-weight` and `font-style` value in use is mapped to the closest face by the matching rules of CSS Fonts 4, section 5.2: style first, then weight.",
+      "kind": "check",
+      "checkKind": "data",
+      "sources": ["S-CSS-FONTS", "U-FONTS"],
+      "decisions": ["DEC-102"],
+      "consumers": ["typography", "ci"],
+      "status": "draft"
+    },
+    {
+      "id": "T-F3",
+      "group": "F",
+      "text": "A face's weight, width and style are read from its `@font-face` descriptors as well as from the file: CSS matches on the descriptors, and the numbers inside a file can differ from them.",
+      "kind": "check",
+      "checkKind": "data",
+      "sources": ["S-CSS-FONTS", "U-FONTS"],
+      "dependsOn": ["T-F2"],
+      "consumers": ["typography", "ci"],
+      "status": "draft"
+    },
+    {
+      "id": "T-F4",
+      "group": "F",
+      "text": "The browser does not synthesize a face the family lacks: `font-synthesis-weight: none` and `font-synthesis-style: none`. CSS Fonts 4: a synthesized face \"does not meet the level of quality of a face designed for the purpose\".",
+      "kind": "check",
+      "checkKind": "source",
+      "sources": ["S-CSS-FONTS", "S-BASELINE"],
+      "consumers": ["typography", "ci"],
+      "status": "draft",
+      "decisions": ["DEC-109"]
+    },
+    {
+      "id": "T-F5",
+      "group": "F",
+      "text": "A family is used for a language only if its files hold what that language needs. For Arabic: every letter in each of its joining forms, the marks and their placement on a letter and on another mark, and the digits in use.",
+      "kind": "check",
+      "checkKind": "data",
+      "sources": ["S-ALREQ", "U-FONTS"],
+      "consumers": ["typography", "ci", "rtl"],
+      "status": "draft",
+      "decisions": ["DEC-104", "DEC-115"]
+    },
+    {
+      "id": "T-F6",
+      "group": "F",
+      "text": "Text is real text, never an image of text, unless the image is essential, such as a logotype.",
+      "kind": "check",
+      "checkKind": "rendered",
+      "sources": ["S-WCAG-1.4.5"],
+      "consumers": ["ci", "a11y"],
+      "status": "draft"
+    },
+    {
+      "id": "T-F7",
+      "group": "F",
+      "text": "Where a family has no italic face, stress emphasis (`em`) is not slanted (T-F4). It is shown by another means, chosen for the case and its importance: text properties, spacing, colour or a component container.",
+      "kind": "guidance",
+      "sources": ["S-HTML"],
+      "decisions": ["DEC-109"],
+      "dependsOn": ["T-F4"],
+      "consumers": ["typography", "rtl"],
+      "status": "draft"
+    },
+    {
+      "id": "T-F8",
+      "group": "F",
+      "text": "A font's width is not used: `font-width` and its legacy name alias `font-stretch` are never set, and every face is its family's normal width.",
+      "kind": "check",
+      "checkKind": "source",
+      "sources": ["S-CSS-FONTS"],
+      "decisions": ["DEC-110"],
+      "consumers": ["typography", "ci"],
+      "status": "draft"
+    },
+    {
+      "id": "T-F9",
+      "group": "F",
+      "text": "Font files are served with the application, never by a font service, and only the faces in use are included: no file for a weight, a width or a style that is never used.",
+      "kind": "check",
+      "checkKind": "data",
+      "decisions": ["DEC-112"],
+      "consumers": ["typography", "ci", "platform"],
+      "status": "draft"
+    },
+    {
+      "id": "T-F10",
+      "group": "F",
+      "text": "The design system ships default families, and only the faces in use (T-F9). Which families and which faces is set in DEC-115 and DEC-106. A tenant can replace the families; a replacement is read and mapped as T-F2 and T-F3 say, and holds what its languages need (T-F5).",
+      "kind": "reference",
+      "sources": ["U-FONTS"],
+      "decisions": ["DEC-104", "DEC-106", "DEC-112", "DEC-115", "DEC-120"],
+      "dependsOn": ["T-F2", "T-F3", "T-F5", "T-F9", "T-W6"],
+      "consumers": ["typography", "platform"],
+      "status": "draft"
+    },
+    {
+      "id": "T-F11",
+      "group": "F",
+      "text": "Every `@font-face` rule sets `font-display`, to the one value set in DEC-116.",
+      "kind": "check",
+      "checkKind": "source",
+      "sources": ["S-CSS-FONTS"],
+      "decisions": ["DEC-116", "DEC-120"],
+      "consumers": ["typography", "ci"],
+      "status": "draft"
+    },
+    {
+      "id": "T-F12",
+      "group": "F",
+      "text": "The default families' files are WOFF2, one per weight, style and script, each chosen by `unicode-range`. They come from packages recorded as development dependencies, and their files are copied into the library. Which packages and which files is set in DEC-117.",
+      "kind": "check",
+      "checkKind": "data",
+      "sources": ["S-CSS-FONTS"],
+      "decisions": ["DEC-112", "DEC-117", "DEC-120"],
+      "dependsOn": ["T-F9", "T-F10"],
+      "consumers": ["typography", "ci", "platform"],
+      "status": "draft"
+    },
+    {
+      "id": "T-F13",
+      "group": "F",
+      "text": "Each family's copyright notice and licence ship with its files. The SIL Open Font License 1.1 allows the fonts to be bundled and redistributed \"provided that each copy contains the above copyright notice and this license\".",
+      "kind": "check",
+      "checkKind": "data",
+      "sources": ["S-OFL"],
+      "decisions": ["DEC-117"],
+      "dependsOn": ["T-F12"],
+      "consumers": ["typography", "ci", "platform"],
+      "status": "draft"
+    },
+    {
+      "id": "T-S1",
+      "group": "S",
+      "text": "Font sizes are in `rem` (L-T13) and the root font size is never set in `px` (L-T7), so the browser's font-size setting scales all text.",
+      "kind": "check",
+      "checkKind": "source",
+      "sources": ["S-WCAG-1.4.4", "S-CSS-VALUES"],
+      "dependsOn": ["L-T7", "L-T13"],
+      "consumers": ["typography", "ci", "a11y"],
+      "status": "draft"
+    },
+    {
+      "id": "T-S2",
+      "group": "S",
+      "text": "Text can be resized up to 200 percent without assistive technology and without loss of content or functionality.",
+      "kind": "check",
+      "checkKind": "rendered",
+      "sources": ["S-WCAG-1.4.4"],
+      "consumers": ["ci", "a11y"],
+      "status": "draft"
+    },
+    {
+      "id": "T-S3",
+      "group": "S",
+      "text": "A font size that grows with its query container grows over the range layout sizes use (L-T3), and stays within the limit of L-F2.",
+      "kind": "check",
+      "checkKind": "data",
+      "sources": ["S-WCAG-1.4.4"],
+      "dependsOn": ["L-T3", "L-F2"],
+      "consumers": ["typography", "ci"],
+      "status": "draft",
+      "decisions": ["DEC-120"]
+    },
+    {
+      "id": "T-S4",
+      "group": "S",
+      "text": "Font sizes are named by the CSS `<absolute-size>` keywords: `xx-small`, `x-small`, `small`, `medium`, `large`, `x-large`, `xx-large` and `xxx-large`, with `medium` as the reference middle value. CSS maps the headings to them: `h1` is `xx-large`, `h2` `x-large`, `h3` `large`, `h4` `medium`, `h5` `small` and `h6` `xx-small`. `xxx-large` is larger than a level-1 heading.",
+      "kind": "reference",
+      "sources": ["S-CSS-FONTS"],
+      "decisions": ["DEC-111"],
+      "consumers": ["typography"],
+      "status": "draft"
+    },
+    {
+      "id": "T-S5",
+      "group": "S",
+      "text": "A use case of text takes one of the sizes of T-S4. Where the same element needs more than one size, the size keyword tells them apart; the element still says what the text is (T-E2).",
+      "kind": "guidance",
+      "decisions": ["DEC-111"],
+      "dependsOn": ["T-S4", "T-E2"],
+      "consumers": ["typography"],
+      "status": "draft"
+    },
+    {
+      "id": "T-S6",
+      "group": "S",
+      "text": "When the browser's font-size setting changes, text and block-axis spacing between components grow together, and inline-axis spacing between components stays fixed (L-T13), so a line of text keeps its length.",
+      "kind": "guidance",
+      "sources": ["S-WCAG-1.4.4"],
+      "decisions": ["DEC-071"],
+      "dependsOn": ["L-T13"],
+      "consumers": ["typography", "layout"],
+      "status": "draft"
+    },
+    {
+      "id": "T-S7",
+      "group": "S",
+      "text": "There are eight font sizes, one per CSS `<absolute-size>` keyword (T-S4). The four above `medium` grow with the query container (T-S3): at the end of the range each reaches the value the next size has at the start, and the largest grows by the same ratio as the one below it. The other four do not change. The values are set in DEC-105.",
+      "kind": "check",
+      "checkKind": "data",
+      "sources": ["S-CSS-FONTS"],
+      "decisions": ["DEC-105", "DEC-120"],
+      "dependsOn": ["T-S3", "T-S4"],
+      "consumers": ["typography", "ci"],
+      "status": "draft"
+    },
+    {
+      "id": "T-S8",
+      "group": "S",
+      "text": "Each heading level takes the size the CSS table maps it to (T-S4). The size above a level-1 heading's is for text larger than that heading.",
+      "kind": "guidance",
+      "sources": ["S-CSS-FONTS"],
+      "decisions": ["DEC-105", "DEC-111", "DEC-120"],
+      "dependsOn": ["T-S4", "T-E4"],
+      "consumers": ["typography"],
+      "status": "draft"
+    },
+    {
+      "id": "T-W1",
+      "group": "W",
+      "text": "A use case's font weight follows its importance: the more important the information, the bolder it is, so the user sees it sooner. HTML defines importance (`strong`: \"strong importance, seriousness, or urgency\") and renders it bolder by default.",
+      "kind": "guidance",
+      "sources": ["S-HTML"],
+      "decisions": ["DEC-099"],
+      "consumers": ["typography", "a11y"],
+      "status": "draft"
+    },
+    {
+      "id": "T-W2",
+      "group": "W",
+      "text": "Importance is shown by font size, font weight, colour and white space together. Two use cases may therefore land on the same face (T-F2) when another of these tells them apart. Typography sets the first two; white space is layout's `spacing` (L-T20) and colour is the colour foundation's.",
+      "kind": "guidance",
+      "decisions": ["DEC-100", "DEC-101"],
+      "dependsOn": ["T-F2", "L-T20"],
+      "consumers": ["typography"],
+      "status": "draft"
+    },
+    {
+      "id": "T-W3",
+      "group": "W",
+      "text": "`font-weight` is a number from 1 to 1000; `normal` is 400 and `bold` is 700. `bolder` and `lighter` are relative to the parent's weight, so a token stores the number.",
+      "kind": "reference",
+      "sources": ["S-CSS-FONTS", "S-DTCG"],
+      "consumers": ["typography"],
+      "status": "draft"
+    },
+    {
+      "id": "T-W4",
+      "group": "W",
+      "text": "Bold stands out only against lighter text around it, so most text sits at the lowest importance level, and bold is kept for short text, never for long passages.",
+      "kind": "guidance",
+      "sources": ["R-NNG-HIERARCHY", "R-USWDS-TYPE", "R-BUTTERICK"],
+      "consumers": ["typography"],
+      "status": "draft",
+      "decisions": ["DEC-106"]
+    },
+    {
+      "id": "T-W5",
+      "group": "W",
+      "text": "No weight lighter than the lowest importance level's is used (T-W6).",
+      "kind": "guidance",
+      "sources": ["R-APPLE-HIG-TYPE"],
+      "consumers": ["typography"],
+      "status": "draft",
+      "decisions": ["DEC-106", "DEC-120"]
+    },
+    {
+      "id": "T-W6",
+      "group": "W",
+      "text": "Each use case of text has one importance level, and each level is identified by its `font-weight`. A level takes the same weight in both languages. The levels, their weights and the use cases at each are set in DEC-106.",
+      "kind": "check",
+      "checkKind": "data",
+      "sources": ["S-HTML"],
+      "decisions": ["DEC-106", "DEC-120"],
+      "dependsOn": ["T-W1", "T-W3"],
+      "consumers": ["typography", "ci"],
+      "status": "draft"
+    },
+    {
+      "id": "T-L1",
+      "group": "L",
+      "text": "`line-height` is always a number, never `normal`: `normal` takes the line height from the font's own metrics, so it changes with the font, while a number is multiplied by the element's font size.",
+      "kind": "check",
+      "checkKind": "source",
+      "sources": ["S-CSS-INLINE", "S-DTCG"],
+      "decisions": ["DEC-065"],
+      "consumers": ["typography", "ci"],
+      "status": "draft"
+    },
+    {
+      "id": "T-L2",
+      "group": "L",
+      "text": "In the AAA theme, line spacing within the paragraphs of a block of text is at least 1.5, and the space between paragraphs is at least 1.5 times the line spacing.",
+      "kind": "check",
+      "checkKind": "rendered",
+      "sources": ["S-WCAG-1.4.8"],
+      "consumers": ["ci", "a11y"],
+      "status": "draft"
+    },
+    {
+      "id": "T-L3",
+      "group": "L",
+      "text": "No content or functionality is lost when a user applies the text-spacing settings of WCAG 1.4.12 (L-R2). A language or script that does not use one of those properties conforms with the ones it has.",
+      "kind": "check",
+      "checkKind": "rendered",
+      "sources": ["S-WCAG-1.4.12"],
+      "dependsOn": ["L-R2"],
+      "consumers": ["ci", "a11y", "rtl"],
+      "status": "draft",
+      "decisions": ["DEC-120"]
+    },
+    {
+      "id": "T-L4",
+      "group": "L",
+      "text": "`line-height` is set per language. Arabic takes a larger one than English at the same font size: \"Arabic ascenders and descenders extend much further than those of the Latin script\", and its marks stack above and below the letters.",
+      "kind": "guidance",
+      "sources": ["S-ALREQ"],
+      "decisions": ["DEC-065", "DEC-103"],
+      "consumers": ["typography", "rtl"],
+      "status": "draft"
+    },
+    {
+      "id": "T-L5",
+      "group": "L",
+      "text": "A single-line component keeps the same block size in both languages. Its block size is the line box plus the two block paddings, so when the line box is taller each block padding is smaller by half the difference, and the other way round. `1lh` is the element's own line height.",
+      "kind": "guidance",
+      "sources": ["S-CSS-VALUES"],
+      "decisions": ["DEC-103"],
+      "dependsOn": ["L-C14", "L-T17"],
+      "consumers": ["typography", "layout", "rtl"],
+      "status": "draft"
+    },
+    {
+      "id": "T-L6",
+      "group": "L",
+      "text": "In text that wraps, the larger line height shows between the lines, where there is no padding to take it back, so a wrapped block of Arabic text is taller than the same block in English.",
+      "kind": "guidance",
+      "sources": ["S-CSS-INLINE"],
+      "dependsOn": ["T-L5"],
+      "consumers": ["typography", "layout"],
+      "status": "draft"
+    },
+    {
+      "id": "T-L7",
+      "group": "L",
+      "text": "No mark is clipped or overlaps the line above or below. The test string in DEC-065 (marks above, below and stacked), a mark under a deep letter (جٍ ، يٍ ، عٍ) and a mark on a tall letter (أً ، ظٌّ) render whole at every font size and line height in use.",
+      "kind": "check",
+      "checkKind": "rendered",
+      "sources": ["S-ALREQ"],
+      "decisions": ["DEC-065", "DEC-107"],
+      "consumers": ["ci", "rtl"],
+      "status": "draft"
+    },
+    {
+      "id": "T-L8",
+      "group": "L",
+      "text": "Each font size has one line height per language. Arabic's is the larger (T-L4): it keeps every mark inside its own line box (T-L7). In the AAA theme a block of text meets T-L2. The values are set in DEC-107.",
+      "kind": "check",
+      "checkKind": "data",
+      "sources": ["U-FONTS"],
+      "decisions": ["DEC-103", "DEC-107", "DEC-120"],
+      "dependsOn": ["T-L1", "T-L2", "T-L4", "T-S7"],
+      "consumers": ["typography", "ci", "rtl"],
+      "status": "draft"
+    },
+    {
+      "id": "T-L9",
+      "group": "L",
+      "text": "A font's built-in metrics are left as the font ships them. `line-height` alone sets the line box (T-L1, T-L8); `text-box-trim`, `font-size-adjust` and the `@font-face` metric descriptors (`ascent-override`, `descent-override`, `line-gap-override`, `size-adjust`) are not used.",
+      "kind": "check",
+      "checkKind": "source",
+      "sources": ["S-CSS-INLINE", "S-CSS-FONTS"],
+      "decisions": ["DEC-065", "DEC-113"],
+      "dependsOn": ["T-L1", "T-L8"],
+      "consumers": ["typography", "ci"],
+      "status": "draft"
+    },
+    {
+      "id": "T-P1",
+      "group": "P",
+      "text": "`letter-spacing` is `normal` for Arabic text. CSS Text 3: a browser that cannot expand a cursive script without breaking its joins \"must not apply spacing between any pair of that script's typographic letter units at all\".",
+      "kind": "check",
+      "checkKind": "source",
+      "sources": ["S-CSS-TEXT", "S-ALREQ"],
+      "consumers": ["typography", "ci", "rtl"],
+      "status": "draft"
+    },
+    {
+      "id": "T-P2",
+      "group": "P",
+      "text": "The space between paragraphs is a multiple of the line box of the paragraph's own text (the `lh` unit), so each language follows its own line height. It is a relation to the text, not one of layout's sizes (L-T9). The multiples are set in DEC-107; they meet T-L2 in the AAA theme and still hold under a user's text-spacing settings (T-L3).",
+      "kind": "guidance",
+      "sources": ["S-WCAG-1.4.8", "S-WCAG-1.4.12", "S-CSS-VALUES"],
+      "dependsOn": ["L-T9", "T-L2", "T-L3"],
+      "consumers": ["typography", "layout"],
+      "status": "draft",
+      "decisions": ["DEC-107", "DEC-120"]
+    },
+    {
+      "id": "T-A1",
+      "group": "A",
+      "text": "Text is aligned with `text-align: start` or `end`, never `left` or `right`, so alignment follows the direction of the text.",
+      "kind": "check",
+      "checkKind": "source",
+      "sources": ["S-CSS-TEXT"],
+      "consumers": ["typography", "ci", "rtl"],
+      "status": "draft"
+    },
+    {
+      "id": "T-A2",
+      "group": "A",
+      "text": "In the AAA theme, text is not justified.",
+      "kind": "check",
+      "checkKind": "rendered",
+      "sources": ["S-WCAG-1.4.8"],
+      "consumers": ["ci", "a11y"],
+      "status": "draft"
+    },
+    {
+      "id": "T-A3",
+      "group": "A",
+      "text": "`text-decoration-line` takes `none`, `underline`, `overline` or `line-through`. A strikethrough is `line-through`.",
+      "kind": "reference",
+      "sources": ["S-CSS-DECOR"],
+      "consumers": ["typography"],
+      "status": "draft"
+    },
+    {
+      "id": "T-A4",
+      "group": "A",
+      "text": "An underline under Arabic text is moved below the baseline with `text-underline-offset`: far enough to clear the letters, and near enough to stay inside the Arabic line box (T-L8). An underline under English text keeps the default of the browser. The offset is set in DEC-114.",
+      "kind": "check",
+      "checkKind": "source",
+      "sources": ["S-CSS-DECOR", "S-BASELINE"],
+      "decisions": ["DEC-114", "DEC-120"],
+      "dependsOn": ["T-L8"],
+      "consumers": ["typography", "ci", "rtl"],
+      "status": "draft"
+    },
+    {
+      "id": "T-O1",
+      "group": "O",
+      "text": "Each component's profile says whether its text wraps or truncates (DEC-064). Typography supplies the means: `overflow-wrap`, `hyphens` and `text-wrap` for wrapping, and `text-overflow: ellipsis` for text cut to one line.",
+      "kind": "guidance",
+      "sources": ["S-CSS-TEXT", "S-CSS-OVERFLOW"],
+      "decisions": ["DEC-064"],
+      "consumers": ["typography", "layout"],
+      "status": "draft"
+    },
+    {
+      "id": "T-O2",
+      "group": "O",
+      "text": "Truncating text to a number of lines is an enhancement only: unprefixed `line-clamp` is not Baseline, so it sits inside `@supports` (L-E2) and the text still reads without it.",
+      "kind": "check",
+      "checkKind": "source",
+      "sources": ["S-BASELINE", "S-CSS-OVERFLOW"],
+      "dependsOn": ["L-E2"],
+      "consumers": ["typography", "ci"],
+      "status": "draft"
+    },
+    {
+      "id": "T-D1",
+      "group": "D",
+      "text": "The language of the page, and of each part in another language, is declared with `lang`. CSS Text 3: \"language-specific typographic tailorings are only applied when the content language is known (declared)\".",
+      "kind": "check",
+      "checkKind": "rendered",
+      "sources": ["S-WCAG-3.1.1", "S-WCAG-3.1.2", "S-CSS-TEXT", "S-HTML"],
+      "consumers": ["ci", "a11y", "rtl"],
+      "status": "draft"
+    },
+    {
+      "id": "T-D2",
+      "group": "D",
+      "text": "Text whose language changes at run time, such as a component's built-in labels, carries the `lang` and `dir` of its language, so the text settings of that language apply.",
+      "kind": "guidance",
+      "sources": ["S-WCAG-3.1.2", "S-HTML"],
+      "dependsOn": ["T-D1"],
+      "consumers": ["typography", "rtl", "platform"],
+      "status": "draft"
+    },
+    {
+      "id": "T-D3",
+      "group": "D",
+      "text": "Arabic text can show Latin digits (0 to 9), Arabic-Indic digits (٠ to ٩) or Extended Arabic-Indic digits (۰ to ۹); Unicode CLDR names these numbering systems `latn`, `arab` and `arabext`. Which one is shown is a setting of the tenant or the user; its default is set in DEC-108.",
+      "kind": "guidance",
+      "sources": ["S-ALREQ", "S-CLDR"],
+      "consumers": ["typography", "rtl", "platform"],
+      "status": "draft",
+      "decisions": ["DEC-108", "DEC-120"]
+    },
+    {
+      "id": "T-D4",
+      "group": "D",
+      "text": "Where digits must line up in columns, `font-variant-numeric: tabular-nums` sets them to one width.",
+      "kind": "reference",
+      "sources": ["S-CSS-FONTS", "S-BASELINE"],
+      "consumers": ["typography"],
+      "status": "draft"
+    },
+    {
+      "id": "T-B1",
+      "group": "B",
+      "text": "Typography follows layout's browser-support rules: core styles use only Baseline features (L-E1), and a non-Baseline feature sits inside `@supports`, with the text still readable without it (L-E2).",
+      "kind": "check",
+      "checkKind": "source",
+      "sources": ["S-BASELINE"],
+      "decisions": ["DEC-005"],
+      "dependsOn": ["L-E1", "L-E2"],
+      "consumers": ["ci"],
+      "status": "draft"
+    },
+    {
+      "id": "T-B2",
+      "group": "B",
+      "text": "The Baseline status of each text feature is listed once, in this foundation's sources. A rule cites the status from there and does not restate it.",
+      "kind": "reference",
+      "sources": ["S-BASELINE"],
+      "consumers": ["typography", "ci"],
+      "status": "draft",
+      "decisions": ["DEC-120"]
+    }
+  ],
+  "gaps": [
+    {
+      "gap": "The block size of a single-line control, from which its block padding follows in each language",
+      "owner": "Ramy",
+      "decision": "DEC-072"
+    },
+    {
+      "gap": "Where the digits setting is stored",
+      "owner": "Ramy",
+      "decision": "DEC-057"
+    },
+    {
+      "gap": "Tokens for the text values the `typography` token does not hold",
+      "owner": "Ramy",
+      "decision": "DEC-118"
+    }
+  ]
+}

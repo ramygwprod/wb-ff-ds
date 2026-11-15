@@ -1,0 +1,354 @@
+{
+  "contractVersion": "0.1.0",
+  "foundation": "typography",
+  "title": "Typography",
+  "scope": "Font family, face, size, weight, width and style; line height and font metrics; letter, word and paragraph spacing; alignment and decoration; wrapping and truncation; the language and direction of text; and the tokens that carry a text style.",
+  "sources": [
+    {
+      "id": "S-WCAG-1.3.1",
+      "role": "judged-by",
+      "title": "WCAG 2.2, Info and Relationships",
+      "edition": "Level A",
+      "checked": "2026-11-15",
+      "urls": [
+        "https://www.w3.org/TR/WCAG22/",
+        "https://www.w3.org/WAI/WCAG22/Understanding/info-and-relationships.html",
+        "https://www.w3.org/WAI/WCAG22/Techniques/failures/F2",
+        "https://www.w3.org/WAI/WCAG22/Techniques/html/H49"
+      ],
+      "uses": "Meaning shown by the look of text is also in the markup",
+      "verification": "read"
+    },
+    {
+      "id": "S-WCAG-1.4.4",
+      "role": "judged-by",
+      "title": "WCAG 2.2, Resize Text",
+      "edition": "Level AA",
+      "checked": "2026-11-15",
+      "urls": ["https://www.w3.org/TR/WCAG22/"],
+      "uses": "Text resizes up to 200 percent without loss of content or functionality",
+      "verification": "read"
+    },
+    {
+      "id": "S-WCAG-1.4.5",
+      "role": "judged-by",
+      "title": "WCAG 2.2, Images of Text",
+      "edition": "Level AA",
+      "checked": "2026-11-15",
+      "urls": ["https://www.w3.org/TR/WCAG22/"],
+      "uses": "Text is text, not an image of it",
+      "verification": "read"
+    },
+    {
+      "id": "S-WCAG-1.4.8",
+      "role": "judged-by",
+      "title": "WCAG 2.2, Visual Presentation",
+      "edition": "Level AAA",
+      "checked": "2026-11-15",
+      "urls": ["https://www.w3.org/TR/WCAG22/"],
+      "uses": "Line spacing, paragraph spacing and no justification in the AAA theme",
+      "verification": "read"
+    },
+    {
+      "id": "S-WCAG-1.4.12",
+      "role": "judged-by",
+      "title": "WCAG 2.2, Text Spacing",
+      "edition": "Level AA",
+      "checked": "2026-11-15",
+      "urls": ["https://www.w3.org/TR/WCAG22/"],
+      "uses": "Text survives user-set line, paragraph, letter and word spacing; a script that lacks one of these conforms with the ones it has",
+      "verification": "read"
+    },
+    {
+      "id": "S-WCAG-3.1.1",
+      "role": "judged-by",
+      "title": "WCAG 2.2, Language of Page",
+      "edition": "Level A",
+      "checked": "2026-11-15",
+      "urls": ["https://www.w3.org/TR/WCAG22/"],
+      "uses": "The language of the page is declared",
+      "verification": "read"
+    },
+    {
+      "id": "S-WCAG-3.1.2",
+      "role": "judged-by",
+      "title": "WCAG 2.2, Language of Parts",
+      "edition": "Level AA",
+      "checked": "2026-11-15",
+      "urls": ["https://www.w3.org/TR/WCAG22/"],
+      "uses": "The language of each part in another language is declared",
+      "verification": "read"
+    },
+    {
+      "id": "S-HTML",
+      "role": "judged-by",
+      "title": "HTML Standard",
+      "edition": "Living Standard",
+      "checked": "2026-11-15",
+      "urls": [
+        "https://html.spec.whatwg.org/multipage/dom.html",
+        "https://html.spec.whatwg.org/multipage/sections.html",
+        "https://html.spec.whatwg.org/multipage/grouping-content.html",
+        "https://html.spec.whatwg.org/multipage/text-level-semantics.html",
+        "https://html.spec.whatwg.org/multipage/edits.html",
+        "https://html.spec.whatwg.org/multipage/tables.html",
+        "https://html.spec.whatwg.org/multipage/forms.html",
+        "https://html.spec.whatwg.org/multipage/rendering.html"
+      ],
+      "uses": "What each element that carries text represents, its default rendering, and the `lang` and `dir` attributes",
+      "verification": "read"
+    },
+    {
+      "id": "S-ALREQ",
+      "role": "judged-by",
+      "title": "W3C Arabic & Persian Layout Requirements",
+      "edition": "Group Draft Note, 2 Oct 2025",
+      "checked": "2026-11-15",
+      "urls": ["https://www.w3.org/TR/alreq/"],
+      "uses": "Arabic letter forms and marks, digits, text spacing and baselines",
+      "note": "Sections read: 4.1, 4.2.7, 6.1.2, 7.2, 7.3, 7.4 and the glossary.",
+      "verification": "read"
+    },
+    {
+      "id": "S-DTCG",
+      "role": "judged-by",
+      "title": "Design Tokens Format Module",
+      "edition": "2025.10",
+      "checked": "2026-11-15",
+      "urls": [
+        "https://www.designtokens.org/tr/2025.10/format/",
+        "https://github.com/design-tokens/community-group"
+      ],
+      "uses": "The `typography` composite token and the `fontFamily`, `fontWeight` and `number` types",
+      "note": "designtokens.org didn't load, so it was read from the spec's source on GitHub (the editor's draft, not the 2025.10 snapshot).",
+      "verification": "read"
+    },
+    {
+      "id": "S-CLDR",
+      "role": "judged-by",
+      "title": "Unicode CLDR: numbering system type keys",
+      "edition": "main branch",
+      "checked": "2026-11-15",
+      "urls": ["https://github.com/unicode-org/cldr/blob/main/common/bcp47/number.xml"],
+      "uses": "The names of the numbering systems: `latn`, `arab` and `arabext`",
+      "note": "The three entries were read through a summarising fetch of the file.",
+      "verification": "read"
+    },
+    {
+      "id": "S-OFL",
+      "role": "judged-by",
+      "title": "SIL Open Font License, Version 1.1",
+      "edition": "26 February 2007",
+      "checked": "2026-11-15",
+      "urls": ["https://openfontlicense.org"],
+      "uses": "The conditions under which the font files are shipped",
+      "note": "Read from the licence file inside the two font packages.",
+      "verification": "read"
+    },
+    {
+      "id": "S-BASELINE",
+      "role": "judged-by",
+      "title": "web-features (Baseline data)",
+      "edition": "3.45.0",
+      "checked": "2026-11-15",
+      "urls": ["https://github.com/web-platform-dx/web-features"],
+      "uses": "Which text features are widely available, newly available or not Baseline",
+      "note": "Read from the data bundled with @eslint/css. It has no entry for the `@font-face` descriptors (`font-display`, `size-adjust`, `ascent-override`, `descent-override`, `line-gap-override`).",
+      "verification": "read"
+    },
+    {
+      "id": "S-CSS-FONTS",
+      "role": "spec",
+      "title": "CSS Fonts Module Level 4 and 5",
+      "edition": "Working Draft, 12 Nov 2026 (Level 4); Working Draft, 4 Nov 2026 (Level 5)",
+      "checked": "2026-11-15",
+      "urls": ["https://www.w3.org/TR/css-fonts-4/", "https://www.w3.org/TR/css-fonts-5/"],
+      "uses": "`font-weight`, `font-width`, `font-style`, the font matching algorithm, synthesized faces, `font-size-adjust`, `font-variant-numeric`, generic families and the `@font-face` descriptors",
+      "verification": "read"
+    },
+    {
+      "id": "S-CSS-INLINE",
+      "role": "spec",
+      "title": "CSS Inline Layout Module Level 3",
+      "edition": "Working Draft, 18 Dec 2024",
+      "checked": "2026-11-15",
+      "urls": ["https://www.w3.org/TR/css-inline-3/"],
+      "uses": "`line-height`, the line box, `text-box-trim` and `text-box-edge`",
+      "verification": "read"
+    },
+    {
+      "id": "S-CSS-TEXT",
+      "role": "spec",
+      "title": "CSS Text Module Level 3 and 4",
+      "edition": "Candidate Recommendation Draft, 14 Aug 2026 (Level 3); Working Draft, 14 Aug 2026 (Level 4)",
+      "checked": "2026-11-15",
+      "urls": ["https://www.w3.org/TR/css-text-3/", "https://www.w3.org/TR/css-text-4/"],
+      "uses": "`letter-spacing` and cursive scripts, `word-spacing`, `text-align`, wrapping, hyphenation and the content language",
+      "verification": "read"
+    },
+    {
+      "id": "S-CSS-VALUES",
+      "role": "spec",
+      "title": "CSS Values and Units Level 4",
+      "edition": "Working Draft, 12 Mar 2024",
+      "checked": "2026-11-15",
+      "urls": ["https://www.w3.org/TR/css-values-4/"],
+      "uses": "The units tied to text: `rem`, `em`, `lh`, `rlh`, `cap`, `ch`",
+      "verification": "read"
+    },
+    {
+      "id": "S-CSS-DECOR",
+      "role": "spec",
+      "title": "CSS Text Decoration Module Level 3 and 4",
+      "edition": "Candidate Recommendation Draft, 5 May 2022 (Level 3); Working Draft, 4 May 2022 (Level 4)",
+      "checked": "2026-11-15",
+      "urls": [
+        "https://www.w3.org/TR/css-text-decor-3/",
+        "https://www.w3.org/TR/css-text-decor-4/"
+      ],
+      "uses": "`text-decoration-line` and its values, `text-underline-position`, `text-underline-offset`",
+      "verification": "read",
+      "note": "From Level 4 only the existence of `text-underline-offset` was read; how browsers draw it was seen by rendering."
+    },
+    {
+      "id": "S-CSS-OVERFLOW",
+      "role": "spec",
+      "title": "CSS Overflow Module Level 3 and 4",
+      "edition": "Working Draft, 7 Oct 2025 (Level 3); Working Draft, 21 Mar 2023 (Level 4)",
+      "checked": "2026-11-15",
+      "urls": ["https://www.w3.org/TR/css-overflow-3/", "https://www.w3.org/TR/css-overflow-4/"],
+      "uses": "`text-overflow` and `line-clamp`",
+      "note": "Only the definitions of the two properties were read.",
+      "verification": "read"
+    },
+    {
+      "id": "R-APPLE-HIG-TYPE",
+      "role": "learn-from",
+      "title": "Apple Human Interface Guidelines: Typography",
+      "checked": "2026-11-15",
+      "urls": ["https://developer.apple.com/design/human-interface-guidelines/typography"],
+      "uses": "Light weights are hard to see when text is small",
+      "note": "Concepts only. Read through a summarising fetch; its quotes were not re-checked against the page.",
+      "verification": "read"
+    },
+    {
+      "id": "R-NNG-HIERARCHY",
+      "role": "learn-from",
+      "title": "Nielsen Norman Group: Visual Hierarchy in UX (2021); How Users Read on the Web (1997)",
+      "checked": "2026-11-15",
+      "urls": [
+        "https://www.nngroup.com/articles/visual-hierarchy-ux-definition/",
+        "https://www.nngroup.com/articles/how-users-read-on-the-web/"
+      ],
+      "uses": "Heavy weights stand out against regular ones; few levels; people pick out words instead of reading every one",
+      "note": "Concepts only. Read through a summarising fetch; its quotes were not re-checked against the pages.",
+      "verification": "read"
+    },
+    {
+      "id": "R-USWDS-TYPE",
+      "role": "learn-from",
+      "title": "U.S. Web Design System: Typography",
+      "checked": "2026-11-15",
+      "urls": ["https://designsystem.digital.gov/components/typography/"],
+      "uses": "Long passages of bold or italic are harder to read",
+      "note": "Concepts only. Read through a summarising fetch; its quotes were not re-checked against the page.",
+      "verification": "read"
+    },
+    {
+      "id": "R-BUTTERICK",
+      "role": "learn-from",
+      "title": "Butterick's Practical Typography: Bold or italic",
+      "checked": "2026-11-15",
+      "urls": ["https://practicaltypography.com/bold-or-italic.html"],
+      "uses": "Bold and italic as little as possible",
+      "note": "Concepts only. Read through a summarising fetch; its quotes were not re-checked against the page.",
+      "verification": "read"
+    },
+    {
+      "id": "U-FONTS",
+      "role": "reuse",
+      "title": "`_incoming/fonts/` (font files in the local design inputs)",
+      "uses": "The faces each family holds, read from the files: weights, widths, styles, the characters covered and the built-in metrics",
+      "note": "The files that were read and measured for DEC-107 and DEC-115. The files that ship are the prepared ones of T-F12, which measure the same (DEC-117)",
+      "verification": "local"
+    }
+  ],
+  "baseline": {
+    "dataset": "web-features 3.45.0",
+    "checked": "2026-11-15",
+    "features": [
+      {
+        "name": "`font-family`, `font-size`, `font-weight`, `font-style`, `line-height`, `letter-spacing`, `word-spacing`, `text-align`, `text-overflow`, `@font-face`",
+        "status": "widely",
+        "use": "core"
+      },
+      {
+        "name": "`text-decoration-line`, `overflow-wrap`, `hyphens`, `text-wrap`",
+        "status": "widely",
+        "use": "core"
+      },
+      {
+        "name": "`text-underline-offset`, `text-underline-position`",
+        "status": "widely",
+        "use": "core"
+      },
+      {
+        "name": "`lh`, `rlh` and `cap` units",
+        "status": "widely",
+        "use": "core"
+      },
+      {
+        "name": "`:lang()` and `:dir()`",
+        "status": "widely",
+        "use": "core"
+      },
+      {
+        "name": "`font-variant-numeric`",
+        "status": "widely",
+        "use": "not-relied-on"
+      },
+      {
+        "name": "`font-synthesis-weight`, `font-synthesis-style`",
+        "status": "widely",
+        "use": "core"
+      },
+      {
+        "name": "`font-stretch`",
+        "status": "widely",
+        "use": "not-used",
+        "note": "The legacy name alias of `font-width`. A font width is not used (DEC-110)."
+      },
+      {
+        "name": "`text-wrap-style`",
+        "status": "newly",
+        "since": "2024",
+        "use": "not-relied-on"
+      },
+      {
+        "name": "`font-size-adjust`",
+        "status": "newly",
+        "since": "2024",
+        "use": "not-used",
+        "note": "Not used (DEC-113)."
+      },
+      {
+        "name": "`text-box-trim`, `text-box-edge`",
+        "status": "newly",
+        "since": "2026",
+        "use": "not-used",
+        "note": "Not used (DEC-113)."
+      },
+      {
+        "name": "`font-width` (the property name)",
+        "status": "limited",
+        "use": "not-used",
+        "note": "A font width is not used (DEC-110)."
+      },
+      {
+        "name": "`line-clamp` (unprefixed)",
+        "status": "limited",
+        "use": "enhancement"
+      }
+    ]
+  }
+}

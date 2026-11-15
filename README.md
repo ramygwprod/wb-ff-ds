@@ -8,7 +8,7 @@ WideBot's AI-native, white-label design system for Angular, with WCAG AA/AAA the
 
 ## Status
 
-**v0.5.x: the layout foundation has its agent, with no tokens or components yet.** The design knowledge is checked data. The layout rules cover every recorded layout decision, in names taken from the standards (CSS, HTML, ARIA, WCAG and Angular). The layout agent is defined by a manifest that the hooks enforce. The other foundations come next, then tokens and components.
+**v0.6.x: the layout and typography foundations each have their agent, with no tokens or components yet.** The design knowledge is checked data. The rules of each foundation cover every decision recorded for it, in names taken from the standards (CSS, HTML, ARIA, WCAG and Angular). Each agent is defined by a manifest that the hooks enforce. The default fonts are chosen and installed as packages, but nothing uses them yet. The other foundations come next, then tokens and components.
 
 Every release has a changelog in [`releases/`](releases/).
 

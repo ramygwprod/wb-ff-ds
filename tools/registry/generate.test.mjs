@@ -200,6 +200,42 @@ test("a foundation agent's open decisions include its gaps; a reviewer's don't",
   assert.ok(!open('demo-reviewer.md').includes('DEC-003'));
 });
 
+test('a source is cited only by the rules of its own foundation, even when two foundations share its ID', () => {
+  const two = structuredClone(valid);
+  const second = structuredClone(valid.foundations[0]);
+  second.name = 'second';
+  second.agent = null;
+  for (const entry of [second.sources, second.rules]) {
+    entry.data.foundation = 'second';
+    entry.file = entry.file.replace('/demo/', '/second/');
+  }
+  second.rules.data.idPrefix = 'Y';
+  second.rules.data.gaps = [];
+  second.rules.data.rules = [
+    {
+      id: 'Y-A1',
+      group: 'A',
+      text: 'A rule of the second foundation.',
+      kind: 'guidance',
+      sources: ['S-DEMO-1'],
+      consumers: ['layout'],
+      status: 'draft',
+    },
+  ];
+  two.foundations.push(second);
+  assert.deepEqual(
+    validateRegistryData(two, validators).filter((i) => i.severity === 'error'),
+    [],
+  );
+  const row = (folder) =>
+    renderRegistry(two, schemas)
+      .find((o) => o.file.endsWith(`${folder}/sources.md`))
+      .content.split('\n')
+      .find((l) => l.startsWith('| S-DEMO-1 '));
+  assert.match(row('demo'), /\| X-A1 +\|$/);
+  assert.match(row('second'), /\| Y-A1 +\|$/);
+});
+
 test("the repository's generated Markdown matches its JSON", async () => {
   const { registry, issues } = await loadRegistry(REPO);
   const outputs = await build(
