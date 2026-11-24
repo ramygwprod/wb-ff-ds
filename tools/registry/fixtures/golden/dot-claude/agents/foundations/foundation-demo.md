@@ -33,7 +33,13 @@ None yet.
 
 Don't apply these, and don't treat them as rules: each waits on the decision named with it.
 
-- **X-A2** (waits on DEC-002): Demo rule waiting for a decision.
+- **X-A2** (waits on DEC-002): Demo rule waiting for a decision. **Why:** Demo reason for the waiting rule, which builds on X-A1.
+
+## Rules named above
+
+A rule above names each of these, so each is given here in full. Follow them as you follow the guidance.
+
+- **X-A1** (check): Demo rule enforced by a check. **Why:** Demo reason for the checked rule.
 
 ## Open decisions
 

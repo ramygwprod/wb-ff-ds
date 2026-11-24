@@ -18,6 +18,10 @@ import Ajv2020 from 'ajv/dist/2020.js';
 
 const SCHEMA_DIR = path.join(path.dirname(fileURLToPath(import.meta.url)), 'schemas');
 const FILE_KINDS = ['sources', 'rules', 'decisions', 'agent', 'checks'];
+// IDs named inside a rule's text or reason. An agent follows a pointer in a sentence as it follows
+// one in a list, so the check reads both. The first group of a rule ID is its foundation's prefix.
+const RULE_ID_IN_TEXT = /\b([A-Z]{1,3})-[A-Z][0-9]+\b/g;
+const DECISION_ID_IN_TEXT = /\bDEC-[0-9]{3}\b/g;
 
 /** @typedef {{ severity: 'error' | 'warning', code: string, file: string, path: string, message: string }} Issue */
 /** @typedef {{ file: string, data: any }} Entry */
@@ -230,6 +234,11 @@ function referenceIssues(registry, passed, { today } = {}) {
   // A foundation folder with no rules.json (MISSING_PAIR) also leaves the set incomplete.
   const rulesComplete = registry.foundations.every((f) => ok(f.rules));
   const unknownRule = (id) => rulesComplete && !allRules.has(id);
+  // Only a token that starts with a foundation's own prefix is read as a rule ID inside a sentence,
+  // so a code from a standard that happens to have the same shape is left alone.
+  const rulePrefixes = new Set(
+    registry.foundations.filter((f) => ok(f.rules)).map((f) => f.rules.data.idPrefix),
+  );
   // Only with a valid register: without one, "waits on nothing" would be a false alarm.
   const waits = decisions
     ? openDecisionsByRule(
@@ -276,9 +285,34 @@ function referenceIssues(registry, passed, { today } = {}) {
     const cited = new Set();
     const groups = new Set(rules.data.groups.map((g) => g.id));
     const prefix = rules.data.idPrefix;
+    // A file states its reasons whole: once one rule has a reason, a rule without one is an error.
+    // A file written before the field existed has none, and that is reported once, as a warning.
+    const withReason = rules.data.rules.filter((r) => r.reason).length;
+    if (withReason === 0) {
+      issues.push(
+        issue(
+          'warning',
+          'REASONS_NOT_STARTED',
+          rules.file,
+          '/rules',
+          `none of the ${rules.data.rules.length} rule(s) states its reason yet`,
+        ),
+      );
+    }
 
     rules.data.rules.forEach((rule, i) => {
       const at = `/rules/${i}`;
+      if (withReason > 0 && !rule.reason) {
+        issues.push(
+          issue(
+            'error',
+            'MISSING_REASON',
+            rules.file,
+            at,
+            `"${rule.id}" states no reason, but other rules in this file state theirs`,
+          ),
+        );
+      }
       if (!groups.has(rule.group)) {
         issues.push(
           issue(
@@ -391,6 +425,75 @@ function referenceIssues(registry, passed, { today } = {}) {
             issue('error', 'UNRESOLVED_RULE', rules.file, pointer, `"${id}" is not a known rule`),
           );
       });
+      // Pointers inside the sentence and the reason. A decision named there must be in the rule's
+      // own list, where the checks above hold it to the register. One that is not listed is held
+      // to the register here, so a sentence can't keep pointing at a replaced or closed decision.
+      for (const field of ['text', 'reason']) {
+        if (typeof rule[field] !== 'string') continue;
+        const pointer = `${at}/${field}`;
+        for (const id of new Set(rule[field].match(DECISION_ID_IN_TEXT) ?? [])) {
+          if ((rule.decisions ?? []).includes(id)) continue;
+          issues.push(
+            issue(
+              'error',
+              'DECISION_NOT_LISTED',
+              rules.file,
+              pointer,
+              `"${rule.id}" names "${id}" in its ${field}, but "${id}" is not in its decisions list`,
+            ),
+          );
+          if (!decisions) continue;
+          const found = decisions.get(id);
+          if (!found) {
+            issues.push(
+              issue(
+                'error',
+                'UNRESOLVED_DECISION',
+                rules.file,
+                pointer,
+                `"${id}", named in the ${field} of "${rule.id}", is not in the decision register`,
+              ),
+            );
+          } else if (supersededBy.has(id)) {
+            issues.push(
+              issue(
+                'error',
+                'DECISION_SUPERSEDED',
+                rules.file,
+                pointer,
+                `"${id}", named in the ${field} of "${rule.id}", was replaced by "${supersededBy.get(id)}"; name that instead`,
+              ),
+            );
+          } else if (found.record.status === 'abandoned' || found.record.status === 'expired') {
+            issues.push(
+              issue(
+                'error',
+                'DECISION_CLOSED',
+                rules.file,
+                pointer,
+                `"${id}", named in the ${field} of "${rule.id}", was ${found.record.status}; a rule can't rest on it`,
+              ),
+            );
+          }
+        }
+        const namedRules = new Set(
+          [...rule[field].matchAll(RULE_ID_IN_TEXT)]
+            .filter((match) => rulePrefixes.has(match[1]))
+            .map((match) => match[0]),
+        );
+        for (const id of namedRules) {
+          if (id !== rule.id && unknownRule(id))
+            issues.push(
+              issue(
+                'error',
+                'UNRESOLVED_RULE',
+                rules.file,
+                pointer,
+                `"${rule.id}" names "${id}" in its ${field}, which is not a known rule`,
+              ),
+            );
+        }
+      }
       if (rule.kind === 'check' && !rule.checkId) {
         issues.push(
           issue(

@@ -1,6 +1,6 @@
 {
   "name": "wb-ff-ds",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "license": "UNLICENSED",
   "peerDependencies": {
     "@angular/common": "^22.2.0",

@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://ramygwprod.github.io/wb-ff-ds/registry/0.1/common.schema.json",
+  "$id": "https://ramygwprod.github.io/wb-ff-ds/registry/0.2/common.schema.json",
   "title": "WB-FF-DS registry: shared definitions",
   "description": "Identifiers and value shapes shared by every registry file. These IDs are names, never fetched.",
   "$defs": {
@@ -52,8 +52,8 @@
       "pattern": "^DEC-[0-9]{3}$"
     },
     "consumer": {
-      "description": "Who uses a rule. layout: the layout agent. typography: the typography agent. a11y: the accessibility reviewer. rtl: the RTL and i18n reviewer. ci: automated checks. qa: the QA engineer. docs: the documentation writer. platform: the platform engineer.",
-      "enum": ["layout", "typography", "a11y", "rtl", "ci", "qa", "docs", "platform"]
+      "description": "Who uses a rule. layout: the layout agent. typography: the typography agent. color: the colour agent. a11y: the accessibility reviewer. rtl: the RTL and i18n reviewer. ci: automated checks. qa: the QA engineer. docs: the documentation writer. platform: the platform engineer.",
+      "enum": ["layout", "typography", "color", "a11y", "rtl", "ci", "qa", "docs", "platform"]
     }
   }
 }

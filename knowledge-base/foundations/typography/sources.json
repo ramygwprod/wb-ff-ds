@@ -1,5 +1,5 @@
 {
-  "contractVersion": "0.1.0",
+  "contractVersion": "0.2.0",
   "foundation": "typography",
   "title": "Typography",
   "scope": "Font family, face, size, weight, width and style; line height and font metrics; letter, word and paragraph spacing; alignment and decoration; wrapping and truncation; the language and direction of text; and the tokens that carry a text style.",

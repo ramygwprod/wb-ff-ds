@@ -4,7 +4,7 @@
 
 Every decision that work depends on. Silence never counts as an answer. This file is public: no confidential detail.
 
-**Contract:** 0.1.0.
+**Contract:** 0.2.0.
 
 - **Status**
   - `open`: waiting.

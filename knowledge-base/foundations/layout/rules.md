@@ -2,9 +2,9 @@
 
 # Layout system: rules
 
-One testable sentence per rule, with its kind, sources, decisions and consumers.
+One testable sentence per rule, with its reason, kind, sources, decisions and consumers.
 
-**Status:** draft. **Contract:** 0.1.0.
+**Status:** draft. **Contract:** 0.2.0.
 
 - **Kind**
   - `check`: a machine enforces it (lint, test or CI); a rule a script can't test isn't a check.
@@ -14,6 +14,7 @@ One testable sentence per rule, with its kind, sources, decisions and consumers.
 - **Consumers**
   - `layout`: the layout agent.
   - `typography`: the typography agent.
+  - `color`: the colour agent.
   - `a11y`: the accessibility reviewer.
   - `rtl`: the RTL and i18n reviewer.
   - `ci`: automated checks.
@@ -233,7 +234,6 @@ Answers, options and history are in [decisions.md](../../decisions.md).
 | -------------------------------------------------------------------------- | ----------- | ---------------------------------------- | -------- |
 | Minimum and maximum sizes (pane, navigation, content)                      | L-L2, L-S4  | Layout agent proposes, Ramy approves     | DEC-022  |
 | Who sets each pane's priority, and where it is stored                      | —           | Ramy                                     | DEC-055  |
-| Where user preferences live (density, pane sizes)                          | —           | Ramy                                     | DEC-057  |
 | The levels of each density setting and what each adjusts                   | L-D7, L-D10 | Ramy                                     | DEC-069  |
 | The minimum height of a control                                            | L-C14       | Ramy, after the foundations (DEC-083)    | DEC-072  |
 | The value of each of the nine sizes and the exact formula                  | L-T10       | Layout agent proposes, Ramy approves     | DEC-073  |

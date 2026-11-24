@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://ramygwprod.github.io/wb-ff-ds/registry/0.1/decisions.schema.json",
+  "$id": "https://ramygwprod.github.io/wb-ff-ds/registry/0.2/decisions.schema.json",
   "title": "WB-FF-DS registry: the decision register",
   "description": "Every decision that work depends on. Silence never counts as an answer. This file is public: no confidential detail.",
   "type": "object",

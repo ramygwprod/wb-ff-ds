@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://ramygwprod.github.io/wb-ff-ds/registry/0.1/sources.schema.json",
+  "$id": "https://ramygwprod.github.io/wb-ff-ds/registry/0.2/sources.schema.json",
   "title": "WB-FF-DS registry: a foundation's sources",
   "description": "What a foundation agent is judged by, learns from and reuses. Rules cite these by ID.",
   "type": "object",

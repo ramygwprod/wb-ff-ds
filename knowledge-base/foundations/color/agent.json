@@ -1,0 +1,13 @@
+{
+  "contractVersion": "0.2.0",
+  "name": "color",
+  "role": "foundation",
+  "foundation": "color",
+  "description": "The assignee for every colour task: colour roles and their values; contrast in the AA and AAA themes; the light and dark colour schemes; surfaces and their levels; the colour of text, links, states, focus and selection; status colours; gradients; the colour of shadows; the colours of code and charts; forced colours mode; and colour tokens. Hand it work that drafts or changes colour rules and sources, proposes colour values with measurements (contrast ratios, OKLCH lightness and chroma), checks whether a design or a component follows the colour rules, or answers a colour question from the knowledge base. It never answers an open decision itself, and it does not set typography, layout or the size of a shadow.",
+  "tools": ["Read", "Grep", "Glob", "Edit", "Write", "WebFetch", "WebSearch"],
+  "writeScope": [
+    "knowledge-base/foundations/color/rules.json",
+    "knowledge-base/foundations/color/sources.json"
+  ],
+  "gate": { "checks": ["registry:check"], "maxRetries": 2 }
+}

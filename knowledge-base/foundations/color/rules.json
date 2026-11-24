@@ -1,0 +1,677 @@
+{
+  "contractVersion": "0.2.0",
+  "foundation": "color",
+  "title": "Colour",
+  "idPrefix": "C",
+  "status": "draft",
+  "groups": [
+    {
+      "id": "N",
+      "title": "Names and values"
+    },
+    {
+      "id": "C",
+      "title": "Contrast and themes"
+    },
+    {
+      "id": "S",
+      "title": "Surfaces, separators and shadows"
+    },
+    {
+      "id": "T",
+      "title": "Text"
+    },
+    {
+      "id": "A",
+      "title": "Accent and brand"
+    },
+    {
+      "id": "M",
+      "title": "Status colours and chart series"
+    },
+    {
+      "id": "I",
+      "title": "States, focus and selection"
+    },
+    {
+      "id": "G",
+      "title": "Gradients"
+    },
+    {
+      "id": "D",
+      "title": "Code"
+    },
+    {
+      "id": "F",
+      "title": "Forced colours"
+    }
+  ],
+  "rules": [
+    {
+      "id": "C-N1",
+      "group": "N",
+      "text": "Colour uses the standards' own names. A colour role is named by the CSS system colour that names it (CSS Color 4, section 6.2), such as `Canvas`, `CanvasText`, `LinkText`, `ButtonFace`, `Highlight`, `Mark`, `GrayText` and `AccentColor`; a colour space by its CSS name (`srgb`, `oklab`, `oklch`); a colour token by the DTCG `color` type. Where no standard names a role, it takes the name of the element, ARIA role or state it colours. No other name is made up for it.",
+      "reason": "A standard name is understood by any developer or AI agent without a glossary, while an agent that meets an ambiguous name may drift or invent: it assumes a meaning and acts on its own understanding. Standard names also avoid unnecessary conflicts.",
+      "kind": "guidance",
+      "sources": ["S-CSS-COLOR-4", "S-DTCG"],
+      "decisions": ["DEC-061", "DEC-086", "DEC-093"],
+      "consumers": ["color", "docs"],
+      "status": "draft"
+    },
+    {
+      "id": "C-N2",
+      "group": "N",
+      "text": "A component's CSS takes every colour from a colour token, never from a literal value: no hex colour, colour function or named colour. The keywords `transparent` and `currentColor`, and the CSS system colours, are not literal values. A value the system chooses lives in one place and is loaded from there.",
+      "reason": "A repeated value is a critical risk: once one copy goes stale the copies conflict, and checks and edits are wasted. A colour taken from its one place stays current when that place changes.",
+      "kind": "check",
+      "checkKind": "source",
+      "decisions": ["DEC-120"],
+      "dependsOn": ["C-N1"],
+      "consumers": ["ci", "color"],
+      "status": "draft"
+    },
+    {
+      "id": "C-N3",
+      "group": "N",
+      "text": "A colour is chosen for what it means where it appears (a colour role, a status, a level of text or of surface), never for decoration and never because it is a common default. A case that no rule and no open decision covers is not filled with a colour: the agent researches the standards and the evidence, proposes an answer, and applies nothing until it is approved. A case under an open decision waits on it, and the agent reports that (DEC-158).",
+      "reason": "Many colours distract, hide what matters most and confuse, so a colour has to carry a meaning (DEC-161); a colour nobody decided carries none yet.",
+      "kind": "guidance",
+      "decisions": ["DEC-086", "DEC-187", "DEC-161", "DEC-158"],
+      "dependsOn": ["C-N1"],
+      "consumers": ["color"],
+      "status": "draft"
+    },
+    {
+      "id": "C-N4",
+      "group": "N",
+      "text": "The knowledge of this foundation holds concepts, reasons and equations, never the colours of one brand: a colour is an output, computed from the properties a person sets, each with a default and limits, and never stored in the knowledge base. A value in the notes of a decision is evidence from one brand, never the system's value (DEC-158).",
+      "reason": "A design system for any brand and any use is generated from a small set of properties, as a designer applies principles to a new brand.",
+      "kind": "guidance",
+      "decisions": ["DEC-158"],
+      "consumers": ["color", "docs"],
+      "status": "draft"
+    },
+    {
+      "id": "C-N5",
+      "group": "N",
+      "text": "A colour token refers down by alias and never sideways: the scale holds the raw values; a foundation token, such as the accent colour, a status or focus, refers to a scale token; an atom, such as a button or a surface, refers to foundation tokens. No level above the scale holds a raw value, and two tokens of one level share a value by referring to the same token below (DEC-159). Until the token file exists, a value lives in the decision that set it and an output is computed when it is needed: nothing is built to stand in for that file.",
+      "reason": "A change to one scale value then applies everywhere by itself, and a token that referred to another of its level would borrow its meaning: focus is not a warning.",
+      "kind": "guidance",
+      "sources": ["S-DTCG"],
+      "decisions": ["DEC-159"],
+      "consumers": ["color", "docs"],
+      "status": "draft"
+    },
+    {
+      "id": "C-N6",
+      "group": "N",
+      "text": "`AccentColorText`, `SelectedItem`, `SelectedItemText`, `ButtonBorder`, `Field` and `FieldText` take the colours DEC-208 gives: the text of C-T3 on the accent colour; the selected surface of C-I6 and the text on it; an edge at 3:1 only on a button that its edge alone identifies (C-S9), and on a disabled one as C-I2 sets; and for a field the colour of the surface it sits on, with the text on it. `accent-color` is never set to the accent colour, `caret-color` and `scrollbar-color` stay `auto`, and `::backdrop` takes no colour of its own (DEC-209).",
+      "reason": "Each of these roles names something an earlier rule already colours, so it takes that colour and adds none. Only the main action takes the accent colour (C-A1), so a native control stays neutral; the user agent draws a caret and scrollbars that follow the text colour and the colour scheme.",
+      "kind": "guidance",
+      "sources": ["S-CSS-COLOR-4", "S-CSS-POSITION-4", "S-CSS-UI-4", "S-CSS-SCROLLBARS-1"],
+      "decisions": ["DEC-208", "DEC-209"],
+      "dependsOn": ["C-N1", "C-T3", "C-I6", "C-S9", "C-A1"],
+      "consumers": ["color"],
+      "status": "draft"
+    },
+    {
+      "id": "C-N7",
+      "group": "N",
+      "text": "A colour is translucent only where what lies beneath is meant to show through: a shadow (C-S5), a translucent surface (C-S10) and the end of a fade (DEC-152). A colour that has to meet a contrast ratio is opaque, or is measured at its worst point over what lies beneath. A disabled state is never made with opacity (C-I2), and no text is dimmed by it (DEC-212).",
+      "reason": "Opacity multiplies with whatever lies beneath, so one value gives a different contrast on every surface.",
+      "kind": "guidance",
+      "decisions": ["DEC-212", "DEC-152"],
+      "dependsOn": ["C-S5", "C-S10", "C-I2"],
+      "consumers": ["color"],
+      "status": "draft"
+    },
+    {
+      "id": "C-C1",
+      "group": "C",
+      "text": "Text meets the theme's contrast ratio on every surface it sits on, hovered, pressed and selected surfaces included (DEC-167), measured where it has the least contrast: in the AA theme 4.5:1, or 3:1 for large-scale text (WCAG 1.4.3); in the AAA theme 7:1, or 4.5:1 for large-scale text (WCAG 1.4.6). A ratio is not rounded: 4.499:1 does not meet 4.5:1. Hover, focus and placeholder text are text. The text of a disabled or busy component follows C-I2.",
+      "reason": "Text a user cannot read gives them nothing.",
+      "kind": "check",
+      "checkKind": "rendered",
+      "sources": ["S-WCAG-1.4.3", "S-WCAG-1.4.6"],
+      "decisions": ["DEC-139", "DEC-167"],
+      "consumers": ["ci", "a11y", "color"],
+      "status": "draft"
+    },
+    {
+      "id": "C-C2",
+      "group": "C",
+      "text": "What identifies a user interface component and its states, and each part of a graphic required to understand it, has a contrast ratio of at least 3:1 against the colours next to it, in every state (WCAG 1.4.11). In the AAA theme the graphical objects of a chart take the ratio of DEC-136 against the canvas. A gradient is measured at its least contrasting area.",
+      "reason": "WCAG 1.4.11 requires this contrast for what identifies a component and its states and for the parts of a graphic required to understand it, testing a gradient at its least contrasting area. WCAG has no Level AAA criterion for non-text contrast, so the AAA ratio of DEC-136 is taken by analogy with large-scale text and is not a WCAG requirement.",
+      "kind": "check",
+      "checkKind": "rendered",
+      "sources": ["S-WCAG-1.4.11"],
+      "decisions": ["DEC-136"],
+      "consumers": ["ci", "a11y", "color"],
+      "status": "draft"
+    },
+    {
+      "id": "C-C3",
+      "group": "C",
+      "text": "Colour is never the only visual means of conveying information, indicating an action, prompting a response or distinguishing an element (WCAG 1.4.1), and instructions never rely on colour alone (WCAG 1.3.3). Text, an icon, a label or a border carries the meaning too. Two colours that differ in hue only are not told apart: a second cue is required.",
+      "reason": "Meaning carried by colour alone does not survive colour blindness or forced colours mode (C-F1), where the user's palette replaces the system's colours. Text, icons, borders and labels carry it so that it survives, and WCAG requires a second cue where hues alone differ.",
+      "kind": "guidance",
+      "sources": ["S-WCAG-1.4.1", "S-WCAG-1.3.3"],
+      "decisions": ["DEC-146", "DEC-198"],
+      "consumers": ["color", "a11y"],
+      "status": "draft"
+    },
+    {
+      "id": "C-C4",
+      "group": "C",
+      "text": "A colour that fails the theme's WCAG requirements is never proposed as an option. It is reported as a finding, with the criterion it fails and its measured ratio.",
+      "reason": "Text a user cannot read gives them nothing (DEC-167), so a colour that fails its ratio is a finding to report, not an option to offer.",
+      "kind": "guidance",
+      "dependsOn": ["C-C1", "C-C2"],
+      "consumers": ["color"],
+      "status": "draft",
+      "decisions": ["DEC-167"]
+    },
+    {
+      "id": "C-C5",
+      "group": "C",
+      "text": "The AA and AAA themes are the same components with different colour values. The AA theme is the default. A request for more contrast (`prefers-contrast: more`, Media Queries 5) selects the AAA theme, and an explicit choice of the user or the tenant, of either theme, overrides that request (DEC-006, DEC-174). The unqualified query `(prefers-contrast)` never selects it. Rules name the themes AA and AAA; the labels shown to people come from the label service (DEC-174).",
+      "reason": "The unqualified query also matches `less`, so it is not a request for more contrast. In rules the themes keep the names of the WCAG levels; the labels are shown through the label service, so a tenant may replace them, and a label describes its purpose (WCAG 2.4.6).",
+      "kind": "guidance",
+      "sources": ["S-MQ5", "S-WCAG-2.4.6"],
+      "decisions": ["DEC-006", "DEC-174"],
+      "consumers": ["color", "platform"],
+      "status": "draft"
+    },
+    {
+      "id": "C-C6",
+      "group": "C",
+      "text": "Contrast is the WCAG 2.2 contrast ratio, computed on relative luminance in sRGB. No other contrast method is a standard: the contrast method of WCAG 3 is still to be determined in its Working Draft. Tints, shades and the colours of states are found by an equation in this ratio from the colour they derive from, never stored as a list of steps (DEC-123).",
+      "reason": "The WCAG 2.2 contrast ratio is the only contrast method that is a standard. Ratios multiply along a chain of lightness, so text on a state keeps the contrast it had on the base, divided or multiplied by the ratio; tested against a mix in Oklab and a fixed OKLCH lightness shift, only the ratio kept text contrast predictable.",
+      "kind": "guidance",
+      "sources": ["S-WCAG-1.4.3", "S-WCAG-3"],
+      "decisions": ["DEC-123"],
+      "consumers": ["color"],
+      "status": "draft"
+    },
+    {
+      "id": "C-C7",
+      "group": "C",
+      "text": "A brand colour is the tenant's identity: it is kept wherever it meets the ratios of its use, the system works around it where it does not, and what no workaround solves is flagged for a person (DEC-197). In the AA theme it does not move to pass contrast: the text on it switches between the dark and the light text neutral, whichever passes (DEC-030). In the AAA theme, a colour carrying text on which neither text neutral passes moves its OKLCH lightness by the smallest step that lets one text neutral pass, lighter or darker, whichever step is the smaller, with its hue kept (DEC-042); the accent colour is calibrated the same way, keeping its chroma while it fits sRGB (DEC-124).",
+      "reason": "The system adapts around a tenant's identity and changes it only where WCAG leaves no other way: the AAA ratio of WCAG 1.4.6 cannot be reached by switching between the text neutrals alone, so in the AAA theme the colour itself is calibrated. Moving only its OKLCH lightness keeps its hue, where the other methods tested moved it.",
+      "kind": "guidance",
+      "decisions": ["DEC-197", "DEC-030", "DEC-042", "DEC-124"],
+      "consumers": ["color", "platform"],
+      "status": "draft"
+    },
+    {
+      "id": "C-C8",
+      "group": "C",
+      "text": "A user chooses among four colour schemes: Auto, which follows the device's setting (`prefers-color-scheme`) and is the default; Dark; Light; and day and night (DEC-173). Day and night is light while the sun is above the horizon where the device is and dark while it is below. It is on only with the user's permission for the device's location, which is never taken from its time zone and is used only to compute the two times: each time it is turned on, the product first says what it does and how to turn it off, then asks. Where the permission is refused, withdrawn or cannot be asked, it is off and the colour scheme is the one chosen before it, or Auto where none was (DEC-182).",
+      "reason": "An option that is on always has an effect: turned on without the permission, day and night would change nothing and look broken. A location identifies a person, so it is taken only with permission and for this one use.",
+      "kind": "guidance",
+      "sources": ["S-MQ5", "S-GEOLOCATION", "S-PRIVACY-PRINCIPLES", "R-NOAA-SOLCALC", "R-EU-GDPR"],
+      "decisions": ["DEC-173", "DEC-182"],
+      "consumers": ["color", "platform"],
+      "status": "draft"
+    },
+    {
+      "id": "C-C9",
+      "group": "C",
+      "text": "A property a person sets as a number has a range, and a value outside it is not accepted. The range ends where text, or what identifies a component or its state, would stop meeting its contrast ratio in the AA theme or in the AAA theme, and it is computed again when a property it depends on changes. Where WCAG sets no limit, a limit may still come from the sRGB colour space or from another decision (DEC-160).",
+      "reason": "A person cannot then set a number that fails WCAG; and both themes are offered for the same design system, so one setting has to pass in both.",
+      "kind": "guidance",
+      "decisions": ["DEC-160"],
+      "consumers": ["color", "platform"],
+      "status": "draft"
+    },
+    {
+      "id": "C-C10",
+      "group": "C",
+      "text": "A change of colour scheme is soft, whoever starts it: the surfaces blend in Oklab between the tinted levels of the two colour schemes, led by the light, over the time DEC-205 sets. Text never fades: on every frame its levels are computed against the surfaces as they are (C-T1), and where neither text neutral would meet the ratio the surfaces cross that band in one frame. Under `prefers-reduced-motion: reduce` the colours still blend and the light and the shadows do not move. The light never follows the sun: by itself it moves only during this change, sinking to its lowest at the switch and rising back.",
+      "reason": "An instant change from dark to light flashes in eyes adapted to the dark, and from light to dark it can look like a fault. Text that faded would fall under its ratio on the way, so it is recomputed instead. WCAG counts a change of colour as no motion animation and a moving shadow as one, and following the sun all day would cost performance.",
+      "kind": "guidance",
+      "sources": ["S-WCAG-2.3.3"],
+      "decisions": ["DEC-205"],
+      "dependsOn": ["C-C8", "C-T1", "C-S8"],
+      "consumers": ["color", "platform"],
+      "status": "draft"
+    },
+    {
+      "id": "C-C11",
+      "group": "C",
+      "text": "No region of a view takes the other colour scheme; a code block is the one exception (C-D1) (DEC-210). A request for less contrast (`prefers-contrast: less`) is never followed below the AA theme; colours stay inside sRGB on every display; and a printed page takes the light colour scheme, with `print-color-adjust` never forced to `exact` (DEC-211).",
+      "reason": "The canvas is always the lowest and darkest level, which a region in the other colour scheme would break (C-S1). The AA theme is the floor every setting keeps (C-C9). On a printer the user agent may drop backgrounds to save ink, and light text on a dark background is unwise there, so the page prints light and leaves the rest to the user.",
+      "kind": "guidance",
+      "sources": ["S-CSS-COLOR-ADJUST", "S-MQ5"],
+      "decisions": ["DEC-210", "DEC-211"],
+      "dependsOn": ["C-S1", "C-C9", "C-D1"],
+      "consumers": ["color", "platform"],
+      "status": "draft"
+    },
+    {
+      "id": "C-S1",
+      "group": "S",
+      "text": "A surface takes one of four levels, counted from the canvas, and the higher its level the brighter it is, in both colour schemes (DEC-162). The canvas is the first level and the darkest; the surface on top (C-S6) takes the fourth, the brightest; every surface under the top sits in the middle: the surface first above the canvas on the second level, and all others on the third. In the light colour scheme the fourth level is white. A level follows the attention a surface needs, not its landmark role, and a level may stay empty. What needs no level stays on the canvas, divided by separators (C-S4). A code block is the exception (C-D1).",
+      "reason": "The user has one place to look: the top is always the brightest, and keeping everything under it close to the canvas keeps it obvious; a middle level close to the fourth would compete with it.",
+      "kind": "guidance",
+      "decisions": ["DEC-162"],
+      "consumers": ["color", "layout"],
+      "status": "draft"
+    },
+    {
+      "id": "C-S2",
+      "group": "S",
+      "text": "No colour of the system is pure black (`#000000`), text and shadows included. The darkest colour is the one DEC-166 defines, and the canvas of the dark colour scheme is a near-black with the lightness and the tint of DEC-164 (DEC-125).",
+      "reason": "From pure black an equal contrast ratio is a larger visible step than elsewhere, so steps of one ratio would be uneven (DEC-125). Smearing of moving content on OLED displays, where pixels that are fully off switch on more slowly, is reported, but no standard measures it.",
+      "kind": "check",
+      "checkKind": "data",
+      "decisions": ["DEC-125", "DEC-164", "DEC-166"],
+      "consumers": ["ci", "color"],
+      "status": "draft"
+    },
+    {
+      "id": "C-S3",
+      "group": "S",
+      "text": "The greys of both colour schemes, in surfaces, the text neutrals, separators and shadows, share one tint: none, the hue of the accent colour, or the hue of a colour a person picks, at the strength of DEC-164. White carries no tint. No grey is stored: each is computed.",
+      "reason": "One tint makes the neutrals, surfaces, separators and shadows belong to one family, and it stays minimal so that it takes no attention from the accent colour.",
+      "kind": "guidance",
+      "decisions": ["DEC-164"],
+      "consumers": ["color"],
+      "status": "draft"
+    },
+    {
+      "id": "C-S4",
+      "group": "S",
+      "text": "A decorative separator takes the contrast of DEC-177 with the surface it sits on, darker than it in the light colour scheme and lighter in the dark. A border that identifies a component or its state is not decorative: it meets C-C2.",
+      "reason": "WCAG asks nothing of a decorative line, while a border that identifies a component or its state must be seen (WCAG 1.4.11).",
+      "kind": "guidance",
+      "sources": ["S-WCAG-1.4.11"],
+      "decisions": ["DEC-177"],
+      "dependsOn": ["C-C2"],
+      "consumers": ["color"],
+      "status": "draft"
+    },
+    {
+      "id": "C-S5",
+      "group": "S",
+      "text": "A shadow takes the hue of the surface it falls on, at a lower lightness: it lowers the luminance of what lies under it and keeps its hue. It stays subtle: it darkens a surface at most to the colour of the lowest surface level, where the text under it still meets its ratio (DEC-201). It is never pure black (C-S2), and never the only edge of a component or the only focus cue.",
+      "reason": "A drop in luminance with no change of colour tends to be read as lighting, because colour changes typically occur at the edges of objects and not of shadows, so a shadow keeps the hue of its surface. Text is measured on the surface where it has the least contrast, so a shadow that stops at the lowest level never takes text under its ratio. Forced colours mode computes `box-shadow` to none (C-F1), so a shadow cannot be the only edge of a component or the only focus cue.",
+      "kind": "guidance",
+      "sources": ["R-KINGDOM-2004"],
+      "decisions": ["DEC-201"],
+      "dependsOn": ["C-S2", "C-F1"],
+      "consumers": ["color"],
+      "status": "draft"
+    },
+    {
+      "id": "C-S6",
+      "group": "S",
+      "text": "The surface on top is the work surface the user last acted on, by a click, a tap or a key press inside it, or a surface opened over the work in the top layer, such as a dialog or a menu, while it is open (DEC-181). A work surface holds the task of the view, and a view may have several. A new top pushes the one before it into the middle, and when it closes the fourth level passes back to the surface then on top (DEC-162). A region beside the work, whichever landmark it is (`navigation`, `banner`, `complementary`, `contentinfo`), is never the top: it takes the second level and stays there while it is used. Moving the pointer over a surface is not acting on it. The level is never the only cue of where the user acts: the focus indicator (C-I3) shows it too.",
+      "reason": "The brightest surface shows where the user acts now. A surface opened over the work is where the user has to act next; a region beside the work is used for a moment and sends the user back, so making it the brightest would pull the eye away from the work each time.",
+      "kind": "guidance",
+      "sources": ["S-CSS-POSITION-4"],
+      "decisions": ["DEC-181", "DEC-162"],
+      "dependsOn": ["C-S1"],
+      "consumers": ["color", "layout"],
+      "status": "draft"
+    },
+    {
+      "id": "C-S7",
+      "group": "S",
+      "text": "The surface levels are not evenly spaced: the highest takes one clear step above the rest, and the levels below stay close to each other, by the span and the growth of DEC-163. In both colour schemes the step up to the highest level passes the test of a clear step that DEC-163 sets.",
+      "reason": "Equal differences put the levels in an ascending order, and the eye follows that order instead of going to the highest. The eye follows a difference in lightness, not a contrast ratio, so the top step is tested in lightness.",
+      "kind": "check",
+      "checkKind": "data",
+      "decisions": ["DEC-163"],
+      "dependsOn": ["C-S1"],
+      "consumers": ["ci", "color"],
+      "status": "draft"
+    },
+    {
+      "id": "C-S8",
+      "group": "S",
+      "text": "The system has one light, the same in both colour schemes: it is how light falls on surfaces, from bright to dark, and its colour is the tint of the greys (DEC-199). Every surface gradient and every shadow comes from it: a person may move the one light (DEC-200), and neither has a direction or a colour of its own. Lighting moves a face only between the colour of its own level and that of the level below, so text on it keeps its ratio at every point (C-T1). In the AA theme the light is on; the AAA theme removes the gradient across a face and the shadows, keeping the flat levels. In forced colours mode both vanish, so a surface keeps a solid colour (C-F1). A hovered or pressed object rises toward the light (DEC-200); how far belongs to the elevation and interaction foundations.",
+      "reason": "One computed light makes every surface agree on where the light is, and a light that only moves a face between two levels can never take text under its ratio. The AAA theme asks for the least detail, so it keeps the levels and drops the rest.",
+      "kind": "guidance",
+      "sources": ["R-RAMACHANDRAN-1988", "R-MORGENSTERN-2011"],
+      "decisions": ["DEC-199", "DEC-200"],
+      "dependsOn": ["C-S1", "C-T1", "C-F1"],
+      "consumers": ["color"],
+      "status": "draft"
+    },
+    {
+      "id": "C-S9",
+      "group": "S",
+      "text": "The texture of a surface comes from light only: its level, the light on its face and the shadows on it; no surface carries grain, noise or an image texture (DEC-203). A line is drawn only where WCAG 1.4.11 asks for one, at 3:1: what identifies a component or its state, such as the edge of a field, the indicator of a state and the focus indicator (C-C2). A component that its text identifies needs no line, and a region is not a component: every other edge comes from light or is a decorative separator (C-S4) (DEC-204).",
+      "reason": "A drop in luminance with no change of colour tends to be read as lighting, so light alone makes a surface read as natural, and grain would add clutter. Lines at 3:1 round every region were tried and were too strong: WCAG asks for that contrast only where a line identifies a component or its state.",
+      "kind": "guidance",
+      "sources": ["S-WCAG-1.4.11", "R-KINGDOM-2004"],
+      "decisions": ["DEC-203", "DEC-204"],
+      "dependsOn": ["C-C2", "C-S4", "C-S8"],
+      "consumers": ["color"],
+      "status": "draft"
+    },
+    {
+      "id": "C-S10",
+      "group": "S",
+      "text": "A translucent surface with a backdrop filter appears only on the surface on top (C-S6), never on the canvas or on a surface under the top (DEC-202). Its contrast is met at its worst point over any content beneath: the darkest colour it can take in the light colour scheme and the brightest in the dark, set by its tint and its `backdrop-filter`, never by its blur. Its text and its edge meet their ratios against that point. In forced colours mode its background is an opaque `Canvas`; under `prefers-reduced-transparency: reduce` it is the solid colour of the fourth level. It carries no noise layer (C-S9).",
+      "reason": "Blur averages what lies beneath, but a large dark or bright area stays dark or bright, so only the tint and the filter bound the worst point; text over it is tested there, as WCAG technique F83 tests text on an image.",
+      "kind": "guidance",
+      "sources": ["S-WCAG-F83"],
+      "decisions": ["DEC-202"],
+      "dependsOn": ["C-S6", "C-S9"],
+      "consumers": ["color"],
+      "status": "draft"
+    },
+    {
+      "id": "C-T1",
+      "group": "T",
+      "text": "Text has three levels of importance in colour, each measured against the surface level on which it has the least contrast (DEC-139, DEC-162). The lowest, the hint (the `placeholder` and `title` attributes and a control's accessible description), meets the theme's ratio for text exactly; the highest (`h1` to `h6`, `strong`, `button`) takes the strongest contrast the colour scheme allows; all other text takes the middle level. No text sits below the hint. Text on a hovered, pressed or selected surface takes the same three levels, measured on that surface (DEC-167).",
+      "reason": "The level of a text shows its importance, and since the lowest level meets the theme's ratio, no text falls under the contrast a reader needs.",
+      "kind": "guidance",
+      "decisions": ["DEC-139", "DEC-162", "DEC-167"],
+      "dependsOn": ["C-C1"],
+      "consumers": ["color", "typography"],
+      "status": "draft"
+    },
+    {
+      "id": "C-T2",
+      "group": "T",
+      "text": "The colour of text depends on the surface under it, on its level in the hierarchy and on its use, so this foundation sets it and typography does not (DEC-101). Importance is shown by font size, font weight, colour and white space together (DEC-100), so a text level of C-T1 follows what the text is, and is never raised only to make it stand out.",
+      "reason": "This foundation sets the surfaces, the text levels and the colour of each use, such as a link, a status or a disabled state; typography sets font size and font weight and none of those. Importance is shown by the four together, so each carries part of the difference.",
+      "kind": "guidance",
+      "decisions": ["DEC-100", "DEC-101"],
+      "dependsOn": ["C-T1", "T-W2"],
+      "consumers": ["color", "typography"],
+      "status": "draft"
+    },
+    {
+      "id": "C-T3",
+      "group": "T",
+      "text": "Text on a filled surface takes the dark or the light text neutral, whichever meets the contrast ratio the theme asks of that text (DEC-030). Where both do, it takes the one with the higher contrast ratio, on a status fill as on any other; at equal ratios, the dark text neutral in the light colour scheme and the light one in the dark (DEC-194).",
+      "reason": "Switching the text between two neutrals meets the theme's ratio without moving the fill, as a brand colour does not move. Where both pass, the higher ratio is the easier to read, and one rule for every fill keeps a fill from carrying two text colours (DEC-194).",
+      "kind": "guidance",
+      "decisions": ["DEC-030", "DEC-194"],
+      "dependsOn": ["C-C1"],
+      "consumers": ["color"],
+      "status": "draft"
+    },
+    {
+      "id": "C-T4",
+      "group": "T",
+      "text": "A link (the role `LinkText`) takes the colour of DEC-172: a blue of the scale with the hue of the information status, at a lightness that meets the theme's ratio for text on every surface it sits on. It refers to the scale, not to the information token (C-N5). A link inside text is also underlined. A visited link (`:visited`, the role `VisitedText`) keeps the hue and the contrast of a link, with the chroma of DEC-172; nothing depends on its colour. A link's states follow C-I1.",
+      "reason": "A link is coloured so that it reads as clickable; inside text its colour is less than 3:1 from the text around it, so colour alone does not identify it (WCAG 1.4.1, technique G183). A visited link draws less attention, so the user does not open it again by mistake, and a browser may never show its colour.",
+      "kind": "guidance",
+      "sources": ["S-WCAG-1.4.1", "S-WCAG-G183"],
+      "decisions": ["DEC-172"],
+      "consumers": ["color", "a11y"],
+      "status": "draft"
+    },
+    {
+      "id": "C-A1",
+      "group": "A",
+      "text": "A colour appears only where it carries a meaning; everything else takes neutral colours. A button takes neutral colours, the roles `ButtonFace` and `ButtonText`, and importance among neutral buttons is shown by variant, not by colour. A view has at most one main action, and only it takes `AccentColor`, in both colour schemes; where it submits a form, it is that form's default button. A button whose action is destructive takes the danger colour (DEC-161). The text on a filled button follows C-T3, and in the AAA theme the fill is calibrated by C-C7.",
+      "reason": "Many colours distract, hide what matters most and confuse. The accent colour marks the main action; used anywhere else, it stops marking it.",
+      "kind": "guidance",
+      "sources": ["S-CSS-COLOR-4"],
+      "decisions": ["DEC-161"],
+      "consumers": ["color"],
+      "status": "draft"
+    },
+    {
+      "id": "C-A2",
+      "group": "A",
+      "text": "The most colourful colour of a logo, by OKLCH chroma, is proposed as the accent colour (`AccentColor`); a person may pick another colour of the logo or enter one, and every choice is checked again. The other colours of the logo take no role by default (DEC-165). A logo with no chromatic colour, or with two colours of equal chroma, is not decided: the agent reports it.",
+      "reason": "The rule is the same for every brand, and a colour appears only where it carries a meaning (C-A1), so a colour of the logo is given no role of its own.",
+      "kind": "guidance",
+      "decisions": ["DEC-165"],
+      "consumers": ["color"],
+      "status": "draft"
+    },
+    {
+      "id": "C-A3",
+      "group": "A",
+      "text": "A tenant's colours change at run time, without a rebuild (DEC-028). When a tenant's brand colour is too close, by the test of C-A4, to a status colour, the status keeps its hue and meaning, the brand colour is kept, and the tenant is warned that the two can be mistaken for each other (DEC-147).",
+      "reason": "A status colour is never derived from a tenant's brand (DEC-147), and a brand colour does not move (DEC-030), so the tenant is told of the risk instead.",
+      "kind": "guidance",
+      "decisions": ["DEC-028", "DEC-030", "DEC-147"],
+      "consumers": ["color", "platform"],
+      "status": "draft",
+      "dependsOn": ["C-A4"]
+    },
+    {
+      "id": "C-A4",
+      "group": "A",
+      "text": "Two colours are too close when they have the same base colour, the basic colour term most people give a colour, such as green, and are both light or both dark: a colour is dark where the light text neutral has more contrast on it than the dark one, and light otherwise (DEC-175). The test is made on the colours as they are shown, never as a number of degrees of hue. The agent proposes whether a colour is light or dark and its base colour, and a person confirms or corrects both; the agent refers to a colour by the ID of its token, never by a name a brand gives it. The base colour is proposed from the OKLCH hue circle: the nearest of six names, `red`, `orange`, `yellow`, `green`, `blue` and `purple`, and both names for a hue in the middle half of the hues between two of them (DEC-178).",
+      "reason": "Apart, the memory of a colour shifts toward the typical colour of its name, and colours seen one after the other need a larger difference to be told apart, so two colours of one base colour that are both light or both dark are told apart only side by side; and a colour term is wider at some hues than at others, so no number of degrees serves every hue.",
+      "kind": "guidance",
+      "sources": ["R-BAE-2015", "R-UCHIKAWA-1983", "R-BERLIN-KAY-1969"],
+      "decisions": ["DEC-175", "DEC-178"],
+      "consumers": ["color"],
+      "status": "draft"
+    },
+    {
+      "id": "C-A5",
+      "group": "A",
+      "text": "The system uses only the logo variations and the images a brand provides and never recolours, tints, dims or filters one (DEC-213). In a colour scheme it takes the variation made for that ground, and where two fit a surface, the one with the higher contrast ratio. It measures a variation against the surface under it as a graphic (C-C2) and flags one whose mark or text falls under 3:1, naming the parts, for a person to decide. Which of the mark with its text or the mark alone, and of horizontal or vertical, is used follows the space and is not set in this foundation.",
+      "reason": "A logo is the tenant's identity, so the system adapts around it and never changes it (C-C7); not every brand has every variation, so what cannot be shown clearly is flagged for a person instead of being altered.",
+      "kind": "guidance",
+      "sources": ["R-HASHICORP-BRAND", "R-NWF-BRAND"],
+      "decisions": ["DEC-213"],
+      "dependsOn": ["C-C2", "C-C7"],
+      "consumers": ["color", "platform"],
+      "status": "draft"
+    },
+    {
+      "id": "C-M1",
+      "group": "M",
+      "text": "A status colour (danger, warning, success, information) is chosen by its meaning first: the hue of the signal colours that already carry that meaning (DEC-132), inside its safe range (C-M4). Contrast is met by the text colour, or on the canvas by the most vivid colour of that range that meets it (DEC-195), never by moving a colour out of its meaning (DEC-187). A colour that passes every measurement but no longer reads as its meaning has failed.",
+      "reason": "A status is recognised by the hue that signals already give its meaning, and no web standard gives a hue a meaning. Choosing by contrast or colour distance first loses it: a search that maximised colour distance alone turned the warning into a brown (DEC-187).",
+      "kind": "guidance",
+      "sources": ["R-EU-92-58-EEC", "R-MUTCD-2009", "R-CFR-23-655", "R-CFR-49-172"],
+      "decisions": ["DEC-187", "DEC-195", "DEC-132"],
+      "consumers": ["color"],
+      "status": "draft",
+      "dependsOn": ["C-M4"]
+    },
+    {
+      "id": "C-M2",
+      "group": "M",
+      "text": "A status colour appears as a fill carrying text, or as text or a graphical object on the canvas (DEC-195), in two options, pale and vivid (DEC-130, DEC-131, DEC-135), with no more chroma than DEC-134 allows. A pale fill does not identify its status by itself: the vivid colour on it, as text, a graphical object or a border, does, and that colour is the one C-M4 keeps apart. Where a use leaves a status no safe range (C-M4), as a warning as text or a graphical object on a light canvas, it is not used that way: it appears as a fill that carries its text or icon, and text on the canvas takes a text neutral.",
+      "reason": "Colours of one OKLCH chroma look about equally colourful, so a status kept within the accent colour's chroma never outweighs the accent colour. A status that would leave its meaning to pass as text, as a warning turned brown on a light canvas, is shown as a fill, where the text on it carries the contrast.",
+      "kind": "guidance",
+      "decisions": ["DEC-195", "DEC-130", "DEC-131", "DEC-134", "DEC-135"],
+      "consumers": ["color"],
+      "status": "draft",
+      "dependsOn": ["C-M4"]
+    },
+    {
+      "id": "C-M4",
+      "group": "M",
+      "text": "Colours that carry different meanings and are seen together, as the four statuses or the series of a chart, each take the most vivid colour in its safe range (DEC-185). There the colour meets the contrast its use needs, keeps the floor of DEC-185 from every other such colour for every kind of colour vision, and still reads as its meaning: a status hue stays within the limit of DEC-192; a warning is never a brown and a red fill never a pink (DEC-133); red text or a red graphical object on a dark canvas may be lighter than that limit, only as light as its contrast needs. A colour outside its range moves in by the least change of hue or lightness. A use that leaves a colour no safe range is not made of it (C-M2). Each also carries a second visible cue (C-C3).",
+      "reason": "Red-blind and green-blind people keep two signals, light against dark and blue against yellow: a blended hue uses the second and lightness the first. A colour that passes every measurement and no longer reads as its meaning has failed, so vividness and meaning come first and the colour moves only as far as safety needs.",
+      "kind": "guidance",
+      "sources": ["S-WCAG-1.4.1", "R-BRETTEL-1997", "R-VIENOT-1999"],
+      "decisions": ["DEC-185", "DEC-192", "DEC-133"],
+      "dependsOn": ["C-C3"],
+      "consumers": ["color", "a11y"],
+      "status": "draft"
+    },
+    {
+      "id": "C-M5",
+      "group": "M",
+      "text": "The agent proposes the colours of a chart's series as several combinations, and a person chooses one (DEC-196). A series that carries a status takes the colour of that status, chosen as C-M1 sets. For the other series each combination is a colour harmony on the OKLCH hue circle: the hue of the accent colour and the hues the harmony sets at its angles from it; the agent prefers the harmonies whose hues lie furthest apart. Where these series are more than the harmony has hues, the hues repeat in a second version: for each hue, the most vivid colour that keeps the floor of C-M4 from the first. Every colour of the chart meets the chart's contrast (C-C2) and stays in its safe range (C-M4); a combination that cannot is not offered.",
+      "reason": "Hues far apart are the easiest to tell apart, and a harmony taken from the accent colour keeps a chart in the brand's colours. Colour alone cannot keep every number of series apart for every kind of colour vision, so the number a combination holds is computed, and beyond it the second cue tells the series apart (C-C3).",
+      "kind": "guidance",
+      "decisions": ["DEC-196"],
+      "dependsOn": ["C-C2", "C-C3", "C-M1", "C-M4"],
+      "consumers": ["color"],
+      "status": "draft"
+    },
+    {
+      "id": "C-M6",
+      "group": "M",
+      "text": "A data scale in an order is an ordered gradient: its lightness changes steadily (DEC-152). A scale from low to high joins a brand colour with a neutral, white in the light colour scheme and the darkest colour in the dark: its high end is the full colour and its low end the neutral, in both colour schemes. A scale around a middle value joins two colours through that same neutral as its one middle stop (C-G4): its two ends are the full colours and its middle the neutral (DEC-206). The agent proposes the colours and a person chooses (C-M5), and the value is always given in another way too (C-C3).",
+      "reason": "The highest values are the ones a reader looks for, so they take the end that stands out most. A gradient that represents a measurement is outside the 3:1 that WCAG 1.4.11 asks of a graphic, which lets the low end sit close to the canvas.",
+      "kind": "guidance",
+      "sources": ["S-WCAG-1.4.11"],
+      "decisions": ["DEC-206", "DEC-152"],
+      "dependsOn": ["C-G4", "C-M5", "C-C3"],
+      "consumers": ["color"],
+      "status": "draft"
+    },
+    {
+      "id": "C-M7",
+      "group": "M",
+      "text": "Only danger, warning, success and information take a status colour. A message that calls for the attention of the person maps onto one of them by what it asks: to stop or act now, danger; to take care, warning; that something is done or safe, success; to know something, information. Text that only states how things are, and calls for no attention, stays neutral. The agent proposes the mapping and a person confirms it (DEC-207).",
+      "reason": "A colour appears only where it carries a meaning (C-A1), and the signal sources that give the four their hues name no fifth; a fifth colour would also have to stay apart from the four for every kind of colour vision (C-M4).",
+      "kind": "guidance",
+      "sources": ["R-EU-92-58-EEC", "R-MUTCD-2009"],
+      "decisions": ["DEC-207"],
+      "dependsOn": ["C-A1", "C-M4"],
+      "consumers": ["color"],
+      "status": "draft"
+    },
+    {
+      "id": "C-I1",
+      "group": "I",
+      "text": "The colours of a component's states are found from its default colour by the state ratio of DEC-168: hovered (`:hover`) one step and pressed (`:active`) two, darker in the light colour scheme and lighter in the dark, with the hue kept and the chroma kept while it fits sRGB. On each state the text switches to whichever text neutral meets the theme's ratio (C-T3), so its colour may change with the state. Where neither does on the hovered or the pressed colour, or where two steps do not fit before the darkest colour (C-S2) or white, both states move the other way (DEC-179). A state is not shown by an outline in place of its colour.",
+      "reason": "A state moves where there is room: surfaces in the light colour scheme are close to white, and those in the dark are close to the darkest colour. An outline in place of the colour would be taken for the focus indicator during keyboard navigation.",
+      "kind": "guidance",
+      "sources": ["S-SELECTORS-4"],
+      "decisions": ["DEC-168", "DEC-179"],
+      "dependsOn": ["C-C6", "C-T3"],
+      "consumers": ["color"],
+      "status": "draft"
+    },
+    {
+      "id": "C-I2",
+      "group": "I",
+      "text": "A disabled component and a busy one (`aria-busy`) look the same: no fill, and text, icons and border in the grey of DEC-169, measured on the surface level on which it has the least contrast. Disabled is one style, the same across all states, and it is not made with opacity.",
+      "reason": "WCAG sets no contrast for inactive components, so this floor is the system's own: at the lowest ratio WCAG uses, the component stays visible and, under the ratio of normal text, reads as off.",
+      "kind": "guidance",
+      "sources": ["S-WCAG-1.4.3", "S-WCAG-1.4.11"],
+      "decisions": ["DEC-169"],
+      "consumers": ["color", "a11y"],
+      "status": "draft"
+    },
+    {
+      "id": "C-I3",
+      "group": "I",
+      "text": "The focus indicator is the same for every component, both colour schemes and both themes: the two colours of DEC-176, side by side, with a contrast ratio of at least 9:1 between them. Over an image or a gradient the indicator is measured pixel by pixel. Focus is a foundation token of its own: it never refers to the warning token (C-N5).",
+      "reason": "With at least 9:1 between its two colours, one of them reaches 3:1 against any solid background (WCAG technique C40). A token that referred to the warning token would borrow its meaning: focus is not a warning.",
+      "kind": "check",
+      "checkKind": "data",
+      "sources": ["S-WCAG-C40", "S-WCAG-2.4.13"],
+      "decisions": ["DEC-176"],
+      "consumers": ["ci", "a11y", "color"],
+      "status": "draft"
+    },
+    {
+      "id": "C-I4",
+      "group": "I",
+      "text": "Selected text (`::selection`, the role `Highlight`) and marked text (the `mark` element, the role `Mark`) take the selection colour of DEC-171, and the text on it is the darkest colour (C-S2), at 7:1 or more (WCAG 1.4.6). Where the selection colour would be too close to a status colour or to the focus colour (C-A4), it takes the nearest hue at which it is not. No limit in degrees is used in its place.",
+      "reason": "A selection must not read as a status or as focus, and the text inside it must stay readable.",
+      "kind": "guidance",
+      "sources": ["S-CSS-COLOR-4", "S-WCAG-1.4.6"],
+      "decisions": ["DEC-171"],
+      "consumers": ["color"],
+      "status": "draft",
+      "dependsOn": ["C-A4"]
+    },
+    {
+      "id": "C-I5",
+      "group": "I",
+      "text": "The focus indicator is drawn with `outline`. It never sets `outline: none` to rely on `box-shadow` alone.",
+      "reason": "Forced colours modes suppress `box-shadow`, so an indicator drawn with it alone disappears there (WCAG technique C40).",
+      "kind": "check",
+      "checkKind": "source",
+      "sources": ["S-WCAG-C40", "S-CSS-COLOR-ADJUST"],
+      "decisions": ["DEC-176", "DEC-146"],
+      "dependsOn": ["C-I3"],
+      "consumers": ["ci", "a11y", "color"],
+      "status": "draft"
+    },
+    {
+      "id": "C-I6",
+      "group": "I",
+      "text": "A selected item is marked by a neutral surface two steps of the state ratio from its own surface (C-I1), together with a second visible cue that meets 3:1 against the colours next to it; the state is also exposed in code (WCAG 4.1.2). The accent colour never marks a selected item. A person may choose the tint that DEC-170 defines instead, only where every text level passes on it. Text on the selected surface follows C-C1.",
+      "reason": "Colour is never the only visible cue of what is selected (WCAG 1.4.1), and the cue that identifies the state must be seen (WCAG 1.4.11). The accent colour marks the main action; used for a selection too, it stops marking it.",
+      "kind": "guidance",
+      "sources": ["S-WCAG-1.4.1", "S-WCAG-1.4.11", "S-WCAG-4.1.2"],
+      "decisions": ["DEC-170"],
+      "dependsOn": ["C-I1"],
+      "consumers": ["color", "a11y"],
+      "status": "draft"
+    },
+    {
+      "id": "C-G1",
+      "group": "G",
+      "text": "A gradient is an option for different uses, not a list of places: the agent proposes a use and a person confirms it (DEC-198). A gradient on a surface is the light on that surface and follows the one light (C-S8); a gradient that carries a meaning of its own, as an ordered data scale (C-M6), joins and mixes its colours as C-G4 and C-G2 set. In every use it is never the only carrier of a meaning (C-C3), it has a solid background colour beside it, and text on it meets the theme's ratio at its least contrasting area. In the AAA theme the gradient of the light is removed (C-S8) and the mark of content made by AI is a solid colour; an ordered data scale stays, because it is the data.",
+      "reason": "A product, a brand or a use may call for a gradient, and its uses are learned by trying, so no list of places is fixed. Forced colours mode computes a gradient to none, so it vanishes there and cannot be the only carrier of a meaning. Text on it is measured at its least contrasting area, as WCAG technique F83 tests text against the part of the background most like it.",
+      "kind": "guidance",
+      "sources": ["S-WCAG-F83"],
+      "decisions": ["DEC-198"],
+      "dependsOn": ["C-C3"],
+      "consumers": ["color"],
+      "status": "draft"
+    },
+    {
+      "id": "C-G2",
+      "group": "G",
+      "text": "A gradient names its colour interpolation method (`in oklab`, or `in oklch` with its hue direction) or writes its stops in OKLCH. Its other mixing rules are those of DEC-152.",
+      "reason": "Stops written in legacy sRGB syntax interpolate in gamma sRGB (CSS Color 4), so a gradient that is to mix in Oklab or OKLCH has to name that space or write its stops in OKLCH.",
+      "kind": "check",
+      "checkKind": "source",
+      "sources": ["S-CSS-COLOR-4", "S-CSS-IMAGES-4"],
+      "decisions": ["DEC-152"],
+      "consumers": ["ci", "color"],
+      "status": "draft"
+    },
+    {
+      "id": "C-G3",
+      "group": "G",
+      "text": "An animated gradient follows DEC-153: no more than three flashes in any second and no saturated red flash (WCAG 2.3.1); a way to pause, stop or hide motion that starts on its own, lasts more than five seconds and sits beside other content (WCAG 2.2.2); stillness under `prefers-reduced-motion: reduce`; and text over it at the theme's ratio on every frame.",
+      "reason": "WCAG 2.3.1 allows no more than three flashes in any second and sets a limit for saturated red, and WCAG 2.2.2 requires that moving content that starts on its own, lasts more than five seconds and sits beside other content can be paused, stopped or hidden. That the ratio holds on every frame is an inference from WCAG technique F83 (DEC-153).",
+      "kind": "guidance",
+      "sources": ["S-WCAG-2.3.1", "S-WCAG-2.2.2", "S-WCAG-F83"],
+      "decisions": ["DEC-153"],
+      "consumers": ["color", "a11y"],
+      "status": "draft"
+    },
+    {
+      "id": "C-G4",
+      "group": "G",
+      "text": "A gradient joins one of three kinds of pair: brand colours with each other; a brand colour with white or with the darkest colour (C-S2); or a brand colour with a partner at an angle from it on the OKLCH hue circle, such as a neighbour or the hue of a harmony (DEC-189). Two colours no further apart in hue than DEC-189 allows mix straight. Further apart they do not: they join in one gradient through white or the darkest colour as its one middle stop, or go round the hue circle only where the path crosses no status hue (DEC-152).",
+      "reason": "The middle of a straight mix loses its colour as the two hues move apart, and is grey between opposite hues; a path round the hue circle shows every hue between its ends, and any half turn holds a status hue.",
+      "kind": "guidance",
+      "decisions": ["DEC-189", "DEC-152"],
+      "dependsOn": ["C-G1", "C-G2"],
+      "consumers": ["color"],
+      "status": "draft"
+    },
+    {
+      "id": "C-D1",
+      "group": "D",
+      "text": "A code block is dark in both colour schemes and uses the eight colour names of ECMA-48 Select Graphic Rendition, with the colours of DEC-141 at the AAA theme's ratio in both themes. A token of code takes a colour only when it carries a meaning (DEC-149); every other token takes the block's default text colour.",
+      "reason": "A dark block in terminal colours reads as a terminal: a technical reader stops at it, and others see it is not meant for them. Code is dense small text, so the AAA values serve both themes, and colouring meaning only adds nothing a developer has to learn, as terminal tools agree only on meaning.",
+      "kind": "guidance",
+      "decisions": ["DEC-141", "DEC-149"],
+      "consumers": ["color"],
+      "status": "draft"
+    },
+    {
+      "id": "C-F1",
+      "group": "F",
+      "text": "Forced colours mode is respected everywhere: `forced-color-adjust` is never `none` (DEC-146). In that mode `box-shadow` and `text-shadow` compute to `none`, and so does a `background-image` without a `url()`, such as a gradient (CSS Color Adjustment 1), so none of them is the only carrier of an edge, a state or a meaning.",
+      "reason": "WCAG 1.4.8 asks that the user can select foreground and background colours, by a mechanism the browser may provide; forced colours mode is such a mechanism, so no part of the system opts out of the user's palette. Meaning is carried by text, icons, borders and labels so that it survives that palette.",
+      "kind": "check",
+      "checkKind": "source",
+      "sources": ["S-CSS-COLOR-ADJUST", "S-WCAG-1.4.8"],
+      "decisions": ["DEC-146"],
+      "consumers": ["ci", "a11y", "color"],
+      "status": "draft"
+    }
+  ],
+  "gaps": []
+}

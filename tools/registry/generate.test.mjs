@@ -175,6 +175,100 @@ test('proposed guidance is listed apart from the guidance to apply, with what it
   assert.equal(section(content, 'Proposed guidance, not decided yet'), null);
 });
 
+test('a rule reaches an agent with its reason, and the rules document gives the reason its own column', () => {
+  const section = (content, title) => content.split(`## ${title}\n`)[1]?.split('\n## ')[0] ?? null;
+  const why =
+    /Demo rule waiting for a decision\. \*\*Why:\*\* Demo reason for the waiting rule, which builds on X-A1\./;
+  const outputs = renderRegistry(valid, schemas);
+  for (const name of ['foundation-demo.md', 'demo-reviewer.md']) {
+    const { content } = outputs.find((o) => o.file.endsWith(name));
+    assert.match(section(content, 'Proposed guidance, not decided yet'), why, name);
+  }
+
+  // The same holds once the rule is guidance to apply.
+  const decided = structuredClone(valid);
+  const dec = decided.decisions.data.decisions.find((d) => d.id === 'DEC-002');
+  delete dec.blocks;
+  Object.assign(dec, {
+    status: 'answered',
+    answer: '1.5',
+    decidedBy: 'Fixture owner',
+    decidedOn: '2026-01-05',
+  });
+  decided.foundations[0].rules.data.rules.find((r) => r.id === 'X-A2').status = 'draft';
+  decided.foundations[0].rules.data.gaps = [];
+  const agent = renderRegistry(decided, schemas).find((o) => o.file.endsWith('foundation-demo.md'));
+  assert.match(section(agent.content, 'Guidance to apply while working'), why);
+
+  const lines = outputs.find((o) => o.file.endsWith('rules.md')).content.split('\n');
+  const cells = (start) => rowCells(lines.find((l) => l.startsWith(start))).map((c) => c.trim());
+  const header = cells('| ID | Rule');
+  assert.equal(cells('| X-A1 ')[header.indexOf('Reason')], 'Demo reason for the checked rule.');
+  assert.ok(lines.some((l) => l.startsWith('- **Reason:** ')));
+});
+
+test('a rule that a rule in the agent file names is given in that file, whatever its kind', () => {
+  const section = (content, title) => content.split(`## ${title}\n`)[1]?.split('\n## ')[0] ?? null;
+  // X-A2, guidance, names X-A1, a check rule, in its reason: without X-A1 the agent could not follow the pointer.
+  for (const name of ['foundation-demo.md', 'demo-reviewer.md']) {
+    const { content } = renderRegistry(valid, schemas).find((o) => o.file.endsWith(name));
+    assert.match(
+      section(content, 'Rules named above'),
+      /- \*\*X-A1\*\* \(check\): Demo rule enforced by a check\. \*\*Why:\*\* Demo reason for the checked rule\./,
+      name,
+    );
+  }
+});
+
+test('a rule named by a named rule is given too, and a name that is no rule is left alone', () => {
+  const section = (content, title) => content.split(`## ${title}\n`)[1]?.split('\n## ')[0] ?? null;
+  const chained = structuredClone(valid);
+  const rules = chained.foundations[0].rules.data.rules;
+  rules[0].reason = 'Demo reason for the checked rule: see X-A3, not Z-Z9.';
+  rules.push({
+    id: 'X-A3',
+    group: 'A',
+    text: 'Demo rule to read when deciding.',
+    reason: 'Demo reason for the reference rule.',
+    kind: 'reference',
+    sources: ['S-DEMO-1'],
+    consumers: ['ci'],
+    status: 'draft',
+  });
+  assert.deepEqual(validateRegistryData(chained, validators), []);
+  const { content } = renderRegistry(chained, schemas).find((o) =>
+    o.file.endsWith('foundation-demo.md'),
+  );
+  const named = section(content, 'Rules named above');
+  assert.match(named, /- \*\*X-A1\*\* \(check\)/);
+  assert.match(named, /- \*\*X-A3\*\* \(reference\): Demo rule to read when deciding\./);
+  assert.doesNotMatch(named, /\*\*Z-Z9\*\*/);
+  // Each rule is given once, in the order it is first named.
+  assert.equal(named.match(/^- \*\*X-A/gm).length, 2);
+  assert.ok(named.indexOf('**X-A1**') < named.indexOf('**X-A3**'));
+});
+
+test('a rule nobody names is not repeated: an agent file that names none has no such section', () => {
+  const plain = structuredClone(valid);
+  plain.foundations[0].rules.data.rules[1].reason = 'Demo reason for the waiting rule.';
+  for (const name of ['foundation-demo.md', 'demo-reviewer.md']) {
+    const { content } = renderRegistry(plain, schemas).find((o) => o.file.endsWith(name));
+    assert.doesNotMatch(content, /## Rules named above/, name);
+    assert.doesNotMatch(content, /\*\*X-A1\*\*/, name);
+  }
+});
+
+test('a rules file in which no rule states its reason renders no Reason column and no Why', () => {
+  const bare = structuredClone(valid);
+  for (const rule of bare.foundations[0].rules.data.rules) delete rule.reason;
+  const outputs = renderRegistry(bare, schemas);
+  const rules = outputs.find((o) => o.file.endsWith('rules.md')).content;
+  assert.doesNotMatch(rules, /\| Reason \||- \*\*Reason:\*\*/);
+  for (const name of ['foundation-demo.md', 'demo-reviewer.md']) {
+    assert.doesNotMatch(outputs.find((o) => o.file.endsWith(name)).content, /\*\*Why:\*\*/, name);
+  }
+});
+
 test("a foundation agent's open decisions include its gaps; a reviewer's don't", () => {
   const gapped = structuredClone(valid);
   gapped.decisions.data.decisions.push({
