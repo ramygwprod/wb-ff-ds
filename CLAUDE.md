@@ -52,7 +52,7 @@ Requires Node 26 (`.nvmrc`) and npm 11.20 (`packageManager`). `engine-strict` re
 - **Theme axes:** brand × scheme (light/dark) × direction × conformance (AA/AAA) × density. What "density" means is not defined yet; ask before using it.
 - **Standards referenced:** WAI-ARIA Authoring Practices, DTCG 2025.10 (design tokens), EN 301 549 (version still to confirm).
 - **Fonts:** the default families are Rubik for English and Arabic, and IBM Plex Mono for code (DEC-115). A tenant can replace them. The rules are in `knowledge-base/foundations/typography/`.
-- Brand colours and tokens are not set yet. Don't add them.
+- **Colour:** the rules are in `knowledge-base/foundations/color/`. Colours are computed from a brand's inputs by those rules; no colour value and no token is stored yet (DEC-159). Don't add them.
 
 ## 5. Supply chain
 

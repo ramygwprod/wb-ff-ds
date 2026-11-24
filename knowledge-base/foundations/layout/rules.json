@@ -1,5 +1,5 @@
 {
-  "contractVersion": "0.1.0",
+  "contractVersion": "0.2.0",
   "foundation": "layout",
   "title": "Layout system",
   "idPrefix": "L",
@@ -940,11 +940,6 @@
       "gap": "Who sets each pane's priority, and where it is stored",
       "owner": "Ramy",
       "decision": "DEC-055"
-    },
-    {
-      "gap": "Where user preferences live (density, pane sizes)",
-      "owner": "Ramy",
-      "decision": "DEC-057"
     },
     {
       "gap": "The levels of each density setting and what each adjusts",

@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://ramygwprod.github.io/wb-ff-ds/registry/0.1/agent.schema.json",
+  "$id": "https://ramygwprod.github.io/wb-ff-ds/registry/0.2/agent.schema.json",
   "title": "WB-FF-DS registry: an agent manifest",
   "description": "What one agent may do and how its work is checked. Its Claude Code agent file is generated from this manifest; hooks and CI enforce it.",
   "type": "object",

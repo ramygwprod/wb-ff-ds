@@ -53,6 +53,56 @@
       "expect": ["SCHEMA"]
     },
     {
+      "name": "reason with trailing whitespace",
+      "file": "rules",
+      "ops": [
+        {
+          "op": "replace",
+          "path": "/rules/0/reason",
+          "value": "Bad "
+        }
+      ],
+      "expect": ["SCHEMA"]
+    },
+    {
+      "name": "empty reason",
+      "file": "rules",
+      "ops": [
+        {
+          "op": "replace",
+          "path": "/rules/0/reason",
+          "value": ""
+        }
+      ],
+      "expect": ["SCHEMA"]
+    },
+    {
+      "name": "rule with no reason in a file where another rule states its reason",
+      "file": "rules",
+      "ops": [
+        {
+          "op": "remove",
+          "path": "/rules/1/reason"
+        }
+      ],
+      "expect": ["MISSING_REASON"]
+    },
+    {
+      "name": "rules file in which no rule states its reason yet",
+      "file": "rules",
+      "ops": [
+        {
+          "op": "remove",
+          "path": "/rules/0/reason"
+        },
+        {
+          "op": "remove",
+          "path": "/rules/1/reason"
+        }
+      ],
+      "expect": ["REASONS_NOT_STARTED"]
+    },
+    {
       "name": "source that doesn't exist",
       "file": "rules",
       "ops": [
@@ -75,6 +125,7 @@
             "id": "X-A1",
             "group": "A",
             "text": "A copy.",
+            "reason": "A copy of a reason.",
             "kind": "reference",
             "sources": ["S-DEMO-1"],
             "consumers": ["ci"],
@@ -295,7 +346,7 @@
         {
           "op": "replace",
           "path": "/contractVersion",
-          "value": "0.2.0"
+          "value": "9.9.9"
         }
       ],
       "expect": ["CONTRACT_MISMATCH"]
@@ -726,7 +777,7 @@
         {
           "op": "replace",
           "path": "/contractVersion",
-          "value": "0.2.0"
+          "value": "9.9.9"
         }
       ]
     },
@@ -902,7 +953,7 @@
         {
           "op": "replace",
           "path": "/contractVersion",
-          "value": "0.2.0"
+          "value": "9.9.9"
         }
       ]
     },
@@ -929,6 +980,148 @@
           "value": "knowledge-base/runs/2026-11.jsonl"
         }
       ]
+    },
+    {
+      "name": "rule naming in its text a rule that does not exist",
+      "file": "rules",
+      "ops": [
+        {
+          "op": "replace",
+          "path": "/rules/0/text",
+          "value": "Demo rule enforced by a check, as X-A9 sets it."
+        }
+      ],
+      "expect": ["UNRESOLVED_RULE"]
+    },
+    {
+      "name": "rule naming in its reason a rule that does not exist",
+      "file": "rules",
+      "ops": [
+        {
+          "op": "replace",
+          "path": "/rules/0/reason",
+          "value": "Demo reason for the checked rule, which X-A9 gives."
+        }
+      ],
+      "expect": ["UNRESOLVED_RULE"]
+    },
+    {
+      "name": "rule naming in its text a decision that is not in its list",
+      "file": "rules",
+      "ops": [
+        {
+          "op": "replace",
+          "path": "/rules/0/text",
+          "value": "Demo rule enforced by a check (DEC-002)."
+        }
+      ],
+      "expect": ["DECISION_NOT_LISTED"]
+    },
+    {
+      "name": "rule naming in its reason a decision that does not exist",
+      "file": "rules",
+      "ops": [
+        {
+          "op": "replace",
+          "path": "/rules/0/reason",
+          "value": "Demo reason for the checked rule (DEC-099)."
+        }
+      ],
+      "expect": ["DECISION_NOT_LISTED", "UNRESOLVED_DECISION"]
+    },
+    {
+      "name": "rule whose list was moved to the new decision while its text still names the replaced one",
+      "file": "decisions",
+      "ops": [
+        {
+          "op": "add",
+          "path": "/decisions/-",
+          "value": {
+            "id": "DEC-003",
+            "question": "Fixture: which base size, revisited?",
+            "status": "answered",
+            "options": ["16px", "18px"],
+            "answer": "16px, confirmed",
+            "decidedBy": "Fixture owner",
+            "decidedOn": "2026-01-04",
+            "recordedOn": "2026-01-04",
+            "supersedes": ["DEC-001"]
+          }
+        }
+      ],
+      "more": [
+        {
+          "file": "rules",
+          "ops": [
+            {
+              "op": "replace",
+              "path": "/rules/0/decisions/0",
+              "value": "DEC-003"
+            },
+            {
+              "op": "replace",
+              "path": "/rules/0/text",
+              "value": "Demo rule enforced by a check (DEC-001)."
+            }
+          ]
+        }
+      ],
+      "expect": ["DECISION_NOT_LISTED", "DECISION_SUPERSEDED"]
+    },
+    {
+      "name": "rule naming in its text an abandoned decision that is not in its list",
+      "file": "decisions",
+      "ops": [
+        {
+          "op": "add",
+          "path": "/decisions/-",
+          "value": {
+            "id": "DEC-003",
+            "question": "Fixture: a question that was dropped?",
+            "status": "abandoned",
+            "options": ["Yes", "No"],
+            "notes": "Dropped in the fixture.",
+            "recordedOn": "2026-01-04"
+          }
+        }
+      ],
+      "more": [
+        {
+          "file": "rules",
+          "ops": [
+            {
+              "op": "replace",
+              "path": "/rules/0/text",
+              "value": "Demo rule enforced by a check (DEC-003)."
+            }
+          ]
+        }
+      ],
+      "expect": ["DECISION_CLOSED", "DECISION_NOT_LISTED"]
+    },
+    {
+      "name": "rule naming in its text a decision it lists and a rule that exists",
+      "file": "rules",
+      "ops": [
+        {
+          "op": "replace",
+          "path": "/rules/1/text",
+          "value": "Demo rule waiting for a decision (DEC-002), after X-A1."
+        }
+      ],
+      "expect": []
+    },
+    {
+      "name": "text with a code shaped like a rule ID whose prefix belongs to no foundation",
+      "file": "rules",
+      "ops": [
+        {
+          "op": "replace",
+          "path": "/rules/0/text",
+          "value": "Demo rule enforced by a check, for the paper size ISO-A4."
+        }
+      ],
+      "expect": []
     }
   ]
 }

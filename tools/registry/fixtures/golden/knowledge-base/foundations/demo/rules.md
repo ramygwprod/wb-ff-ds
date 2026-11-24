@@ -2,10 +2,11 @@
 
 # demo: rules
 
-One testable sentence per rule, with its kind, sources, decisions and consumers.
+One testable sentence per rule, with its reason, kind, sources, decisions and consumers.
 
-**Status:** draft. **Contract:** 0.1.0.
+**Status:** draft. **Contract:** 0.2.0.
 
+- **Reason:** Why the rule holds: the requirement of a standard or the concept behind it, in words that stand without the rule's text. Once one rule in a file states its reason, every rule in that file does.
 - **Kind**
   - `check`: a machine enforces it (lint, test or CI); a rule a script can't test isn't a check.
   - `guidance`: the agent loads it while working.
@@ -14,6 +15,7 @@ One testable sentence per rule, with its kind, sources, decisions and consumers.
 - **Consumers**
   - `layout`: the layout agent.
   - `typography`: the typography agent.
+  - `color`: the colour agent.
   - `a11y`: the accessibility reviewer.
   - `rtl`: the RTL and i18n reviewer.
   - `ci`: automated checks.
@@ -32,10 +34,10 @@ One testable sentence per rule, with its kind, sources, decisions and consumers.
 
 ## 1. Demo group
 
-| ID   | Rule                              | Kind     | Basis                 | Consumers | Status                     | Check                   |
-| ---- | --------------------------------- | -------- | --------------------- | --------- | -------------------------- | ----------------------- |
-| X-A1 | Demo rule enforced by a check.    | check    | S-DEMO-1, DEC-001     | ci        | approved                   | source: `chk-demo-size` |
-| X-A2 | Demo rule waiting for a decision. | guidance | U-DEMO, DEC-002, X-A1 | layout    | proposed, waits on DEC-002 | —                       |
+| ID   | Rule                              | Reason                                                  | Kind     | Basis                 | Consumers | Status                     | Check                   |
+| ---- | --------------------------------- | ------------------------------------------------------- | -------- | --------------------- | --------- | -------------------------- | ----------------------- |
+| X-A1 | Demo rule enforced by a check.    | Demo reason for the checked rule.                       | check    | S-DEMO-1, DEC-001     | ci        | approved                   | source: `chk-demo-size` |
+| X-A2 | Demo rule waiting for a decision. | Demo reason for the waiting rule, which builds on X-A1. | guidance | U-DEMO, DEC-002, X-A1 | layout    | proposed, waits on DEC-002 | —                       |
 
 ## Decisions these rules rest on
 

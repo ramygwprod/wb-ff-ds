@@ -54,22 +54,28 @@ function applyOp(document, { op, path: pointer, value }) {
 /**
  * Returns a copy of the valid registry with one case's changes applied. "file" names the target:
  * decisions, checks (the check registry), the demo foundation's sources, rules or agent, or
- * "reviewer" (the reviewer manifest).
+ * "reviewer" (the reviewer manifest). A case that needs a second file changed lists it under
+ * "more", as further { file, ops } pairs applied after the first.
  */
 function variant(testCase) {
   const registry = structuredClone(valid);
-  const [holder, key] =
-    testCase.file === 'decisions' || testCase.file === 'checks'
-      ? [registry, testCase.file]
-      : testCase.file === 'reviewer'
+  const target = (file) =>
+    file === 'decisions' || file === 'checks'
+      ? [registry, file]
+      : file === 'reviewer'
         ? [registry.agents, 0]
-        : [registry.foundations[0], testCase.file];
+        : [registry.foundations[0], file];
+  const [holder, key] = target(testCase.file);
   if (testCase.drop) {
     assert.notEqual(testCase.file, 'reviewer', 'drop is not supported for the reviewer');
     holder[key] = null;
     return registry;
   }
   for (const op of testCase.ops) applyOp(holder[key].data, op);
+  for (const part of testCase.more ?? []) {
+    const [moreHolder, moreKey] = target(part.file);
+    for (const op of part.ops) applyOp(moreHolder[moreKey].data, op);
+  }
   return registry;
 }
 

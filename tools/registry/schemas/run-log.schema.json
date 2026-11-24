@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://ramygwprod.github.io/wb-ff-ds/registry/0.1/run-log.schema.json",
+  "$id": "https://ramygwprod.github.io/wb-ff-ds/registry/0.2/run-log.schema.json",
   "title": "WB-FF-DS run log: one line",
   "description": "One event in the public run log (DEC-021). Structured fields and IDs only: no free text, no names of agents without a manifest, and a path only when git publishes it.",
   "type": "object",

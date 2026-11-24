@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://ramygwprod.github.io/wb-ff-ds/registry/0.1/rules.schema.json",
+  "$id": "https://ramygwprod.github.io/wb-ff-ds/registry/0.2/rules.schema.json",
   "title": "WB-FF-DS registry: a foundation's rules",
-  "description": "One testable sentence per rule, with its kind, sources, decisions and consumers.",
+  "description": "One testable sentence per rule, with its reason, kind, sources, decisions and consumers.",
   "type": "object",
   "required": ["contractVersion", "foundation", "idPrefix", "status", "groups", "rules"],
   "additionalProperties": false,
@@ -76,6 +76,11 @@
           "pattern": "^[A-Z]$"
         },
         "text": {
+          "description": "What must hold, in one testable sentence.",
+          "$ref": "common.schema.json#/$defs/text"
+        },
+        "reason": {
+          "description": "Why the rule holds: the requirement of a standard or the concept behind it, in words that stand without the rule's text. Once one rule in a file states its reason, every rule in that file does.",
           "$ref": "common.schema.json#/$defs/text"
         },
         "kind": {

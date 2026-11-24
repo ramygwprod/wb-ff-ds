@@ -1,5 +1,5 @@
 {
-  "contractVersion": "0.1.0",
+  "contractVersion": "0.2.0",
   "foundation": "demo",
   "idPrefix": "X",
   "status": "draft",
@@ -14,6 +14,7 @@
       "id": "X-A1",
       "group": "A",
       "text": "Demo rule enforced by a check.",
+      "reason": "Demo reason for the checked rule.",
       "kind": "check",
       "checkKind": "source",
       "sources": ["S-DEMO-1"],
@@ -26,6 +27,7 @@
       "id": "X-A2",
       "group": "A",
       "text": "Demo rule waiting for a decision.",
+      "reason": "Demo reason for the waiting rule, which builds on X-A1.",
       "kind": "guidance",
       "sources": ["U-DEMO"],
       "decisions": ["DEC-002"],

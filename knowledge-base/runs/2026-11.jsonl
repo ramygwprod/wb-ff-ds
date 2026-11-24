@@ -1,1 +1,6 @@
 {"v":1,"at":"2026-11-14T00:39:03.300Z","event":"write","agent":"unregistered","run":"a8b70bce999b6b78f","tool":"Write","path":null,"where":"unpublished","decision":"denied","why":"no-manifest"}
+{"v":1,"at":"2026-11-15T22:18:16.549Z","event":"write","agent":"unregistered","run":"aec8a126e14a9fa36","tool":"Write","path":null,"where":"unpublished","decision":"denied","why":"no-manifest"}
+{"v":1,"at":"2026-11-15T22:19:52.010Z","event":"write","agent":"unregistered","run":"ab780167c4356949f","tool":"Write","path":null,"where":"unpublished","decision":"denied","why":"no-manifest"}
+{"v":1,"at":"2026-11-15T22:20:21.803Z","event":"write","agent":"unregistered","run":"ad9ff797c99aa243f","tool":"Write","path":null,"where":"unpublished","decision":"denied","why":"no-manifest"}
+{"v":1,"at":"2026-11-15T22:23:14.673Z","event":"write","agent":"unregistered","run":"ad9ff797c99aa243f","tool":"Write","path":null,"where":"outside-repo","decision":"denied","why":"no-manifest"}
+{"v":1,"at":"2026-11-23T18:57:01.133Z","event":"write","agent":"unregistered","run":"ae991603cc265ecd3","tool":"Write","path":null,"where":"outside-repo","decision":"denied","why":"no-manifest"}

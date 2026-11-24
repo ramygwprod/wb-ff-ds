@@ -2,9 +2,9 @@
 
 # Typography: rules
 
-One testable sentence per rule, with its kind, sources, decisions and consumers.
+One testable sentence per rule, with its reason, kind, sources, decisions and consumers.
 
-**Status:** draft. **Contract:** 0.1.0.
+**Status:** draft. **Contract:** 0.2.0.
 
 - **Kind**
   - `check`: a machine enforces it (lint, test or CI); a rule a script can't test isn't a check.
@@ -14,6 +14,7 @@ One testable sentence per rule, with its kind, sources, decisions and consumers.
 - **Consumers**
   - `layout`: the layout agent.
   - `typography`: the typography agent.
+  - `color`: the colour agent.
   - `a11y`: the accessibility reviewer.
   - `rtl`: the RTL and i18n reviewer.
   - `ci`: automated checks.
@@ -190,5 +191,4 @@ Answers, options and history are in [decisions.md](../../decisions.md).
 | Gap                                                                                            | Blocks | Owner | Decision |
 | ---------------------------------------------------------------------------------------------- | ------ | ----- | -------- |
 | The block size of a single-line control, from which its block padding follows in each language | L-C14  | Ramy  | DEC-072  |
-| Where the digits setting is stored                                                             | —      | Ramy  | DEC-057  |
 | Tokens for the text values the `typography` token does not hold                                | T-T3   | Ramy  | DEC-118  |

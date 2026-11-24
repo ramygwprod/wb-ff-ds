@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://ramygwprod.github.io/wb-ff-ds/registry/0.1/checks.schema.json",
+  "$id": "https://ramygwprod.github.io/wb-ff-ds/registry/0.2/checks.schema.json",
   "title": "WB-FF-DS registry: the checks",
   "description": "Every check that enforces a rule. Rules point here by checkId; the lint configuration is built from this file, and each check is proven on samples it must pass and must fail.",
   "type": "object",

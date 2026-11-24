@@ -1,0 +1,465 @@
+{
+  "contractVersion": "0.2.0",
+  "foundation": "color",
+  "title": "Colour",
+  "scope": "Colour roles and their values; contrast in the AA and AAA themes; the light and dark colour schemes; the colour of surfaces, text, links, states, focus, selection, status, gradients, shadows, code and charts; forced colours mode; and the tokens that carry a colour.",
+  "sources": [
+    {
+      "id": "S-WCAG-1.3.3",
+      "role": "judged-by",
+      "title": "WCAG 2.2, Sensory Characteristics",
+      "edition": "Level A",
+      "checked": "2026-11-15",
+      "urls": ["https://www.w3.org/TR/WCAG22/"],
+      "uses": "Instructions do not rely solely on shape, colour, size, visual location, orientation or sound",
+      "verification": "read"
+    },
+    {
+      "id": "S-WCAG-1.4.1",
+      "role": "judged-by",
+      "title": "WCAG 2.2, Use of Color",
+      "edition": "Level A",
+      "checked": "2026-11-15",
+      "urls": [
+        "https://www.w3.org/TR/WCAG22/",
+        "https://www.w3.org/WAI/WCAG22/Understanding/use-of-color"
+      ],
+      "uses": "Colour is not the only visual means of conveying information; hue alone needs a second cue; lightness at 3:1 counts as a second cue",
+      "verification": "read"
+    },
+    {
+      "id": "S-WCAG-1.4.3",
+      "role": "judged-by",
+      "title": "WCAG 2.2, Contrast (Minimum)",
+      "edition": "Level AA",
+      "checked": "2026-11-15",
+      "urls": [
+        "https://www.w3.org/TR/WCAG22/",
+        "https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum"
+      ],
+      "uses": "Text contrast in the AA theme, the definition of the contrast ratio, unrounded thresholds, large-scale text, logotypes and inactive components",
+      "verification": "read"
+    },
+    {
+      "id": "S-WCAG-1.4.6",
+      "role": "judged-by",
+      "title": "WCAG 2.2, Contrast (Enhanced)",
+      "edition": "Level AAA",
+      "checked": "2026-11-15",
+      "urls": [
+        "https://www.w3.org/TR/WCAG22/",
+        "https://www.w3.org/WAI/WCAG22/Understanding/contrast-enhanced"
+      ],
+      "uses": "Text contrast in the AAA theme",
+      "verification": "read"
+    },
+    {
+      "id": "S-WCAG-1.4.11",
+      "role": "judged-by",
+      "title": "WCAG 2.2, Non-text Contrast",
+      "edition": "Level AA",
+      "checked": "2026-11-15",
+      "urls": [
+        "https://www.w3.org/TR/WCAG22/",
+        "https://www.w3.org/WAI/WCAG22/Understanding/non-text-contrast"
+      ],
+      "uses": "Contrast of what identifies a component and its states, and of the parts of a graphic required to understand it; a gradient is tested at its least contrasting area",
+      "verification": "read"
+    },
+    {
+      "id": "S-WCAG-2.2.2",
+      "role": "judged-by",
+      "title": "WCAG 2.2, Pause, Stop, Hide",
+      "edition": "Level A",
+      "checked": "2026-11-20",
+      "urls": ["https://www.w3.org/WAI/WCAG22/Understanding/pause-stop-hide"],
+      "uses": "Moving content that starts automatically, lasts more than five seconds and is presented in parallel with other content can be paused, stopped or hidden",
+      "verification": "read"
+    },
+    {
+      "id": "S-WCAG-2.3.1",
+      "role": "judged-by",
+      "title": "WCAG 2.2, Three Flashes or Below Threshold",
+      "edition": "Level A",
+      "checked": "2026-11-15",
+      "urls": ["https://www.w3.org/TR/WCAG22/"],
+      "uses": "No more than three flashes in any second; the definition of a saturated red",
+      "verification": "read"
+    },
+    {
+      "id": "S-WCAG-2.4.13",
+      "role": "judged-by",
+      "title": "WCAG 2.2, Focus Appearance",
+      "edition": "Level AAA",
+      "checked": "2026-11-15",
+      "urls": ["https://www.w3.org/TR/WCAG22/"],
+      "uses": "Size of the focus indicator and its 3:1 contrast between the focused and unfocused states",
+      "verification": "read"
+    },
+    {
+      "id": "S-WCAG-C40",
+      "role": "judged-by",
+      "title": "WCAG Technique C40: Creating a two-color focus indicator to ensure sufficient contrast with all components",
+      "checked": "2026-11-20",
+      "urls": ["https://www.w3.org/WAI/WCAG22/Techniques/css/C40"],
+      "uses": "Two indicator colours at least 9:1 apart, so one meets 3:1 against any solid background; not to rely on box-shadow alone, which forced colour modes suppress",
+      "note": "Sufficient for 1.4.11, 2.4.7 and 2.4.13. Its guarantee holds only over one solid background colour; over an image or a gradient the indicator is compared pixel by pixel.",
+      "verification": "read"
+    },
+    {
+      "id": "S-WCAG-G183",
+      "role": "judged-by",
+      "title": "WCAG Technique G183: Using a contrast ratio of at least 3:1 to distinguish inline text links from surrounding text",
+      "checked": "2026-11-20",
+      "urls": ["https://www.w3.org/WAI/WCAG22/Techniques/general/G183"],
+      "uses": "An inline link marked by colour alone needs 3:1 against the text around it; otherwise another cue, such as an underline",
+      "verification": "read"
+    },
+    {
+      "id": "S-WCAG-3",
+      "role": "judged-by",
+      "title": "WCAG 3.0",
+      "edition": "Working Draft, 10 September 2026",
+      "checked": "2026-11-15",
+      "urls": ["https://www.w3.org/TR/wcag-3.0/"],
+      "uses": "Its contrast method is still to be determined, so the WCAG 2.2 contrast ratio stays the measure",
+      "verification": "read"
+    },
+    {
+      "id": "S-CSS-COLOR-4",
+      "role": "spec",
+      "title": "CSS Color Module Level 4",
+      "edition": "Candidate Recommendation Draft, 12 November 2026",
+      "checked": "2026-11-15",
+      "urls": ["https://www.w3.org/TR/css-color-4/"],
+      "uses": "The system colours that name colour roles, the Oklab and OKLCH colour spaces, colour interpolation (legacy sRGB syntax mixes in sRGB) and gamut mapping",
+      "verification": "read"
+    },
+    {
+      "id": "S-CSS-COLOR-ADJUST",
+      "role": "spec",
+      "title": "CSS Color Adjustment Module Level 1",
+      "edition": "Candidate Recommendation Snapshot, 16 December 2025",
+      "checked": "2026-11-20",
+      "urls": ["https://www.w3.org/TR/css-color-adjust-1/"],
+      "uses": "`color-scheme`, forced colours mode and `forced-color-adjust`; in forced colours mode `box-shadow` and `text-shadow` compute to `none`, and `background-image` too unless it contains a `url()`",
+      "verification": "read"
+    },
+    {
+      "id": "S-MQ5",
+      "role": "spec",
+      "title": "Media Queries Level 5",
+      "edition": "Working Draft, 19 February 2026",
+      "checked": "2026-11-15",
+      "urls": ["https://www.w3.org/TR/mediaqueries-5/"],
+      "uses": "`prefers-contrast` (an unqualified query also matches `less`), `prefers-color-scheme` and `forced-colors`",
+      "verification": "read"
+    },
+    {
+      "id": "S-DTCG",
+      "role": "judged-by",
+      "title": "Design Tokens Format Module",
+      "edition": "2025.10",
+      "checked": "2026-11-15",
+      "urls": [
+        "https://www.designtokens.org/tr/2025.10/format/",
+        "https://github.com/design-tokens/community-group"
+      ],
+      "uses": "The `color` type (colour space, components, alpha, hex fallback) and the `gradient`, `shadow` and `border` types that hold a colour",
+      "note": "designtokens.org didn't load, so it was read from the spec's source on GitHub (the editor's draft, not the 2025.10 snapshot). Naming, gamut mapping, interpolation and the resolver were read through a summarising fetch only.",
+      "verification": "read"
+    },
+    {
+      "id": "S-GEOLOCATION",
+      "role": "spec",
+      "title": "Geolocation",
+      "edition": "W3C Candidate Recommendation Draft, 18 November 2026",
+      "checked": "2026-11-24",
+      "urls": ["https://www.w3.org/TR/geolocation/"],
+      "uses": "A location is shared only with the express permission of the user, only in a secure context, and with an embedded frame only where the host page allows it",
+      "note": "Read through a summarising fetch; its quotes were not re-checked against the page.",
+      "verification": "read"
+    },
+    {
+      "id": "S-PRIVACY-PRINCIPLES",
+      "role": "judged-by",
+      "title": "Privacy Principles",
+      "edition": "W3C Statement, 15 May 2025",
+      "checked": "2026-11-24",
+      "urls": ["https://www.w3.org/TR/privacy-principles/"],
+      "uses": "Data minimisation: only the data needed for the user's goal is taken",
+      "note": "Read through a summarising fetch; its quotes were not re-checked against the page.",
+      "verification": "read"
+    },
+    {
+      "id": "S-CSS-POSITION-4",
+      "role": "spec",
+      "title": "CSS Positioned Layout Module Level 4",
+      "edition": "W3C Working Draft, 7 October 2025",
+      "checked": "2026-11-24",
+      "urls": ["https://www.w3.org/TR/css-position-4/"],
+      "uses": "The top layer and the `::backdrop` pseudo-element",
+      "note": "Read through a summarising fetch; its quotes were not re-checked against the page.",
+      "verification": "read"
+    },
+    {
+      "id": "S-SELECTORS-4",
+      "role": "spec",
+      "title": "Selectors Level 4",
+      "edition": "W3C Working Draft, 22 January 2026",
+      "checked": "2026-11-24",
+      "urls": ["https://www.w3.org/TR/selectors-4/"],
+      "uses": "The `:hover` and `:active` pseudo-classes",
+      "note": "Read through a summarising fetch: the opening sentences of sections 9.1 and 9.2 only.",
+      "verification": "read"
+    },
+    {
+      "id": "S-WCAG-2.4.6",
+      "role": "judged-by",
+      "title": "WCAG 2.2, Headings and Labels",
+      "edition": "Level AA",
+      "checked": "2026-11-24",
+      "urls": ["https://www.w3.org/TR/WCAG22/"],
+      "uses": "A label describes its topic or purpose",
+      "note": "Read through a summarising fetch; its quotes were not re-checked against the page.",
+      "verification": "read"
+    },
+    {
+      "id": "S-WCAG-4.1.2",
+      "role": "judged-by",
+      "title": "WCAG 2.2, Name, Role, Value",
+      "edition": "Level A",
+      "checked": "2026-11-24",
+      "urls": ["https://www.w3.org/TR/WCAG22/"],
+      "uses": "A state the user can set can be set programmatically, and a change of it is notified to user agents and assistive technologies",
+      "note": "Read through a summarising fetch; its quotes were not re-checked against the page.",
+      "verification": "read"
+    },
+    {
+      "id": "S-WCAG-F83",
+      "role": "judged-by",
+      "title": "WCAG technique F83: Failure of Success Criterion 1.4.3 and 1.4.6 due to using background images that do not provide sufficient contrast with foreground text (or images of text)",
+      "checked": "2026-11-24",
+      "urls": ["https://www.w3.org/WAI/WCAG22/Techniques/failures/F83"],
+      "uses": "Text over a background image is tested where the image is most like the text: its darkest area for dark text, its lightest for light text",
+      "note": "Read through a summarising fetch; its quotes were not re-checked against the page.",
+      "verification": "read"
+    },
+    {
+      "id": "S-WCAG-1.4.8",
+      "role": "judged-by",
+      "title": "WCAG 2.2, Visual Presentation (Understanding Success Criterion 1.4.8)",
+      "checked": "2026-11-24",
+      "urls": ["https://www.w3.org/WAI/WCAG22/Understanding/visual-presentation.html"],
+      "uses": "The user can select foreground and background colours, by a mechanism the browser or another user agent may provide",
+      "note": "Read through a summarising fetch. The page names no operating system mode and no forced colours mode.",
+      "verification": "read"
+    },
+    {
+      "id": "S-CSS-IMAGES-4",
+      "role": "spec",
+      "title": "CSS Images Module Level 4",
+      "edition": "W3C Working Draft, 30 September 2025",
+      "checked": "2026-11-24",
+      "urls": ["https://www.w3.org/TR/css-images-4/"],
+      "uses": "A gradient states its colour interpolation method, such as `in oklab` or `in oklch`",
+      "note": "Read through a summarising fetch, sections 3.1 to 3.2.1 only. The hue direction of a polar colour space was not seen there.",
+      "verification": "read"
+    },
+    {
+      "id": "S-WCAG-2.3.3",
+      "role": "judged-by",
+      "title": "WCAG 2.2, Animation from Interactions",
+      "edition": "Level AAA",
+      "checked": "2026-11-24",
+      "urls": ["https://www.w3.org/TR/WCAG22/"],
+      "uses": "Motion animation triggered by interaction can be disabled; a change of colour, blurring or opacity that does not change the perceived size, shape or position of an element is not motion animation",
+      "verification": "read"
+    },
+    {
+      "id": "S-CSS-UI-4",
+      "role": "spec",
+      "title": "CSS Basic User Interface Module Level 4",
+      "edition": "W3C Working Draft, 20 January 2026",
+      "checked": "2026-11-24",
+      "urls": ["https://www.w3.org/TR/css-ui-4/"],
+      "uses": "`accent-color`, for the widgets a platform draws with an accent colour, and `caret-color`, whose `auto` value uses `currentColor`",
+      "note": "Read through a summarising fetch. The section read does not list the form controls `accent-color` applies to.",
+      "verification": "read"
+    },
+    {
+      "id": "S-CSS-SCROLLBARS-1",
+      "role": "spec",
+      "title": "CSS Scrollbars Styling Module Level 1",
+      "edition": "W3C Candidate Recommendation Snapshot, 9 December 2021",
+      "checked": "2026-11-24",
+      "urls": ["https://www.w3.org/TR/css-scrollbars-1/"],
+      "uses": "`scrollbar-color`: with `auto` the user agent determines the colours of the scrollbar",
+      "note": "Read through a summarising fetch; its quotes were not re-checked against the page.",
+      "verification": "read"
+    },
+    {
+      "id": "R-BRETTEL-1997",
+      "role": "learn-from",
+      "title": "Brettel, Vienot and Mollon, Computerized simulation of color appearance for dichromats, Journal of the Optical Society of America A 14(10), 1997",
+      "checked": "2026-11-24",
+      "urls": ["https://doi.org/10.1364/JOSAA.14.002647"],
+      "uses": "A method to simulate how red-blind, green-blind and blue-blind people see a colour",
+      "note": "Only the abstract was read. Per the abstract, a red-blind and a green-blind observer tested the simulation; the blue-blind case was not tested on an observer.",
+      "verification": "reachable"
+    },
+    {
+      "id": "R-VIENOT-1999",
+      "role": "learn-from",
+      "title": "Vienot, Brettel and Mollon, Digital video colourmaps for checking the legibility of displays by dichromats, Color Research and Application 24(4), 1999",
+      "checked": "2026-11-24",
+      "urls": ["https://doi.org/10.1002/(SICI)1520-6378(199908)24:4<243::AID-COL5>3.0.CO;2-3"],
+      "uses": "A method to simulate on a display how red-blind and green-blind people see a colour",
+      "note": "The publisher's page did not load; title, authors and journal were seen in metadata records only, and the content was not read.",
+      "verification": "search-only"
+    },
+    {
+      "id": "R-EU-92-58-EEC",
+      "role": "learn-from",
+      "title": "Council Directive 92/58/EEC of 24 June 1992 on the minimum requirements for the provision of safety and/or health signs at work",
+      "checked": "2026-11-16",
+      "urls": ["https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:31992L0058"],
+      "uses": "Red for prohibition and danger, yellow or amber for warning, green for no danger, blue for mandatory signs",
+      "note": "The meanings were read on 2026-11-16 (DEC-187). On 2026-11-24 a second reader got no text from EUR-Lex and saw only the title, the date and the annex titles on the EU-OSHA summary page.",
+      "verification": "read"
+    },
+    {
+      "id": "R-MUTCD-2009",
+      "role": "learn-from",
+      "title": "Manual on Uniform Traffic Control Devices, 2009 edition, Section 1A.12 Color Code (US Federal Highway Administration)",
+      "checked": "2026-11-24",
+      "urls": ["https://mutcd.fhwa.dot.gov/htm/2009/part1/part1a.htm"],
+      "uses": "Red for stop or prohibition, yellow for warning, green for permitted movement and direction guidance, blue for road user services guidance",
+      "note": "Blue also covers tourist information and evacuation routes there.",
+      "verification": "read"
+    },
+    {
+      "id": "R-CFR-23-655",
+      "role": "learn-from",
+      "title": "23 CFR Part 655, Subpart F, Appendix: Alternate Method of Determining the Color of Retroreflective Sign Materials and Pavement Marking Materials",
+      "checked": "2026-11-24",
+      "urls": ["https://www.law.cornell.edu/cfr/text/23/appendix-to_subpart_F_of_part_655"],
+      "uses": "CIE chromaticity regions of traffic sign colours, the source of the status hues with 49 CFR 172",
+      "note": "Read on the copy of the Legal Information Institute; ecfr.gov did not load.",
+      "verification": "read"
+    },
+    {
+      "id": "R-CFR-49-172",
+      "role": "learn-from",
+      "title": "49 CFR Part 172, Appendix A: Office of Hazardous Materials Transportation Color Tolerance Charts and Tables",
+      "checked": "2026-11-24",
+      "urls": ["https://www.law.cornell.edu/cfr/text/49/appendix-A_to_part_172"],
+      "uses": "Munsell notations and CIE coordinates of hazard label colours, the source of the status hues with 23 CFR 655",
+      "note": "Read on the copy of the Legal Information Institute; ecfr.gov did not load.",
+      "verification": "read"
+    },
+    {
+      "id": "R-KINGDOM-2004",
+      "role": "learn-from",
+      "title": "Kingdom, Beauce and Hunter, Colour vision brings clarity to shadows, Perception 33(8), 2004",
+      "checked": "2026-11-24",
+      "urls": ["https://doi.org/10.1068/p5264"],
+      "uses": "Colour changes typically occur at the edges of objects and not of shadows, so a change of luminance with no change of colour tends to be read as lighting",
+      "note": "Only the abstract was read. It states a regularity the visual system uses, not an absolute rule.",
+      "verification": "reachable"
+    },
+    {
+      "id": "R-BAE-2015",
+      "role": "learn-from",
+      "title": "Bae, Olkkonen, Allred and Flombaum, Why some colors appear more memorable than others: a model combining categories and particulars in color working memory, Journal of Experimental Psychology: General 144(4), 2015",
+      "checked": "2026-11-24",
+      "urls": ["https://doi.org/10.1037/xge0000076"],
+      "uses": "A remembered colour is biased toward the centre of its colour category",
+      "note": "Only the abstract was read. The same bias appears without a memory delay; memory makes it larger.",
+      "verification": "reachable"
+    },
+    {
+      "id": "R-UCHIKAWA-1983",
+      "role": "learn-from",
+      "title": "Uchikawa, Purity discrimination: successive vs simultaneous comparison method, Vision Research 23(1), 1983",
+      "checked": "2026-11-24",
+      "urls": ["https://doi.org/10.1016/0042-6989(83)90041-x"],
+      "uses": "Colours seen one after the other need a difference about 1.5 to 2 times larger to be told apart than colours seen side by side",
+      "note": "Only the abstract was read.",
+      "verification": "reachable"
+    },
+    {
+      "id": "R-BERLIN-KAY-1969",
+      "role": "learn-from",
+      "title": "Berlin and Kay, Basic Color Terms: Their Universality and Evolution, University of California Press, 1969",
+      "checked": "2026-11-24",
+      "urls": ["https://hraf.yale.edu/ehc/documents/545"],
+      "uses": "The idea of a small set of basic colour terms",
+      "note": "A book, not read: only a catalogue summary was seen.",
+      "verification": "reachable"
+    },
+    {
+      "id": "R-NOAA-SOLCALC",
+      "role": "learn-from",
+      "title": "NOAA Global Monitoring Laboratory, Solar Calculator, calculation details",
+      "checked": "2026-11-24",
+      "urls": ["https://gml.noaa.gov/grad/solcalc/calcdetails.html"],
+      "uses": "Sunrise and sunset are computed from a date and a place, to within a minute between 72 degrees north and south",
+      "note": "The page says the calculator is no longer actively maintained and that observed values may differ from the computed ones.",
+      "verification": "read"
+    },
+    {
+      "id": "R-EU-GDPR",
+      "role": "learn-from",
+      "title": "Regulation (EU) 2016/679 (General Data Protection Regulation), Article 4(1)",
+      "checked": "2026-11-22",
+      "urls": ["https://eur-lex.europa.eu/eli/reg/2016/679/oj"],
+      "uses": "Location data is named among the identifiers that make data personal",
+      "note": "Read on 2026-11-22 (DEC-182). On 2026-11-24 a second reader got no text from EUR-Lex.",
+      "verification": "read"
+    },
+    {
+      "id": "R-HASHICORP-BRAND",
+      "role": "learn-from",
+      "title": "HashiCorp, HCP Brand Guidelines: Brand Logos",
+      "checked": "2026-11-24",
+      "urls": ["https://www.hashicorp.com/en/brand/hcp-brand-logos"],
+      "uses": "A horizontal full logo as the primary, a vertical one when space requires, the mark alone where the audience knows the brand, and no other colours or tints",
+      "note": "Concepts only.",
+      "verification": "read"
+    },
+    {
+      "id": "R-NWF-BRAND",
+      "role": "learn-from",
+      "title": "National Wildlife Federation Brand Guide: Primary Logo and Logomark",
+      "checked": "2026-11-24",
+      "urls": [
+        "https://brandguide.nwf.org/logo/primary-logo/",
+        "https://brandguide.nwf.org/logo/logomark/"
+      ],
+      "uses": "Horizontal and vertical configurations, colour and reversed versions, and choosing the version that is clearest against its background",
+      "note": "Concepts only.",
+      "verification": "read"
+    },
+    {
+      "id": "R-RAMACHANDRAN-1988",
+      "role": "learn-from",
+      "title": "Ramachandran, Perception of shape from shading, Nature 331, 1988",
+      "checked": "2026-11-24",
+      "urls": ["https://doi.org/10.1038/331163a0"],
+      "uses": "The visual system assumes one light source for the whole image",
+      "note": "Only the abstract was read; it does not say the light comes from above.",
+      "verification": "reachable"
+    },
+    {
+      "id": "R-MORGENSTERN-2011",
+      "role": "learn-from",
+      "title": "Morgenstern, Murray and Harris, The human visual system's assumption that light comes from above is weak, Proceedings of the National Academy of Sciences 108(30), 2011",
+      "checked": "2026-11-24",
+      "urls": ["https://doi.org/10.1073/pnas.1100794108"],
+      "uses": "The assumption of a light from above is weak, and barely visible lighting cues override it",
+      "note": "Only the abstract was read.",
+      "verification": "reachable"
+    }
+  ]
+}

@@ -120,6 +120,8 @@ function table(columns, rows, where) {
 const list = (entries) => [...entries].map(([key, meaning]) => `  - \`${key}\`: ${meaning}.`);
 const capitalise = (text) => text.charAt(0).toUpperCase() + text.slice(1);
 const code = (value) => (value ? `\`${value}\`` : '');
+/** A rule as an agent reads it: what must hold, then why, so the reason is never apart from it. */
+const stated = (rule) => (rule.reason ? `${rule.text} **Why:** ${rule.reason}` : rule.text);
 
 function generatedNote(jsonFile) {
   return (
@@ -173,6 +175,19 @@ function context(registry) {
   // The same function the validator uses, so "waits on" here matches what the checks enforce.
   const waitsOn = openDecisionsByRule(decisions, rules);
 
+  // A rule names another by its ID, in its text or its reason. Only IDs of rules that exist count.
+  const ruleById = new Map();
+  for (const foundation of registry.foundations)
+    for (const rule of foundation.rules.data.rules)
+      ruleById.set(rule.id, { rule, foundation: foundation.name });
+  const namedBy = (rule) => [
+    ...new Set(
+      (`${rule.text} ${rule.reason ?? ''}`.match(/\b[A-Z]{1,3}-[A-Z]\d+\b/g) ?? []).filter(
+        (id) => id !== rule.id && ruleById.has(id),
+      ),
+    ),
+  ];
+
   /** Rule IDs, with a whole group written as "All L-T rules". */
   const ruleList = (ids = []) => {
     const out = [];
@@ -189,7 +204,17 @@ function context(registry) {
     return out.join(', ');
   };
 
-  return { decisions, decisionById, supersededBy, citedBy, sourceCitedBy, waitsOn, ruleList };
+  return {
+    decisions,
+    decisionById,
+    supersededBy,
+    citedBy,
+    sourceCitedBy,
+    waitsOn,
+    ruleList,
+    ruleById,
+    namedBy,
+  };
 }
 
 // ---------- Documents ----------
@@ -202,6 +227,7 @@ function renderRules(foundation, ctx, legendOf, schemas) {
   const columns = [
     { header: 'ID', value: (r) => r.id },
     { header: 'Rule', value: (r) => r.text },
+    { header: 'Reason', value: (r) => r.reason, optional: true },
     { header: 'Kind', value: (r) => r.kind },
     {
       header: 'Basis',
@@ -228,6 +254,9 @@ function renderRules(foundation, ctx, legendOf, schemas) {
     schemas.rules.description,
     `**Status:** ${data.status}. **Contract:** ${data.contractVersion}.`,
     [
+      ...(data.rules.some((r) => r.reason)
+        ? [`- **Reason:** ${ruleSchema.reason.description}`]
+        : []),
       '- **Kind**',
       ...list(legendOf.kind),
       `- **Basis:** the sources ([sources.md](sources.md)), decisions ([decisions.md](../../decisions.md)) and other rules the rule rests on.`,
@@ -413,7 +442,8 @@ function renderDecisions(entry, ctx, legendOf, schemas) {
 
 /**
  * A Claude Code agent file, generated from a manifest. It stays local (DEC-039): the prompt
- * points at the registry by path and ID, and repeats only the guidance rules the agent loads.
+ * points at the registry by path and ID, and repeats the guidance rules the agent loads, each with
+ * its reason, and every rule those name, so that no rule ID in the file points outside the file.
  */
 function renderAgent(entry, registry, ctx, legendOf) {
   const { data, file } = entry;
@@ -448,6 +478,20 @@ function renderAgent(entry, registry, ctx, legendOf) {
   // Proposed guidance is not a rule yet, so it is never listed as guidance to apply.
   const guidance = rules.filter((r) => r.kind === 'guidance');
   const proposed = guidance.filter((r) => r.status === 'proposed');
+  // Every rule this file names is given in this file: a pointer the agent cannot open is a rule it cannot follow.
+  // That holds for a rule of any kind and of any foundation, and for the rules those rules name in turn.
+  const inFile = new Set(guidance.map((r) => r.id));
+  const named = [];
+  const queue = guidance.flatMap((r) => ctx.namedBy(r));
+  while (queue.length) {
+    const id = queue.shift();
+    if (inFile.has(id)) continue;
+    inFile.add(id);
+    const found = ctx.ruleById.get(id);
+    named.push(found);
+    queue.push(...ctx.namedBy(found.rule));
+  }
+  const ownFoundations = new Set(mine.map((f) => f.name));
   const reviews = [...registry.foundations.map((f) => f.agent), ...(registry.agents ?? [])].filter(
     (a) => a?.data.reviewedBy?.includes(data.name),
   );
@@ -488,7 +532,7 @@ function renderAgent(entry, registry, ctx, legendOf) {
   out.push(
     '## Guidance to apply while working',
     bullets(
-      guidance.filter((r) => r.status !== 'proposed').map((r) => `- **${r.id}:** ${r.text}`),
+      guidance.filter((r) => r.status !== 'proposed').map((r) => `- **${r.id}:** ${stated(r)}`),
       'None yet.',
     ),
   );
@@ -499,7 +543,22 @@ function renderAgent(entry, registry, ctx, legendOf) {
       proposed
         .map((r) => {
           const on = [...(ctx.waitsOn.get(r.id) ?? [])].sort().join(', ');
-          return `- **${r.id}** (waits on ${on}): ${r.text}`;
+          return `- **${r.id}** (waits on ${on}): ${stated(r)}`;
+        })
+        .join('\n'),
+    );
+  }
+  if (named.length) {
+    out.push(
+      '## Rules named above',
+      'A rule above names each of these, so each is given here in full. Follow them as you follow the guidance.',
+      named
+        .map(({ rule, foundation }) => {
+          const notes = [rule.kind];
+          if (!ownFoundations.has(foundation)) notes.push(`from ${foundation}`);
+          const on = [...(ctx.waitsOn.get(rule.id) ?? [])].sort().join(', ');
+          if (rule.status === 'proposed') notes.push(`not decided yet, waits on ${on}`);
+          return `- **${rule.id}** (${notes.join(', ')}): ${stated(rule)}`;
         })
         .join('\n'),
     );

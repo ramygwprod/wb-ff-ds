@@ -1,5 +1,5 @@
 {
-  "contractVersion": "0.1.0",
+  "contractVersion": "0.2.0",
   "foundation": "layout",
   "title": "Layout system",
   "scope": "Grid, spacing, density, containers, aspect ratios, and the layout primitives (flex column, flex row, grid, scroll container, aspect-ratio box).",

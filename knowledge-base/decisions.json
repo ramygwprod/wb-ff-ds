@@ -1,5 +1,5 @@
 {
-  "contractVersion": "0.1.0",
+  "contractVersion": "0.2.0",
   "decisions": [
     {
       "id": "DEC-001",
@@ -306,10 +306,13 @@
     {
       "id": "DEC-029",
       "question": "What contrast floor do disabled controls keep, and are state shifts the same for every colour role?",
-      "status": "open",
+      "status": "answered",
       "options": [],
       "recordedOn": "2026-11-13",
-      "notes": "WCAG 2.2 doesn't require contrast for inactive controls; the floor is ours to set. Decided at the colour foundation stage with computed examples. Ramy's direction from planning: disabled is one unified style across all states, not opacity."
+      "notes": "Replaced on 2026-11-22 by DEC-169. WCAG 2.2 doesn't require contrast for inactive controls; the floor is ours to set. Decided at the colour foundation stage with computed examples. Ramy's direction from planning: disabled is one unified style across all states, not opacity. On 2026-11-16 DEC-123 answered the second half: one ratio applies to every colour role. The contrast floor of disabled controls is still open. Answered on 2026-11-18. 3.1:1 sits just above the 3:1 of WCAG 1.4.11 and under the text floor, so the component stays visible and reads as off. Computed: light #828587, dark #6E7072.",
+      "answer": "A disabled component keeps a contrast ratio of 3.1:1: its text, icons and border take a grey at 3.1:1 with the surface of DEC-137 on which it has the least contrast, and it loses its fill. A busy component (`aria-busy`) looks the same while it loads.",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-18"
     },
     {
       "id": "DEC-030",
@@ -320,7 +323,7 @@
       "decidedBy": "Ramy",
       "decidedOn": "2026-11-14",
       "recordedOn": "2026-11-13",
-      "notes": "Computed on 2026-11-14 over all 16,777,216 sRGB colours: with pure black and white text, none fails AA (worst case 4.58:1). In general the worst background gets the square root of the contrast between the two text neutrals, so AA holds for every colour only if they have at least 20.25:1 contrast with each other. AAA (7:1) cannot be reached by switching alone; see DEC-042."
+      "notes": "Computed on 2026-11-14 over all 16,777,216 sRGB colours: with pure black and white text, none fails AA (worst case 4.58:1). In general the worst background gets the square root of the contrast between the two text neutrals, so AA holds for every colour only if they have at least 20.25:1 contrast with each other. AAA (7:1) cannot be reached by switching alone; see DEC-042. Changed for the AAA theme in the dark colour scheme by DEC-124. Changed by DEC-140: the dark text neutral is #050608, not black; at 20.27:1 with white it still holds for every colour. Since 2026-11-22 the dark text neutral is computed (DEC-166). Since 2026-11-24 the reason and the order of workarounds are DEC-197, and the text where both neutrals pass is DEC-194."
     },
     {
       "id": "DEC-031",
@@ -443,13 +446,16 @@
     {
       "id": "DEC-042",
       "question": "In the AAA theme, what happens to a colour surface carrying text when neither text neutral reaches 7:1? With black and white text that is 38.6% of all colours, e.g. #808080.",
-      "status": "open",
+      "status": "answered",
       "options": [
         "Adjust its lightness (same hue) in the AAA theme until 7:1",
         "Show a 'fails AAA' warning"
       ],
       "recordedOn": "2026-11-14",
-      "notes": "Raised by DEC-030. To be decided at the colour foundation stage."
+      "notes": "Raised by DEC-030. To be decided at the colour foundation stage. On 2026-11-16 DEC-124 answered it for the dark colour scheme. It is still open for the light colour scheme. Answered on 2026-11-18 for the light colour scheme, the same way as DEC-124 for the dark. Computed: the accent #FF5200 moves to #FE6937 (near-black 7.04, a lightness move of 0.028); #808080 to #989898; the success fill #058568 to #00654E (white 7.07).",
+      "answer": "Its lightness is adjusted in the AAA theme, with its hue kept, by the smallest move that lets one text neutral reach 7:1: towards whichever of the two is nearer.",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-18"
     },
     {
       "id": "DEC-043",
@@ -621,10 +627,13 @@
     {
       "id": "DEC-057",
       "question": "Where do user preferences live (theme, scheme, language, density, pane sizes), and how do they reach the design system?",
-      "status": "open",
+      "status": "answered",
       "options": [],
       "recordedOn": "2026-11-14",
-      "notes": "Raised by DEC-056. L-D9 already says the chosen density is stored and wins over tenant and device defaults; the store itself is not defined yet."
+      "notes": "Raised by DEC-056. L-D9 already says the chosen density is stored and wins over tenant and device defaults; the store itself is not defined yet. Answered on 2026-11-23 for the theme and the colour scheme; the other preferences live in the same place (DEC-056). That document is the token file: a mechanical document made by the pipeline after the foundations, and nothing is built to stand in for it before then (DEC-159).",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-23",
+      "answer": "In the JSON document of the design system, as standard variables (tokens) with generated values. A preference is such a variable, and it reaches the design system through that document."
     },
     {
       "id": "DEC-058",
@@ -1092,7 +1101,7 @@
       "question": "Which foundation sets the colour of text, and when?",
       "options": ["Typography", "Colour, after typography"],
       "answer": "The colour foundation, after the typography agent is final. Typography does not handle colour.",
-      "notes": "Applied on recording: no typography rule sets a colour or a contrast value (T-T4).",
+      "notes": "Applied on recording: no typography rule sets a colour or a contrast value (T-T4). The colour of text depends on the surface under it, on its level in the hierarchy and on its use, all set in the colour foundation: reason given on 2026-11-24.",
       "status": "answered",
       "decidedBy": "Ramy",
       "decidedOn": "2026-11-15",
@@ -1335,6 +1344,1298 @@
       "decidedBy": "Ramy",
       "decidedOn": "2026-11-15",
       "recordedOn": "2026-11-15"
+    },
+    {
+      "id": "DEC-121",
+      "question": "In the light colour scheme, does a button take the accent colour as its default fill?",
+      "options": ["Yes: the accent colour", "No: neutral colours"],
+      "answer": "No. In the light colour scheme a button, including a form's default button, takes neutral colours by default: the roles CSS names `ButtonFace` and `ButtonText`. The accent colour (CSS `AccentColor`) is not a button's default fill.",
+      "notes": "Replaced on 2026-11-22 by DEC-161. CSS Color 4 names these roles as system colours, and HTML defines a form's default button. Measured on 2026-11-16 on the orange of the WideBot logo (#FF5200): white text on it has a contrast ratio of 3.25, where WCAG 1.4.3 needs 4.5; black text on it has 6.46. Where the accent colour may appear in the light colour scheme is not decided here. The dark colour scheme is DEC-122.",
+      "status": "answered",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-16",
+      "recordedOn": "2026-11-16"
+    },
+    {
+      "id": "DEC-122",
+      "question": "In the dark colour scheme, may the accent colour be a button's default fill?",
+      "options": ["Yes", "No: neutral colours, as in the light colour scheme"],
+      "answer": "Yes. In the dark colour scheme the accent colour (CSS `AccentColor`) may fill a button, including a form's default button. The text on it follows DEC-030.",
+      "notes": "Replaced on 2026-11-22 by DEC-161. Measured on 2026-11-16 on the colour named in DEC-121. With black text on it the contrast ratio is 6.46, which meets WCAG 1.4.3. As text on a neutral dark surface it keeps 4.5 while the surface's OKLCH lightness is 0.279 or less, and keeps the 3 of WCAG 1.4.11 up to 0.386. It does not reach the 7 of WCAG 1.4.6 on any surface, pure black included: the AAA theme is DEC-124.",
+      "status": "answered",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-16",
+      "recordedOn": "2026-11-16"
+    },
+    {
+      "id": "DEC-123",
+      "question": "How are a colour's tints and shades, and the colours of a user interface component's states, defined?",
+      "options": [
+        "A stored list of steps for each colour",
+        "An equation applied to the colour they derive from"
+      ],
+      "answer": "By an equation applied to the colour they derive from, never by a stored list of steps. The unit is the contrast ratio of WCAG 2.2: a tint, a shade or the colour of a state is the colour whose contrast ratio with its base equals a set ratio. The same ratio applies to every colour role.",
+      "notes": "WCAG 2.2 defines the contrast ratio as (L1 + 0.05) / (L2 + 0.05) on relative luminance, so ratios multiply along a chain of lightness: text on a state has the contrast it had on the base, divided or multiplied by the ratio. Tested on 2026-11-16 against a mix with the text colour in Oklab and against a fixed OKLCH lightness shift: only the ratio kept text contrast predictable. A shade made by scaling linear-light RGB is exact and keeps its hue; a tint that keeps its hue needs a solver. From pure black an equal ratio is a larger visible step than elsewhere (DEC-125). The ratios are not set: DEC-127. Answers the second half of DEC-029. Follows DEC-120. Since 2026-11-22 the ratios are set by DEC-168 and DEC-163.",
+      "status": "answered",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-16",
+      "recordedOn": "2026-11-16"
+    },
+    {
+      "id": "DEC-124",
+      "question": "In the AAA theme and the dark colour scheme, what happens to the accent colour where it cannot reach a contrast ratio of 7:1?",
+      "options": [
+        "It does not move, and the failure is shown as a warning",
+        "Its lightness moves and its hue is kept",
+        "Its lightness moves and its chroma is kept",
+        "It moves to the nearest colour that passes"
+      ],
+      "answer": "It is calibrated: its OKLCH lightness moves until the ratio is met, and no further. Its hue is kept. Its chroma is kept for as long as the colour fits the sRGB gamut.",
+      "notes": "Applies where the accent colour is text, or is a surface carrying text (WCAG 1.4.6). Answers DEC-042 for the dark colour scheme; the light colour scheme stays open there. Changes DEC-030 for the AAA theme only: in the AA theme a brand colour still does not move. Tested on 2026-11-16 on the colour named in DEC-121. With black text on it, a ratio of 7 needed a factor of 1.084, an Oklab distance of 0.028 from that colour. Keeping the chroma instead moved the hue by up to 22 degrees, and the nearest passing colour moved it by up to 9 degrees. In the light colour scheme the same ratio turned the colour brown.",
+      "status": "answered",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-16",
+      "recordedOn": "2026-11-16"
+    },
+    {
+      "id": "DEC-125",
+      "question": "Is the canvas of the dark colour scheme pure black?",
+      "options": ["Yes: `#000000`", "No: a near-black, which may carry a tint"],
+      "answer": "No. The canvas of the dark colour scheme (the role CSS names `Canvas`) is a near-black, not `#000000`, and it may carry a tint.",
+      "notes": "Measured on 2026-11-16: from pure black a contrast ratio of 1.2 is an Oklab distance of 0.213, against 0.044 to 0.068 from an OKLCH lightness of 0.2 upward, so steps of one ratio (DEC-123) are uneven from pure black. Canvases of one relative luminance gave the same contrast ratios whatever their tint. Smearing on OLED displays, where pixels that are fully off switch on more slowly than lit ones, is described in a device review and in user reports only: no standard and no measured threshold was found. This is the canvas only; the text neutrals of DEC-030 are not changed by it. Its lightness and tint are set in DEC-126. Since 2026-11-22 its lightness and tint are set by DEC-164.",
+      "status": "answered",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-16",
+      "recordedOn": "2026-11-16"
+    },
+    {
+      "id": "DEC-126",
+      "question": "What are the lightness and the tint of the canvas of the dark colour scheme?",
+      "options": [
+        "A neutral near-black",
+        "A near-black tinted with the hue of the accent colour",
+        "A near-black tinted with another hue"
+      ],
+      "notes": "Replaced on 2026-11-22 by DEC-164. Raised by DEC-125. Until the token contract exists (DEC-026), this decision is where the value lives (DEC-120). Measured on 2026-11-16: its relative luminance is 0.00593 and its sRGB channels are 16, 18 and 20 of 255, so none is zero. Its OKLCH hue is 248 degrees after rounding to 8 bits; the blue of the logo is at 256.5. White text on it has a contrast ratio of 18.77. The colour named in DEC-121 has 5.77 as text on it, which meets WCAG 1.4.3, and keeps 4.5 on surfaces up to a ratio of 1.283 above the canvas (DEC-123). In the AAA theme DEC-124 moves that colour by a factor of 1.212 to reach 7.",
+      "status": "answered",
+      "recordedOn": "2026-11-16",
+      "answer": "The canvas of the dark colour scheme is `#101214`: a near-black tinted with another hue. Its OKLCH lightness is 0.181 and its chroma 0.005, tinted towards the hue of the blue of the WideBot logo (#004A9B). It is the same in the AA theme and the AAA theme.",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-16"
+    },
+    {
+      "id": "DEC-127",
+      "question": "Which contrast ratios do tints, shades and the colours of states use?",
+      "options": [
+        "One ratio, applied once or more for each state and each surface level",
+        "A separate ratio for each state and each surface level"
+      ],
+      "notes": "Replaced on 2026-11-22 by DEC-168. Raised by DEC-123. A state is safe while the contrast of the text on its base, divided by the ratio, still meets WCAG 1.4.3 in the AA theme or WCAG 1.4.6 in the AAA theme. Answered on 2026-11-18. A step of 1.1 was not recognizable; the golden ratio sets each state clearly apart. Measured: every state of the neutral button, the accent, the status fills and links passes in both colour schemes and both themes. Inverted: links in the dark colour scheme, and in the AAA theme the dark fills that carry dark text. Where states reach white or near-black they can coincide (the warning fill in the AAA theme).",
+      "status": "answered",
+      "recordedOn": "2026-11-16",
+      "answer": "Surfaces follow DEC-138. The colours of a component's states step one golden ratio (about 1.618) at a time from its default colour: `:hover` by the golden ratio, `:active` by its square, darker by default. Text on a filled component switches to whichever text neutral meets the theme's ratio (DEC-030). Where the darker colour cannot meet it even then, the ratio is inverted and the state is lighter. No state is darker than the near-black of DEC-140 or lighter than white. Disabled and busy follow DEC-029.",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-18"
+    },
+    {
+      "id": "DEC-128",
+      "question": "What decides the colour of a status: danger, warning, success or information?",
+      "options": ["Its contrast and its distance from other colours first", "Its meaning first"],
+      "answer": "Its meaning first. Each of the four statuses keeps the hue that signals already give that meaning (DEC-132), at a lightness where that hue still has its colour name (DEC-133). Contrast is met by the text colour or by calibration (DEC-129), never by moving a fill out of its colour name.",
+      "notes": "Replaced on 2026-11-24 by DEC-187. The statuses are danger, warning, success and information. Meanings read in the sources: the MUTCD colour code (2009 edition, Section 1A.12) gives red to stop or prohibition, yellow to warning, green to permitted movement, and blue to road user services and information; Council Directive 92/58/EEC, Annex I, gives red to prohibition and danger, yellow or amber to warning, green to no danger and blue to mandatory signs. No web standard gives a hue a meaning (WCAG 2.2, CSS Color 4). Known when deciding: a search that maximised colour distance alone turned the warning into a brown. WCAG 1.4.1 still requires a second visual cue for a status. Since 2026-11-23 a status takes the most vivid colour in its safe range (DEC-184).",
+      "status": "answered",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-16",
+      "recordedOn": "2026-11-16"
+    },
+    {
+      "id": "DEC-129",
+      "question": "In which forms does a status colour appear, and what gives each form its contrast?",
+      "options": [
+        "As a fill carrying text only",
+        "As a fill carrying text, and as text or a graphical object on the canvas"
+      ],
+      "answer": "As a fill carrying text, and as text or a graphical object on the canvas. On the fill, the text is the dark or the light text neutral, whichever meets the theme's contrast ratio (DEC-030); when both do, dark on yellow and light on red, green and blue. On the canvas, the status uses its fill colour where that meets the ratio; otherwise a colour of the same hue whose OKLCH lightness is moved until it does, as in DEC-124.",
+      "notes": "Replaced on 2026-11-24 by DEC-186. The pairing used when both neutrals pass is that of Council Directive 92/58/EEC, Annex II: a black pictogram on yellow, a white one on red, green and blue. Computed on 2026-11-16 with the inputs of DEC-132 to DEC-134: the fill colour also serves as text everywhere except the warning in the light colour scheme, and danger in the dark colour scheme in the AAA theme. In those two cases the calibrated text leaves its colour name (DEC-133): the warning text has a relative luminance of 0.18 in the AA theme and 0.10 in the AAA theme, and the danger text 0.34. Known when deciding, and accepted: the text is calibrated to pass.",
+      "status": "answered",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-16",
+      "recordedOn": "2026-11-16"
+    },
+    {
+      "id": "DEC-130",
+      "question": "Does a status colour come in more than one option of lightness and chroma?",
+      "options": ["One option", "Two options: a pale one and a vivid one"],
+      "answer": "Two options, each a pair of lightness and chroma: a pale one, of high lightness and low chroma (DEC-135), and a vivid one, of the highest chroma (DEC-131). Both are calibrated to meet the AA theme and the AAA theme in the light and the dark colour scheme.",
+      "notes": "Pale and vivid are modifiers of the ISCC-NBS System of Color Designation (read in secondary sources; NBS Special Publication 440 itself was not read). Measured on 2026-11-16: with the values of DEC-135, dark neutral text on a pale fill has a contrast ratio of about 15, so both themes are met; pale fills of different statuses are an Oklab distance of 0.003 to 0.007 apart, so a pale fill does not identify its status by itself: the status's vivid colour on it, as text, a graphical object or a border, does. A yellow cannot be text on its own pale fill and keep its colour name.",
+      "status": "answered",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-16",
+      "recordedOn": "2026-11-16"
+    },
+    {
+      "id": "DEC-131",
+      "question": "Which lightness does the vivid option of a status take?",
+      "options": [
+        "The lightness that puts the statuses furthest apart",
+        "The lightness nearest the hue's most saturated one that still meets the theme"
+      ],
+      "answer": "The lightness nearest the one at which its hue has the most chroma in sRGB, at which the text on the fill still meets the theme's contrast ratio, inside the range where the hue keeps its colour name (DEC-133). Where a colour in that range also meets the ratio against the canvas, that colour is taken, so one value serves as fill and as text.",
+      "notes": "Decided for the AA theme; the same rule is applied to the AAA theme, where the two options tested differ little. Measured on 2026-11-16 on fixed test hues, as the closest pair among the accent colour and the four statuses for typical, protan and deutan vision (Oklab distance): 0.048 against 0.093 for the furthest-apart set in the light colour scheme in the AA theme, and 0.068 against 0.089 in the AAA theme. With the hues of DEC-132: 0.083 (light, AA), 0.108 (light, AAA), 0.056 (dark, AA) and 0.161 (dark, AAA). The values are computed from DEC-132 to DEC-134 and are not stored (DEC-123). Since 2026-11-24 a status also stays in its safe range (DEC-185): fill and text may then take two values.",
+      "status": "answered",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-16",
+      "recordedOn": "2026-11-16"
+    },
+    {
+      "id": "DEC-132",
+      "question": "Which hue does each status take?",
+      "options": [
+        "Hues chosen to sit furthest from the accent colour",
+        "The hues of real-world signal colours"
+      ],
+      "answer": "OKLCH hue 26 degrees for danger, 89 for warning, 170 for success and 240 for information.",
+      "notes": "Each is the mean of two official references, converted from CIE xyY to Oklab with the matrices of the CSS Color 4 sample code: the centre of the daytime colour region of traffic signs (23 CFR Part 655, Subpart F, Appendix, Table 1; D65) and the central colour of hazard labels (49 CFR Part 172, Appendix A, Table 1; source C, scaled to D65). Red 24.5 and 28.4, yellow 79.7 and 97.5, green 168.7 and 171.1, blue 236.5 and 242.6. Taking the mean is a choice of method. Both tables were read on the copy of the Legal Information Institute. For comparison, the orange of the WideBot logo is at 38.1: inside the traffic-sign orange region (32.5 to 59.8) and next to the red one (16.8 to 35.4). Since 2026-11-24 a status starts from these hues and stays in its safe range (DEC-185, DEC-192).",
+      "status": "answered",
+      "decidedBy": "Ramy (resolved by research, as he ruled)",
+      "decidedOn": "2026-11-16",
+      "recordedOn": "2026-11-16"
+    },
+    {
+      "id": "DEC-133",
+      "question": "Within which lightness does a status hue keep its colour name?",
+      "options": [
+        "No limit: any lightness that meets contrast",
+        "The limits of the hue's colour name"
+      ],
+      "answer": "Red is no lighter than a relative luminance of 0.215: lighter, it is a pink. Yellow is no darker than a relative luminance of 0.240: darker, it is an olive or a brown. Green and blue keep their names at any lightness.",
+      "notes": "Approximate. Each limit is the Munsell value midway between the nearest centroids of the two colour names in the ISCC-NBS system (Kelly 1958, read in a secondary digitisation): strong red at value 4.5 and deep pink at 6.0; light olive brown at 5.0 and deep yellow at 6.0. Value is turned into luminance with the function of ASTM D1535 (read in secondary sources). The block boundaries of NBS Special Publication 440 were not read. Green centroids run from value 1.3 to 8.7 and blue ones from 1.7 to 8.4. By the same method the orange of the WideBot logo keeps its name down to a luminance of 0.134 (strong brown at 3.5, deep orange at 5.0). A yellow at its limit has a contrast ratio of 3.62 with white, so no yellow is text on white at 4.5. Since 2026-11-24 the red limit binds a fill (DEC-185).",
+      "status": "answered",
+      "decidedBy": "Ramy (resolved by research, as he ruled)",
+      "decidedOn": "2026-11-16",
+      "recordedOn": "2026-11-16"
+    },
+    {
+      "id": "DEC-134",
+      "question": "How much chroma may a status colour have?",
+      "options": [
+        "As much as sRGB allows",
+        "As much as sRGB allows, and no more than the accent colour's"
+      ],
+      "answer": "As much as sRGB allows at its lightness, and no more than the accent colour's chroma.",
+      "notes": "OKLCH was built for uniform chroma (CSS Color 4, section 9.2), so colours of one chroma look about equally colourful and no status outweighs the accent colour. The official signal colours of DEC-132 measured an OKLCH chroma of 0.13 to 0.21; the orange of the WideBot logo measures 0.22.",
+      "status": "answered",
+      "decidedBy": "Ramy (resolved by research, as he ruled)",
+      "decidedOn": "2026-11-16",
+      "recordedOn": "2026-11-16"
+    },
+    {
+      "id": "DEC-135",
+      "question": "Which lightness and chroma does the pale option take, and is it the same in both colour schemes?",
+      "options": [
+        "A pale colour in the light colour scheme and a dark tint in the dark one",
+        "The same pale colour in both colour schemes"
+      ],
+      "answer": "An OKLCH lightness of 0.885 and a chroma of 0.040, the same in the light and the dark colour scheme.",
+      "notes": "The values are the mean of the ISCC-NBS centroids of pale pink, pale yellow, very pale green and very pale blue, each read in two secondary digitisations that differ (lightness 0.858 to 0.919, chroma 0.020 to 0.076). The same colour serves both colour schemes because a dark tint of the warning's hue falls under the yellow limit of DEC-133 and is an olive, and because one value needs no second calibration. Against the canvas of DEC-126 a pale fill has a contrast ratio of about 13. Known: by the same naming system a pale red is called a pink, in either colour scheme.",
+      "status": "answered",
+      "decidedBy": "Ramy (resolved by research, as he ruled)",
+      "decidedOn": "2026-11-16",
+      "recordedOn": "2026-11-16"
+    },
+    {
+      "id": "DEC-136",
+      "question": "In the AAA theme, which contrast ratio does a graphical object of a chart have against the canvas?",
+      "options": [
+        "At least 3:1, as in the AA theme (WCAG 2.2, 1.4.11 Non-text Contrast)",
+        "At least 4.5:1"
+      ],
+      "answer": "At least 4.5:1. In the AAA theme, each part of a chart that is required to understand it has a contrast ratio of at least 4.5:1 against the canvas. In the AA theme the ratio is the one WCAG 2.2 requires in 1.4.11 Non-text Contrast.",
+      "notes": "WCAG 2.2 has no Level AAA criterion for non-text contrast: 1.4.11 is Level AA. Its Understanding page says its requirements and rationale are similar to those for large text in 1.4.3; for large text, 1.4.6 Contrast (Enhanced), Level AAA, requires 4.5:1. The ratio is taken by that analogy and is not a WCAG requirement. Measured on 2026-11-16 on test sets of eight colours, as the closest pair for typical, protan and deutan vision (Oklab distance): 0.092 at 4.5:1 against 0.102 at 3:1 on a white test canvas, and 0.072 against 0.087 on the canvas of DEC-126. Known: text in the AAA theme needs 7:1 (1.4.6), so a colour at 4.5:1 cannot be the colour of text on the canvas. Since 2026-11-24 the colours of a chart's series are chosen by DEC-196 and kept apart by DEC-185.",
+      "status": "answered",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-16",
+      "recordedOn": "2026-11-16"
+    },
+    {
+      "id": "DEC-137",
+      "question": "How does the colour of a surface follow its place in the stacking order?",
+      "options": [
+        "Every surface takes the same colour",
+        "The higher a surface in the stacking order, the brighter it is"
+      ],
+      "answer": "The higher a surface in the stacking order, the brighter it is, in both colour schemes. There are four levels, from the bottom: the canvas; the page regions other than `main` (`banner`, `navigation`, `complementary`, `contentinfo`); the `main` region; and the top layer (CSS Positioned Layout 4), where dialogs and popovers are shown. In the light colour scheme the top layer is white (`#FFFFFF`) and each level below it is darker. In the dark colour scheme the canvas is that of DEC-126 and each level above it is lighter.",
+      "notes": "Replaced on 2026-11-22 by DEC-162. The `main` region holds the main task of a view, where the user interacts most, so it sits above the other page regions. The canvas of the light colour scheme is therefore not white: it follows from DEC-138. Nothing is brighter than white, so a surface opened above another in the top layer of the light colour scheme is set apart by elevation, not by colour. The greys of both colour schemes keep the tint of DEC-126. The code block is an exception (DEC-141).",
+      "status": "answered",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-18",
+      "recordedOn": "2026-11-18"
+    },
+    {
+      "id": "DEC-138",
+      "question": "How far apart are the surface levels of DEC-137?",
+      "options": ["Equal gaps", "Gaps that grow towards the top"],
+      "answer": "The gaps grow towards the top: each gap is the one below it times a growth ratio of 2.50, a gap being counted as the logarithm of the contrast ratio between two neighbouring levels. The span, the contrast ratio between the canvas and the top layer, is 1.20.",
+      "notes": "Replaced on 2026-11-22 by DEC-163. The levels that matter less nearly merge and the upper ones stand apart. The growth ratio does not change the contrast of text; only the span does. Computed on 2026-11-18, steps 1.019, 1.048 and 1.124 from the bottom: light colour scheme #E8EBEE, #EAEDF0, #EFF2F5, #FFFFFF; dark colour scheme #101214, #131417, #18191C, #222426. The smallest gap is about two code values apart in 8-bit sRGB. This answers DEC-127 for surfaces; the ratios of states stay open there.",
+      "status": "answered",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-18",
+      "recordedOn": "2026-11-18"
+    },
+    {
+      "id": "DEC-139",
+      "question": "How many levels of importance does text have in colour, and what contrast does each take?",
+      "options": [
+        "One text colour",
+        "Three levels: the hint, the middle level and the highest level"
+      ],
+      "answer": "Three levels, each measured against the surface of DEC-137 on which it has the least contrast. The lowest is the hint (the `placeholder` and `title` attributes, and a control's accessible description): it meets the theme's ratio for text exactly, 4.5:1 in the AA theme (WCAG 1.4.3) and 7:1 in the AAA theme (WCAG 1.4.6). The highest is the main message and the actions (`h1` to `h6`, `strong`, `button`): the strongest contrast the colour scheme allows, the near-black of DEC-140 in the light colour scheme and white in the dark. All other text, body text, `label`, `caption`, `legend` and `th` included, is the middle level, with equal gaps: its ratio is the geometric mean of the other two. Links follow DEC-142.",
+      "notes": "HTML calls the placeholder a short hint. The colour level of a use case need not match its font weight level (DEC-106, T-W2): `label`, `caption`, `legend` and `th` are heavier but take the middle level. Computed on 2026-11-18, AA: light hint #696A6D (4.52), middle #3E4042 (8.70), highest #050608 (16.94); dark hint #888B8D (4.54), middle #BCBEC2 (8.37), highest #FFFFFF (15.57). AAA: light #4C4D50, #2F3134 (10.90); dark #ACAEB1, #D1D4D7 (10.46). Error text keeps the rule of DEC-129, measured on the same worst surface. Since 2026-11-22 its surfaces are those of DEC-162, its near-black is DEC-166, and links follow DEC-172. Since 2026-11-24 the forms of a status are those of DEC-186.",
+      "status": "answered",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-18",
+      "recordedOn": "2026-11-18"
+    },
+    {
+      "id": "DEC-140",
+      "question": "May any colour of the system be pure black (`#000000`)?",
+      "options": ["Yes, for text", "No, never"],
+      "answer": "No. No colour of the system is pure black, text included. Where the darkest colour is needed, such as the highest text level of the light colour scheme (DEC-139) and the dark text neutral of DEC-030, it is `#050608`: the near-black with the tint of DEC-126 that keeps a contrast ratio of at least 20.25:1 with white.",
+      "notes": "Replaced on 2026-11-22 by DEC-166. Extends DEC-125 beyond the canvas, for the same reason: smearing on OLED displays. At 20.27:1 with white, DEC-030 still holds for every colour (worst case 4.50:1). The canvas of DEC-126, #101214, was compared side by side: with it, 3.8% of all sRGB colours, of relative luminance about 0.183 to 0.202, would reach 4.5:1 with neither text neutral. Known when deciding: whether a value this close to black avoids smearing is not known, as DEC-125 found no measured threshold. The canvas of the dark colour scheme stays #101214.",
+      "status": "answered",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-18",
+      "recordedOn": "2026-11-18"
+    },
+    {
+      "id": "DEC-141",
+      "question": "Which colours does a code block use?",
+      "options": [
+        "Colours of its own",
+        "The colour names of ECMA-48 Select Graphic Rendition, mapped onto the hues of the system"
+      ],
+      "answer": "A code block is dark in both colour schemes: its background is the canvas of DEC-126. Its colours are the eight names of ECMA-48 Select Graphic Rendition. Red, yellow, green and blue take the hues of DEC-132; cyan and magenta take the hues of the CSS named colours `cyan` and `magenta`; white and bold text take the highest text level of DEC-139, default text the middle, black and grey (bright black) the hint. In both themes the block uses the values of the AAA theme: each meets 7:1 on it (WCAG 1.4.6), and the six coloured names are spread over two levels, the floor and the middle text level, to keep them apart for colour-blind readers. Each bright form (codes 90 to 97) is its normal colour one contrast level up. An error is shown as white text on a red band calibrated to 7:1 with white.",
+      "notes": "Meanings follow command-line convention, as in DEC-128: red for errors, yellow for warnings, green for success. ECMA-48 names the colours and gives no values. Code is dense small text, and an error line at the AA values (near-black on red, 4.86:1) could not be read, so the AAA values serve both themes. In the light colour scheme the block sits below `main` (16.71:1), an exception to DEC-137. Computed on 2026-11-18: red #FF7269 (a pink), yellow #F8C402, green #04E5B4, blue #08A7F4, cyan #0BB0B0, magenta #FFB0FB, default #C8CACE, grey #9C9FA2 (closest pair 0.087); error band #B50017, white on it 7.05. It reads as a terminal: a technical reader scanning a page stops at it, and a non-technical reader sees it is not meant for them and passes it on unchanged. Now see DEC-162 and DEC-164.",
+      "status": "answered",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-18",
+      "recordedOn": "2026-11-18"
+    },
+    {
+      "id": "DEC-142",
+      "question": "Which colour does a link take?",
+      "options": [
+        "The highest neutral text level, with buttons",
+        "The information colour of DEC-131"
+      ],
+      "answer": "The information colour of DEC-131 used as text, by the rule of DEC-129: where it does not meet the theme's ratio for text on every surface of DEC-137, its OKLCH lightness moves with its hue kept. A link inside text is also underlined, because its colour is less than 3:1 from body text (WCAG 1.4.1). A visited link (`:visited`) keeps the same contrast with half the chroma. A link's states follow DEC-127.",
+      "notes": "Replaced on 2026-11-22 by DEC-172. Technique G183 accepts colour alone only at 3:1 between a link and the text around it; the link is 1.36 to 1.92:1 from the middle level of DEC-139. A link shares its hue with the information status. In the dark colour scheme its states are lighter, as darker ones fall under the theme's ratio. Computed on 2026-11-18, link and visited: light #0370A6 and #496E88 (AA), #01527C and #345065 (AAA); dark #05ACFB and #72A9D0 (AA), #41B7FF and #82B4D7 (AAA).",
+      "status": "answered",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-18",
+      "recordedOn": "2026-11-18"
+    },
+    {
+      "id": "DEC-143",
+      "question": "Which colours does the focus indicator use?",
+      "options": ["One colour", "Two colours, a light one and a dark one (WCAG technique C40)"],
+      "answer": "Two: the warning colour of DEC-131, `#FDC808`, as a bright yellow ring, with the near-black of DEC-140 beside it, so that one of the two reaches 3:1 against any solid background (WCAG technique C40). The same indicator serves every component, both colour schemes and both themes.",
+      "notes": "Replaced on 2026-11-22 by DEC-176. C40 asks the two colours to be at least 9:1 apart; these are 12.97:1. Measured on 2026-11-18: on the light surfaces the yellow alone is 1.31 to 1.56:1 and the near-black 16.9 to 20.3:1; on the dark surfaces the yellow is 10.0 to 12.0:1; on accent and status fills the near-black is 4.4 to 6.2:1. The indicator shares its hue with the warning status. Its size and offset (WCAG 2.4.13) are not a matter of colour.",
+      "status": "answered",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-18",
+      "recordedOn": "2026-11-18"
+    },
+    {
+      "id": "DEC-144",
+      "question": "Which colours does a status container, such as an alert, use?",
+      "options": [
+        "The pale option of DEC-135",
+        "A tint of the status hue at the lightness of `main`"
+      ],
+      "answer": "The status hue at the OKLCH lightness of the `main` region (DEC-137), with a chroma of 0.03. Its border and its icon take the status hue at 3:1 with the container. Text inside keeps the levels of DEC-139. A filled button inside takes the vivid status colour (DEC-131) with the text of DEC-129; an outlined button takes the border colour as its outline and, as its text, the status hue at the theme's ratio with the container.",
+      "notes": "The pale option fails WCAG there: in the light colour scheme it is darker than the canvas and the hint falls to 3.78:1; in the dark colour scheme the text falls to 1.3 to 2.5:1. At the lightness of `main` every text level passes (hint 4.77:1 or more in light, 5.06:1 in dark). Computed on 2026-11-18, borders: light danger #DD665E, warning #AC8700, success #009F7C, information #0094DA; dark #B03D39, #7D6101, #017459, #016B9E. States follow DEC-127. Since 2026-11-22 no surface level belongs to the `main` region (DEC-162), so the lightness of this container is not set here: a status container is a component, and its surface is decided with the component. Its states follow DEC-168. Set aside on 2026-11-24: a status container is a component, decided with the component; this text is input for it.",
+      "status": "abandoned",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-18",
+      "recordedOn": "2026-11-18"
+    },
+    {
+      "id": "DEC-145",
+      "question": "Which roles does the blue of the WideBot logo (#004A9B) take?",
+      "options": [
+        "A secondary accent",
+        "The tint of the greys and the colour of selected and marked text only"
+      ],
+      "answer": "Two only: its hue tints the greys of both colour schemes (DEC-126, DEC-137), and it colours selected and marked text. It takes no other role: it is not an accent, a status or a link colour.",
+      "notes": "Replaced on 2026-11-22 by DEC-165. Links take the information colour of DEC-142, of OKLCH hue 240, near the logo blue's 257 but not the same.",
+      "status": "answered",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-18",
+      "recordedOn": "2026-11-18"
+    },
+    {
+      "id": "DEC-146",
+      "question": "What happens in forced colours mode (CSS Color Adjustment 1)?",
+      "options": [
+        "The system respects it everywhere",
+        "Charts and code blocks keep their own colours"
+      ],
+      "answer": "The user's palette is respected everywhere: no part of the system opts out (`forced-color-adjust` is never `none`). Meaning never depends on the system's colours alone: text, icons, borders and labels carry it, so it survives the user's palette.",
+      "notes": "WCAG 2.2 has no criterion for forced colours. Understanding 1.4.8 (AAA) says the mechanism that lets users select foreground and background colours can be provided by the browser, and this mode is one. In it, the browser provides the user's palette through the CSS system colours.",
+      "status": "answered",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-18",
+      "recordedOn": "2026-11-18"
+    },
+    {
+      "id": "DEC-147",
+      "question": "What happens when a tenant's brand colour is close to a status colour?",
+      "options": [
+        "The brand colour moves away",
+        "The brand colour is kept and the tenant is warned"
+      ],
+      "answer": "The status colour always keeps its hue and meaning (DEC-128, DEC-132). The brand colour is kept, as DEC-030 says, and the tenant is warned that it can be mistaken for a status.",
+      "notes": "Status colours are never derived from a tenant's brand. How close counts as a clash is not set yet. Since 2026-11-23 it is measured by DEC-175, with the base colour of DEC-178. Since 2026-11-24 what decides a status colour is DEC-187.",
+      "status": "answered",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-18",
+      "recordedOn": "2026-11-18"
+    },
+    {
+      "id": "DEC-148",
+      "question": "How strong is a decorative separator?",
+      "options": ["As strong as a boundary, 3:1", "One surface step, 1.124:1"],
+      "answer": "A grey with the tint of DEC-126 at a contrast ratio of 1.124 with the surface it sits on: the step between `main` and the top layer (DEC-138).",
+      "notes": "Replaced on 2026-11-22 by DEC-177. WCAG asks nothing of decorative lines. Computed on 2026-11-18: on `main`, light #E3E5E8 and dark #222426; on the top layer, light #EFF2F5 and dark #2B2D2F. On `main` in the dark colour scheme and on the top layer in the light, the separator equals the next surface level.",
+      "status": "answered",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-18",
+      "recordedOn": "2026-11-18"
+    },
+    {
+      "id": "DEC-149",
+      "question": "Which tokens of code take a colour in a code block?",
+      "options": [
+        "Every token type, after the defaults of one tool such as Vim or Pygments",
+        "Only the tokens that carry a meaning"
+      ],
+      "answer": "Only the tokens that carry a meaning: errors (the red band of DEC-141); removed lines in red, added lines in green and hunk headers in cyan, as git shows them; warnings in yellow, success in green and information in blue (DEC-128); comments in grey (bright black). Every other token takes the default text colour of the block.",
+      "notes": "No standard maps token types to colours, and terminal tools disagree: a string is magenta in Vim (runtime/syntax/syncolor.vim), yellow in Pygments (formatters/terminal.py), bright magenta in nano and green in Node.js util.inspect. They agree only on meaning: git (diff.c) shows removed lines red, added lines green and hunk headers cyan. Colouring meaning only adds nothing a developer has to learn. Since 2026-11-24 what decides a status colour is DEC-187.",
+      "status": "answered",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-18",
+      "recordedOn": "2026-11-18"
+    },
+    {
+      "id": "DEC-150",
+      "question": "Which colour do selected and marked text take?",
+      "options": [
+        "The browser's own Highlight and Mark",
+        "The hue of the logo blue, saturated and light, with near-black text"
+      ],
+      "answer": "Selected text (`::selection`, CSS `Highlight`) and marked text (the `mark` element, CSS `Mark`) take the hue of the logo blue (DEC-145) at an OKLCH lightness of 0.80, with the most chroma sRGB allows there: `#94C0FE`, in both colour schemes. The text on it switches to the near-black of DEC-140.",
+      "notes": "Replaced on 2026-11-22 by DEC-171. Near-black on it is 10.84:1 (WCAG 1.4.6). Against `main` it is 1.66:1 in the light colour scheme and 9.40:1 in the dark. A value as light as the light canvas (#DFECFE) had a chroma of 0.028 and barely showed (1.06:1 against `main`). Lightness 0.80 lies between the most saturated value that keeps near-black at 7:1 (0.683) and a pale one (0.90). Selected and marked text share one colour.",
+      "status": "answered",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-18",
+      "recordedOn": "2026-11-18"
+    },
+    {
+      "id": "DEC-151",
+      "question": "Where may a gradient appear?",
+      "options": [
+        "Nowhere in the product interface",
+        "Brand moments, AI presence and continuous data scales"
+      ],
+      "answer": "In three places: brand moments (decorative surfaces such as a welcome screen, an empty state or marketing areas, never inside working views), AI presence (marking AI-generated content or the assistant's surfaces) and continuous data scales. A gradient may move for loading, generative AI and pointer interaction, within DEC-153. It is never the only carrier of a meaning: text, an icon or a label carries it too. It always has a solid background colour beside it, and text on it meets the theme's ratio at its least contrasting area.",
+      "notes": "Replaced on 2026-11-24 by DEC-198. Forced colours mode computes background-image to none (CSS Color Adjustment 1), so a gradient vanishes there (DEC-146). WCAG F83 tests text against the part of the background most like it. Platforms that document gradients use them for the AI's mark, waiting and voice states, brand moments and data (Google Gemini, Microsoft Copilot, ClickUp, IBM Carbon, AWS Cloudscape); many use none (Notion, Slack, Linear, Zendesk, PatternFly). No source gives rules for text on gradients.",
+      "status": "answered",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-19",
+      "recordedOn": "2026-11-19"
+    },
+    {
+      "id": "DEC-152",
+      "question": "How are the colours of a gradient mixed?",
+      "options": [
+        "By the browser's defaults, with any stops",
+        "By rules that keep the mix even, smooth and free of noise"
+      ],
+      "answer": "Stops are written in OKLCH, or the gradient names its space. Near hues mix in Oklab; distant hues mix in OKLCH with the hue direction stated or pinned by an intermediate stop, on a path that crosses no status hue of DEC-132. Interior stops join on one smooth curve, not straight segments. Lightness changes steadily in an ordered gradient. Every point stays inside sRGB. A fade ends in the same colour at alpha 0. Banding is met by a wider lightness or chroma range or a shorter distance, never by added noise. A gradient has as few stops as it can, two where possible, and gradients are not mixed with blend modes.",
+      "notes": "CSS Color 4: hex, named, rgb(), hsl() and hwb() stops interpolate in gamma sRGB (13.3); a path can leave the gamut (13.1, 14); premultiplied alpha (13.5). Seams are Mach bands at slope changes (Mach 1865; Kingdom 2014); a spline removes them (Aisch 2013; viridis). Steady lightness: Kovesi 2015. Blend modes work in gamma sRGB (Compositing and Blending 1). IBM: no more than two colours. Browser dithering is optional and uneven (WebKit bug 90339). Measured: over four stops one curve cut the lightness slope jump from 1.44 to 0.39. Since 2026-11-23 near hues are those up to 90 degrees of OKLCH hue apart (DEC-154). Since 2026-11-24 the pairs and the limit are those of DEC-189.",
+      "status": "answered",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-19",
+      "recordedOn": "2026-11-19"
+    },
+    {
+      "id": "DEC-153",
+      "question": "What limits apply to the colours of an animated gradient?",
+      "options": [
+        "Those of the motion foundation only",
+        "The WCAG limits on flashes and moving content, applied to colour now"
+      ],
+      "answer": "An animated gradient flashes no more than three times in any second and never flashes a saturated red: a colour with R/(R+G+B) of 0.8 or more, such as #B40318 or #B50017 (WCAG 2.3.1). Moving content that starts on its own, lasts more than five seconds and sits beside other content can be paused, stopped or hidden (WCAG 2.2.2). Under prefers-reduced-motion: reduce the gradient is still. Text over it meets the theme's ratio on every frame.",
+      "notes": "Durations, easing and the motion itself belong to the motion foundation. A loading-only screen is exempt from 2.2.2 (Understanding 2.2.2, note 4). Changes of colour or opacity alone are not motion animation under 2.3.3, but 2.3.1 still applies. That the text ratio holds on every frame is an inference from F83.",
+      "status": "answered",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-19",
+      "recordedOn": "2026-11-19"
+    },
+    {
+      "id": "DEC-154",
+      "question": "Which colours may a gradient join?",
+      "options": [
+        "The accent and its neighbouring hues only",
+        "The brand pair: the accent and the logo blue, extending DEC-145",
+        "Brand colours, a brand colour with white or the darkest colour, and partners from the hue circle"
+      ],
+      "notes": "Replaced on 2026-11-24 by DEC-189. Where products name the colours of their AI gradient, they come from the company's own brand palette (Google, Microsoft, ClickUp). DEC-145 limits the logo blue to the tint of the greys and to selected and marked text. The accent and the logo blue are about 140 degrees of hue apart: mixed in Oklab the middle greys; in OKLCH the shorter way passes the danger hue (DEC-152 then needs an intermediate stop). Since 2026-11-22 the blue of the logo has no role (DEC-165). Answered on 2026-11-23. Measured: two colours of equal chroma, a hue angle D apart, mixed straight in Oklab keep cos(D/2) of their chroma in the middle: 71 per cent at 90 degrees, 50 at 120, none at 180. The limit was picked from a drawing. Black was asked for; it is the darkest colour.",
+      "status": "answered",
+      "recordedOn": "2026-11-19",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-23",
+      "answer": "Three kinds of pair. Brand colours with each other. A brand colour with white or with the darkest colour (DEC-166): a tint or a shade of it. And a brand colour with a partner the OKLCH hue circle gives from it (DEC-178): a neighbour, or the hue a harmony sets at an angle from it, such as 120 degrees for a triad or 180 for the opposite. Two colours up to 90 degrees of hue apart mix straight (DEC-152). Further apart they do not: they join through white or the darkest colour, as two gradients of the second kind end to end, or they go round the hue circle only where the path crosses no status hue (DEC-152)."
+    },
+    {
+      "id": "DEC-155",
+      "question": "May a tenant give the chat widget a gradient background?",
+      "options": [
+        "Solid colours only",
+        "A gradient under DEC-152, with text meeting the theme's ratio at its least contrasting area"
+      ],
+      "notes": "Intercom lets customers set the Messenger background to a gradient, with header text black or white and no contrast guidance; Zendesk and Tidio offer solid colours only. Dropped on 2026-11-23: the chat widget is a component, and its background is decided with the component, not in the colour foundation.",
+      "status": "abandoned",
+      "recordedOn": "2026-11-19"
+    },
+    {
+      "id": "DEC-156",
+      "question": "Which colour does a shadow take?",
+      "options": [
+        "Near-black (#050608) at an alpha",
+        "The hue of the surface it falls on, darkened"
+      ],
+      "answer": "The hue of the surface it falls on, at a lower lightness: a shadow lowers the luminance of what lies under it and keeps its hue. On the greys of DEC-137 that is the canvas hue of DEC-126. It is never pure black (DEC-140). A shadow is never the only edge of a component or the only focus cue.",
+      "notes": "Replaced on 2026-11-24 by DEC-201. Vision science: a pure drop in luminance is read as lighting, a change of colour as paint (Kingdom, McGill; Kingdom, Beauce and Hunter 2004); colour constancy largely holds inside cast shadows (Morimoto et al. 2025). Forced colours mode computes box-shadow and text-shadow to none (CSS Color Adjustment 1), and Understanding 1.4.11 never accepts a shadow as the required boundary. Atlassian, GitHub Primer and Radix tint their shadows; Material and Fluent use black. Painting practice: warm light, cool shadow (Gurney). Sizes, layers and light direction belong to the elevation foundation. Since 2026-11-22 the surface levels are those of DEC-162, the greys and the canvas hue those of DEC-164, and the darkest colour is DEC-166.",
+      "status": "answered",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-19",
+      "recordedOn": "2026-11-19"
+    },
+    {
+      "id": "DEC-157",
+      "question": "Where may a translucent surface with a backdrop filter (frosted glass) appear, and how is its contrast met?",
+      "options": [
+        "Nowhere: every surface is opaque",
+        "On the top layer only, with contrast met at its worst point over any content beneath",
+        "On any surface, with contrast checked against the content behind it when it is designed"
+      ],
+      "answer": "Only on the top layer (DEC-137), where dialogs and popovers are shown: never on the canvas, a page region or `main`. Its contrast is met at its worst point over any content beneath: the darkest colour it can take in the light colour scheme and the brightest in the dark, set by its tint and its `backdrop-filter`, never by its blur. Its text levels follow DEC-139 against that point, and its edge meets the theme's ratio for component edges there (WCAG 1.4.11). In forced colours mode its background is an opaque `Canvas`; where `prefers-reduced-transparency: reduce` applies, it is the solid colour of the top layer. It is legible without that query, and it carries no noise layer.",
+      "notes": "Replaced on 2026-11-24 by DEC-202. Apple, Microsoft and Android keep glass to floating or temporary surfaces; Apple's Materials page rules it out of the content layer. Blur averages what lies beneath, but a large dark or bright area stays dark or bright, so only the tint and the filter bound the worst point; WCAG technique F83 tests text on an image at its darkest or lightest area. Measured on 2026-11-20 for content of any colour: body text on light glass needs a tint of 67% (AA) to 74.5% (AAA), or 40% to 53.5% when `contrast()` and `brightness()` narrow the backdrop. CSS Color Adjustment 1 keeps a background's alpha in forced colours and does not list `backdrop-filter`. `prefers-reduced-transparency` is not Baseline.",
+      "status": "answered",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-20",
+      "recordedOn": "2026-11-20"
+    },
+    {
+      "id": "DEC-158",
+      "question": "What does the knowledge of a foundation hold, and what is left to be computed?",
+      "options": [
+        "The values chosen for one brand",
+        "Concepts with their reasons, the properties a person may set, and equations; every value that follows is computed"
+      ],
+      "answer": "Concepts, reasons and equations, never the values of one brand. Each choice is recorded in three parts: what is fixed, a standard's requirement or a concept with its reason; the properties a person may set, each with a default and limits; and the outputs, which are computed from the first two and never stored in the knowledge base. A rule states its reason, so that it can be applied to a case nobody listed and combined with related rules. A value in the notes of a decision is evidence from one brand, never the system's value. For a case no rule and no open decision covers, the agent researches the standards and the evidence, proposes an answer, and applies nothing until it is approved. A case under an open decision waits on it: the agent stops and reports that.",
+      "notes": "A design system for any brand and any use is generated from a small set of properties, as a designer applies principles to a new brand. A scale is an equation, not a list of steps (DEC-123), and a value has one place (DEC-120). A person here is whoever sets up the design system for a brand; the user of a product sets only preferences, such as the colour scheme (DEC-173) and the theme (DEC-174). A colour such as the canvas of one brand is an output. A rule carries its reason in a field of its own (DEC-180).",
+      "status": "answered",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-21",
+      "recordedOn": "2026-11-23"
+    },
+    {
+      "id": "DEC-159",
+      "question": "How do the levels of tokens hold their values?",
+      "options": [
+        "Each level stores its own values",
+        "A raw value is set once, in the scale; every level above refers down to it by alias"
+      ],
+      "answer": "In three levels. The scale holds the raw values, such as the neutrals, a yellow, a size or a font family: it is the lowest level and gives the range. A foundation token, such as the accent colour, warning, focus or a heading level, refers to a scale token by alias, as the DTCG format names a reference to another token, and gives it a meaning. An atom, such as a button, a surface or a switch, refers to foundation tokens by alias, and forms a component when combined with others. No level above the scale holds a raw value. A token never refers to a token of its own level: two foundation tokens share a value by referring to the same scale token, as the text of a heading and of an action share one dark neutral.",
+      "notes": "A change to one scale value then applies everywhere by itself, with no override at each level. A foundation token that referred to another would borrow its meaning. A copied value goes stale when its source changes (DEC-120). The scale is an output, computed from the properties (DEC-158); every computed value is a raw value and sits in the scale. The token file is a mechanical document made by the pipeline after the foundations, and nothing is built to stand in for it before then: a stand-in would be a second place and would drift. Until it exists, the default and the limits of a property live in the decision that set them (DEC-120), and an output is computed when it is needed. It belongs to the general token contract (DEC-026).",
+      "status": "answered",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-22",
+      "recordedOn": "2026-11-23"
+    },
+    {
+      "id": "DEC-160",
+      "question": "What limits the range of a property a person may set?",
+      "options": [
+        "Nothing: any value may be entered, and a failure is reported afterwards",
+        "WCAG: the range ends where a requirement would stop being met"
+      ],
+      "answer": "WCAG. A range ends where text, or what identifies a component or its state, would stop meeting its contrast ratio, so a person cannot set a number that fails. The range is where both the AA theme and the AAA theme pass: both are offered for the same design system, so one setting has to pass in both. A limit that depends on another property is computed again when that property changes: the range of the property being set ends where the current value of another would stop being valid. Where WCAG sets no limit, a limit may still come from the sRGB colour space or from another decision. This holds for a property that is a number. A colour a person enters, such as the accent colour, is kept in the AA theme, calibrated in the AAA theme (DEC-042, DEC-124), and checked by DEC-030 and DEC-147.",
+      "notes": "Measured on 2026-11-22, each with every other property at its default: state ratio 1.205 to 1.49; OKLCH lightness of the dark canvas 0.122 to 0.214; OKLCH chroma of the grey tint 0.0035 to 0.0185; span of the surface levels from 1.19 to just under the state ratio (itself 1.25 by default), because the state ratio stays greater than the span (DEC-168). Of the two properties of the surface levels, only the span changes the contrast of text; the growth does not (DEC-163). Measured alone, without the state ratio, the span could reach 2.68. They are outputs for those defaults, not fixed numbers.",
+      "status": "answered",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-22",
+      "recordedOn": "2026-11-23"
+    },
+    {
+      "id": "DEC-161",
+      "question": "Where does a colour appear, and what takes the accent colour?",
+      "options": [
+        "The accent colour fills every button that matters",
+        "Neutral colours by default; the accent colour for the one main action of a view only"
+      ],
+      "answer": "A colour appears only where it carries a meaning; everything else takes neutral colours. A button takes neutral colours, the roles CSS names `ButtonFace` and `ButtonText`; among neutral buttons the order of importance is shown by variant, not by colour. A view has at most one main action, and only it takes the accent colour (CSS `AccentColor`), in both colour schemes; where it submits a form, it is that form's default button. A button whose action is destructive takes the danger colour, because that colour carries its meaning (DEC-128). The text on a filled button follows DEC-030, and in the AAA theme the fill is calibrated by DEC-042 and DEC-124.",
+      "notes": "Many colours distract, hide what matters most and confuse. The accent colour marks the main action; used anywhere else, it stops marking it. It replaces DEC-121 and DEC-122. Measured for DEC-121 on the accent colour of one brand: white text on it has a contrast ratio of 3.25 and black 6.46, so the text follows DEC-030. CSS Color 4 names these roles as system colours, and HTML defines a form's default button. How a selected item is marked is DEC-170. Since 2026-11-24 what decides a status colour is DEC-187.",
+      "status": "answered",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-22",
+      "recordedOn": "2026-11-23",
+      "supersedes": ["DEC-121", "DEC-122"]
+    },
+    {
+      "id": "DEC-162",
+      "question": "How does the colour of a surface follow its level?",
+      "options": [
+        "By its landmark role, in one fixed order",
+        "By the attention it needs: the more, the higher and the brighter"
+      ],
+      "answer": "There are four surface levels, counted from the canvas, which is the first. The higher a surface, the brighter it is, in both colour schemes, and its level follows the attention it needs, not its landmark role. The canvas is always the lowest and the darkest. The surface on top (DEC-181) takes the fourth level, the brightest. Every surface under the top sits in the middle, close to the canvas and far from the fourth (DEC-163): the first above the canvas takes the second level and all others share the third; a level may stay empty. A new top pushes the one before it into the middle; when the top closes, the fourth level passes back to the surface then on top. What needs no level stays on the canvas, divided by separators (DEC-177). In the light colour scheme the fourth level is white.",
+      "notes": "The user has one place to look: the top is always the brightest, and keeping everything under it close to the canvas keeps it obvious; a middle level close to the fourth would compete with it. It replaces DEC-137. The level is never the only cue of where the user acts: the focus indicator shows it too (WCAG 1.4.1, 2.4.7). Text on a surface that changes level follows DEC-167. A code block is the exception: it is dark in both colour schemes (DEC-141).",
+      "status": "answered",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-22",
+      "recordedOn": "2026-11-23",
+      "supersedes": ["DEC-137"]
+    },
+    {
+      "id": "DEC-163",
+      "question": "How far apart are the surface levels?",
+      "options": [
+        "Equal differences",
+        "One clear step up to the highest level, with the levels below close to each other"
+      ],
+      "answer": "The highest level takes one clear step above the rest, and the levels below stay close to each other; the differences are never equal. Two properties set this. The span is the contrast ratio between the lowest and the highest level, 1.20 by default. The growth is how many times larger each difference is than the one below it, 2.50 by default, a difference being counted as the logarithm of the contrast ratio between two neighbouring levels. The step up to the highest level is at least 0.038 in OKLCH lightness, in both colour schemes: that figure is fixed, and it is the test of a clear step.",
+      "notes": "Equal differences put the levels in an ascending order, and the eye follows that order instead of going to the highest. The eye follows a difference in lightness, not the contrast ratio: a top step of one contrast ratio, 1.124, measures 0.056 in OKLCH lightness on a canvas of lightness 0.122 and 0.030 on one of 0.300. 0.038 is that step on the lightest dark canvas at which the highest level was still seen to stand clearly above the rest. Measured on 2026-11-22 with every other property at its default: that step holds from a span of 1.19 and from a growth of 2.26. At the defaults the smallest difference is about two code values of 8-bit sRGB, so a larger growth can merge two levels; its upper limit is not measured. It replaces DEC-138 and keeps its two defaults.",
+      "status": "answered",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-22",
+      "recordedOn": "2026-11-23",
+      "supersedes": ["DEC-138"]
+    },
+    {
+      "id": "DEC-164",
+      "question": "What tint do the greys take, and how light is the canvas of the dark colour scheme?",
+      "options": [
+        "One fixed grey scale for every brand",
+        "A tint with a hue and a strength a person sets, and a canvas lightness a person sets, inside limits"
+      ],
+      "answer": "The greys of both colour schemes, in surfaces, the text neutrals, separators and shadows, share one tint. Its hue is one of three options: neutral, where the greys have no chroma and no strength applies; the hue of the accent colour, the default; or the hue of a colour a person picks. Where there is a tint, its strength is an OKLCH chroma a person sets, 0.005 by default, in a range computed by DEC-160; white carries none. The canvas of the dark colour scheme has an OKLCH lightness a person sets, 0.18 by default, from the lightness of the darkest colour (DEC-166) up to where the step up to the highest level is still at least 0.038 (DEC-163). That lightness is the same in the AA theme and the AAA theme. No colour is stored: each is computed from these.",
+      "notes": "The tint stays minimal so that it takes no attention from the accent colour. Measured on 2026-11-22 for every hue in steps of 5 degrees, with every other property at its default: the strength runs from 0.0035 to 0.0185; under 0.0035 the darkest colour loses its tint for some hues; above 0.0185 the lightest tinted level cannot hold it in sRGB for hues near 265 degrees. The canvas lightness ends at 0.214 with every other property at its default; WCAG alone would allow 0.314. It replaces DEC-126, whose value was one brand's output. The rule C-S3, which forbade a grey with no chroma, is redrafted with it.",
+      "status": "answered",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-22",
+      "recordedOn": "2026-11-23",
+      "supersedes": ["DEC-126"]
+    },
+    {
+      "id": "DEC-165",
+      "question": "Which roles do the colours of a brand's logo take?",
+      "options": [
+        "Each colour of the logo is given a role by hand",
+        "The most colourful colour is proposed as the accent colour; the others take no role by default"
+      ],
+      "answer": "The most colourful colour of the logo, by OKLCH chroma, is proposed as the accent colour (CSS `AccentColor`). A person may pick another colour of the logo or enter one, and every choice is checked again. The other colours of the logo take no role by default. The tint of the greys is set by DEC-164. The rule is the same for every brand.",
+      "notes": "It replaces DEC-145. Read from eight test logos on 2026-11-20: all 192 combinations tested passed for every text element. A brand colour close to a status colour is kept, with a warning (DEC-147). A logo with no chromatic colour, and two colours of equal chroma, are not decided.",
+      "status": "answered",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-20",
+      "recordedOn": "2026-11-23",
+      "supersedes": ["DEC-145"]
+    },
+    {
+      "id": "DEC-166",
+      "question": "What is the darkest colour of the system?",
+      "options": ["Pure black (`#000000`)", "A near-black that carries the tint of the greys"],
+      "answer": "No colour of the system is pure black (`#000000`), text and shadows included. The darkest colour is the lightest colour, with the tint of the greys where they have one (DEC-164), that still has a contrast ratio of at least 20.25:1 with white. The highest text level of the light colour scheme (DEC-139) and the dark text neutral of DEC-030 both take it. It is computed, not stored.",
+      "notes": "Pixels that are fully off switch on more slowly than lit ones on OLED displays, which smears moving content; no standard and no measured threshold was found for it (DEC-125). 20.25 is 4.5 squared: with the two text neutrals that far apart, every colour reaches 4.5:1 with one of them, so DEC-030 holds for every colour. It replaces DEC-140, whose value was one brand's output.",
+      "status": "answered",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-22",
+      "recordedOn": "2026-11-23",
+      "supersedes": ["DEC-140"]
+    },
+    {
+      "id": "DEC-167",
+      "question": "On which surfaces does text meet its theme's contrast ratio, and where are its levels measured?",
+      "options": [
+        "On the surface levels only",
+        "On every surface it sits on, hovered, pressed and selected surfaces included"
+      ],
+      "answer": "On every surface it sits on, with no exception by surface: the surface levels (DEC-162) and every hovered, pressed and selected surface. The text of a disabled or busy component follows DEC-169: WCAG sets no ratio for an inactive component (1.4.3). The text of a page takes the three levels of DEC-139, measured on the surface level on which it has the least contrast. Text on a hovered, pressed or selected surface takes its three levels measured on that surface, by the same rule: the lowest at the theme's ratio, the highest at the strongest contrast, the middle at their geometric mean.",
+      "notes": "Text a user cannot read gives them nothing. Measured on 2026-11-22 on a selected surface (DEC-170): the lowest text level of the page reaches 2.87 in the light colour scheme and 2.90 in the dark, against 4.5; measured on that surface, the three levels reach 4.51, 7.01 and 10.77 in the light AA theme and 7.01, 8.69 and 10.77 in the light AAA theme. It extends DEC-139.",
+      "status": "answered",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-22",
+      "recordedOn": "2026-11-23"
+    },
+    {
+      "id": "DEC-168",
+      "question": "How do the colours of a component's states follow its default colour?",
+      "options": [
+        "A stored colour for each state",
+        "Steps of one ratio from the default colour, darker in the light colour scheme and lighter in the dark"
+      ],
+      "answer": "By steps of one ratio, the state ratio: hovered is one step from the default colour and pressed is two, a step being a contrast ratio (DEC-123). In the light colour scheme a state is darker than the default colour; in the dark it is lighter; where it cannot move that way, DEC-179 applies. The colour moves along OKLCH lightness with its hue kept, and its chroma kept while it fits sRGB. A person sets the ratio as a number, 1.25 by default; there is no list of kinds of product to pick from. Its range runs from any ratio greater than the span of the surface levels (DEC-163) to the largest ratio at which one of the two text neutrals still reaches 7:1 on a pressed surface of every surface level; both ends are computed (DEC-160). Text on a state follows DEC-167. Disabled and busy follow DEC-169.",
+      "notes": "In the light colour scheme surfaces are close to white, so a state has room only towards dark; in the dark colour scheme they are close to the darkest colour, so it has room only towards light. The right step depends on the use of the product: a product for work needs calm steps, an expressive one can take larger. A step of 1.1 was not recognizable. Under the span, a state can take the colour of another surface level. Measured on 2026-11-22 with every other property at its default: the range is 1.205 to 1.49. It replaces DEC-127, whose golden ratio is above that range: at it no text neutral reached 7:1 on a pressed surface. Hovered is the state CSS matches with `:hover`, pressed with `:active`. Since 2026-11-24 an interaction also acts as a change of height where the light is on (DEC-200).",
+      "status": "answered",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-22",
+      "recordedOn": "2026-11-23",
+      "supersedes": ["DEC-127"]
+    },
+    {
+      "id": "DEC-169",
+      "question": "What contrast do disabled and busy components keep?",
+      "options": [
+        "None: WCAG requires none for inactive components",
+        "3:1 with their surface, and no fill"
+      ],
+      "answer": "A disabled component keeps a contrast ratio of 3:1, in both themes: its text, icons and border take a grey at 3:1 with the surface level on which it has the least contrast (DEC-162), and it loses its fill. Disabled is one style, the same across all states, and it is not made with opacity. A busy component (`aria-busy`) looks the same while it loads.",
+      "notes": "3:1 is the lowest contrast ratio WCAG uses, in 1.4.11 and for large-scale text in 1.4.3: the component stays visible and, under the ratio of normal text, reads as off. WCAG requires no contrast for inactive components, so this floor is the system's own. One style and no opacity were set at planning, before the colour foundation. It replaces DEC-029: its figure was a typing error for 3:1, so the reason its notes give for that figure does not hold. The second half of DEC-029, whether one ratio applies to every colour role, was answered by DEC-123.",
+      "status": "answered",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-22",
+      "recordedOn": "2026-11-23",
+      "supersedes": ["DEC-029"]
+    },
+    {
+      "id": "DEC-170",
+      "question": "How is a selected item marked?",
+      "options": [
+        "By the accent colour",
+        "By a tint of the selection colour",
+        "By a neutral surface, with a second visible cue"
+      ],
+      "answer": "By a neutral surface two steps of the state ratio from its own surface, a value it shares with a pressed surface (DEC-168), together with a second visible cue. Colour is never the only visible cue of what is selected (WCAG 1.4.1); the second cue is what identifies the state, so it meets 3:1 against the colours next to it (WCAG 1.4.11); and the state is exposed in code (WCAG 4.1.2). A person may choose a tint instead, only where every text level passes on it: the surface at its own lightness, with the hue of the selection colour (DEC-171) and that colour's chroma multiplied by 0.236, the share a visited link keeps (DEC-172). The accent colour itself never marks a selected item: it stays for the main action (DEC-161). Text on the selected surface follows DEC-167.",
+      "notes": "The brightness of a neutral is set by a contrast ratio, so it is the same for every brand; that of a tint shifts with its hue. Measured on 2026-11-22: on a tinted item the lowest text level fell to 4.473 against 4.5, and under 4.5 for hues near 30, 150, 210 and 330 degrees. A tint has a contrast ratio of 1.00 with its surface and the accent colour of one brand 2.89 in the light colour scheme, so neither identifies the state alone. Where sRGB cannot hold that chroma at the surface's lightness, the tint moves by the least needed, in the direction of states. The accent colour marks the main action; used for a selection too, it stops marking it.",
+      "status": "answered",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-22",
+      "recordedOn": "2026-11-23"
+    },
+    {
+      "id": "DEC-171",
+      "question": "Which colour do selected and marked text take?",
+      "options": [
+        "One fixed colour for every brand",
+        "A colour mapped from the accent colour and kept clear of the status hues and the focus colour"
+      ],
+      "answer": "Selected text (`::selection`, CSS `Highlight`) and marked text (the `mark` element, CSS `Mark`) take the selection colour. Its hue is the hue of the accent colour; where the colour this gives is too close to a status colour (DEC-131, DEC-135) or to the focus colour (DEC-176), by the test of DEC-175, it takes the nearest hue at which it is not; no limit in degrees is used in its place. Its OKLCH lightness is 0.80, with the most chroma sRGB allows there, in both colour schemes. The text on it is the darkest colour (DEC-166), which keeps at least 7:1 on it (WCAG 1.4.6).",
+      "notes": "A selection must not read as a status or as focus. It replaces DEC-150. Fixed limits in degrees of hue were tested on 2026-11-20 and are not used; DEC-175 gives the reason. The lightness of 0.80 is kept from DEC-150: it lies between the lightness under which the darkest colour loses 7:1 on the most saturated colour and a pale one that barely showed against the surface. Computed on 2026-11-23 for every hue at that lightness, with the most chroma: the darkest colour keeps at least 9.96:1. Selected and marked text share one colour.",
+      "status": "answered",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-22",
+      "recordedOn": "2026-11-23",
+      "supersedes": ["DEC-150"]
+    },
+    {
+      "id": "DEC-172",
+      "question": "Which colours do a link and a visited link take?",
+      "options": [
+        "A visited link looks the same as an unvisited one",
+        "A visited link keeps the hue and the contrast of a link, with less chroma"
+      ],
+      "answer": "A link takes a blue of the scale with the hue of the information status (DEC-132): the vivid blue of DEC-131, its OKLCH lightness moved, with its hue kept, until it meets the theme's ratio for text on every surface it sits on (DEC-167). It refers to the scale, not to the information token (DEC-159). A link inside text is also underlined, because its colour is less than 3:1 from the text around it (WCAG 1.4.1, technique G183). A visited link (`:visited`, CSS `VisitedText`) keeps the hue and the contrast of a link, and its chroma is the link's chroma multiplied by 0.236. Nothing depends on the visited colour: a browser may never show it. A link's states follow DEC-168.",
+      "notes": "A link is coloured so that it reads as clickable. Once visited it draws less attention, so the user goes on to the goal or to other links and does not open it again by mistake. Browsers apply only colour properties to a visited link and no difference in transparency, and Selectors 4 lets a user agent never match `:visited`; Understanding 1.4.1 says telling visited from unvisited by colour alone is not a failure. 0.236 is one number, picked on 2026-11-22 and used here and in DEC-170; at it the visited colour is close to the lowest text level. It replaces DEC-142.",
+      "status": "answered",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-22",
+      "recordedOn": "2026-11-23",
+      "supersedes": ["DEC-142"]
+    },
+    {
+      "id": "DEC-173",
+      "question": "Which colour scheme options does a user have, and which is the default?",
+      "options": [
+        "Light and dark only",
+        "Auto, Dark, Light, and an automatic switch by day and night"
+      ],
+      "answer": "Four: Auto, which follows the device's setting (`prefers-color-scheme`) and is the default; Dark; Light; and an automatic switch by day and night, which is on only with the user's permission (DEC-182). Each is a preference of the user.",
+      "notes": "People know these options from other products. Where the device itself switches by day and night, Auto already follows it: a media query is evaluated again when the user's environment changes (Media Queries 5). How day and night works, and what holds without the permission, is DEC-182. Where the preference is stored is DEC-057.",
+      "status": "answered",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-22",
+      "recordedOn": "2026-11-23"
+    },
+    {
+      "id": "DEC-174",
+      "question": "Which conformance theme is the default, and how are the two themes labelled?",
+      "options": [
+        "The AAA theme is the default",
+        "The AA theme is the default; the labels are Casual and Formal"
+      ],
+      "answer": "The AA theme is the default. A request for more contrast (`prefers-contrast: more`) selects the AAA theme, and an explicit choice of the user or the tenant, of either theme, overrides that request (DEC-006). The labels shown to people are Casual for the AA theme and Formal for the AAA theme.",
+      "notes": "In rules and decisions the themes keep the names of the WCAG levels, AA and AAA. The two labels are shown through the label service, so a tenant may replace them; WCAG 2.4.6 asks that a label describes its purpose.",
+      "status": "answered",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-22",
+      "recordedOn": "2026-11-23"
+    },
+    {
+      "id": "DEC-175",
+      "question": "When is a colour too close to a status colour or to the focus colour?",
+      "options": [
+        "Within a fixed number of degrees of OKLCH hue",
+        "When people give both the same basic colour term and cannot tell them apart unless side by side",
+        "When both have the same base colour and the same range, light or dark, as a person confirms"
+      ],
+      "answer": "When both have the same base colour and the same range. The base colour is the basic colour term most people give a colour, such as green. The range is light or dark: a colour is in the dark range where the light text neutral has more contrast on it than the dark one, and in the light range otherwise (DEC-030). So a dark green and a pale green are not too close, and two pale greens are. It is not a number of degrees of hue: a colour term is wider at some hues than at others. The test is made on the colours as they are shown. The agent proposes the range, and the base colour from the source of DEC-178; a person confirms or corrects both, and may give the colour a name of their brand. The agent refers to a colour by the ID of its token, never by such a name.",
+      "notes": "Apart, a colour is recalled by its name, not its exact shade, so two colours of one base colour and one range are told apart only side by side. A person confirms, because a brand may hold the colour under its own name; a token's ID does not change with it. Measured on 2026-11-22 on the official colour regions of traffic signs (DEC-132): the red region is 18.6 degrees of OKLCH hue wide and the blue one 74.2. Read on 2026-11-22: a remembered colour shifts towards the typical colour of its term, by up to 10 degrees of CIELAB hue (Bae, Olkkonen, Allred and Flombaum 2015); seen one after the other, a difference is noticed only at about twice the size noticed side by side (Uchikawa 1983). The basic colour terms are those of Berlin and Kay 1969, which was not read. It gives DEC-147 its measure.",
+      "status": "answered",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-23",
+      "recordedOn": "2026-11-23"
+    },
+    {
+      "id": "DEC-176",
+      "question": "Which colours does the focus indicator use?",
+      "options": ["One colour", "Two colours, a light one and a dark one (WCAG technique C40)"],
+      "answer": "Two colours of the scale, side by side: a bright yellow and the darkest colour (DEC-166), with a contrast ratio of at least 9:1 between them, so that one of the two reaches 3:1 against any solid background (WCAG technique C40). The yellow is the vivid yellow of the scale that the warning status takes as a fill (DEC-131). The same indicator, with the same two values, serves every component, both colour schemes and both themes. Focus is a foundation token of its own: it refers to that scale value, as the warning status does, and never to the warning token (DEC-159).",
+      "notes": "Two tokens of one level share a value through the level below; neither takes the meaning of the other: focus is not a warning. It replaces DEC-143, which stored the value of one brand. Computed on 2026-11-22: the fill DEC-131 gives a yellow is one value in both colour schemes and both themes, because dark text on it stays far above 7:1. Measured for DEC-143 on 2026-11-18 at that value: the two colours were 12.97:1 apart; on the light surfaces the yellow alone reached 1.31 to 1.56:1 and the darkest colour 16.9 to 20.3:1; on the dark surfaces the yellow reached 10.0 to 12.0:1. The size and the offset of the indicator (WCAG 2.4.13) are not a matter of colour.",
+      "status": "answered",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-22",
+      "recordedOn": "2026-11-23",
+      "supersedes": ["DEC-143"]
+    },
+    {
+      "id": "DEC-177",
+      "question": "How strong is a decorative separator?",
+      "options": [
+        "As strong as a boundary, 3:1",
+        "As strong as the step up to the highest surface level"
+      ],
+      "answer": "A grey with the tint of the greys (DEC-164), at a contrast ratio with the surface it sits on equal to the step up to the highest surface level (DEC-163). It is darker than its surface in the light colour scheme and lighter in the dark. It is computed, not stored.",
+      "notes": "WCAG asks nothing of decorative lines. It replaces DEC-148, which stored that step as a number and named surface levels by landmark region. With every property at its default the step is 1.124. On the third level in the dark colour scheme a separator has the colour of the fourth level, and on the fourth in the light that of the third.",
+      "status": "answered",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-22",
+      "recordedOn": "2026-11-23",
+      "supersedes": ["DEC-148"]
+    },
+    {
+      "id": "DEC-178",
+      "question": "From which source does the agent propose the base colour of a colour (DEC-175)?",
+      "options": [
+        "The colour naming model of Heer and Stone 2012, built on the xkcd colour survey",
+        "The ISCC-NBS colour names, already used for DEC-133, each mapped to a basic colour term",
+        "A model of the eleven basic colour terms fitted in a laboratory (Benavente, Vanrell and Baldrich 2008; Parraga and Akbarinia 2016)",
+        "The painter's colour wheel of red, yellow and blue",
+        "The OKLCH hue circle, with the names of the CSS colours"
+      ],
+      "answer": "From the OKLCH hue circle. Six names stand on it, each at the OKLCH hue of the CSS named colour of that name: `red`, `orange`, `yellow`, `green`, `blue` and `purple` (CSS Color 4). The base colour of a colour is the name nearest to its hue. Between two neighbouring names, the middle half of the hues carries both names, as a yellow-green is a yellow and a green, and two colours have the same base colour when they share a name. A grey has no base colour. A person confirms or corrects what the agent proposes (DEC-175).",
+      "notes": "The system names colours and finds their partners on the hue circle it computes in, not on the painter's wheel, on which a green lies opposite a red. The names are those of CSS, because colour uses the standards' own names (DEC-086, DEC-093). Placing each name at the hue of its CSS colour is the method used here: no standard gives the boundaries of a hue name in degrees (read on 2026-11-22 and 2026-11-23). Computed on 2026-11-23: red 29.2, orange 70.7, yellow 109.8, green 142.5, blue 264.1 and purple 328.4 degrees. Two greens judged the same main colour on 2026-11-22, at 128.0 and 145.8 degrees, fall between yellow and green and on green: they share green. The middle half follows the division of a hue circle into twelve, in which a hue between two main hues is as wide as a main hue.",
+      "status": "answered",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-23",
+      "recordedOn": "2026-11-23"
+    },
+    {
+      "id": "DEC-179",
+      "question": "What does a state do where its colour cannot move further in its direction?",
+      "options": [
+        "It moves in the other direction",
+        "It takes the limit colour, and the state is shown by a second cue"
+      ],
+      "answer": "It moves in the other direction: hovered and pressed both do, by the same steps (DEC-168). A colour cannot move in its direction in two cases: where two steps of the state ratio do not fit between it and the darkest colour (DEC-166) or white; or where neither text neutral would meet the theme's ratio on its hovered or its pressed colour. The text on a state first switches to whichever text neutral meets that ratio (DEC-030), so its colour may change with the state, and the state inverts only where neither does. Both tests are contrast ratios, as WCAG defines them. So in the light colour scheme a fill at or near the darkest colour gets lighter, and in the dark colour scheme a fill at or near white gets darker. A state is not shown by an outline in place of its colour.",
+      "notes": "A state moves where there is room (DEC-168); the order, text first and the state second, is kept from DEC-127. An outline in place of the colour would be taken for the focus indicator (DEC-176) during keyboard navigation. Measured on 2026-11-23 with the state ratio at 1.25. On a neutral at 20.26:1 with white, lighter: white text keeps 16.25 hovered and 12.83 pressed. On a mid blue on which white text has 6.44:1, lighter, in the AA theme: white has 5.12 hovered and 4.15 pressed, so on the pressed colour the text switches to the dark neutral, 4.88, and the state does not invert. In the AAA theme no text neutral reaches 7:1 on a colour on which white has between 2.89 and 7, so a fill whose states would enter that band inverts.",
+      "status": "answered",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-23",
+      "recordedOn": "2026-11-23"
+    },
+    {
+      "id": "DEC-180",
+      "question": "Does a rule carry its reason in a field of its own?",
+      "options": [
+        "No: the reason is written in the text of the rule, after what must hold",
+        "Yes: a rule has a field for its reason, and the check fails a rule that has none"
+      ],
+      "answer": "Yes. A rule states what must hold in `text` and why in `reason`, a field of its own. A rules file states its reasons whole: once one rule in it has a reason, the registry check fails a rule in it that has none. A file in which no rule has a reason yet is reported by the check, and stays reported until its rules are given their reasons.",
+      "notes": "Raised by DEC-158, which requires a rule to state its reason. In a field, a tool can tell a rule that has no reason; inside the text it cannot. The field was added to the schema, the check and the generator on 2026-11-23, before the colour rules were redrafted, so that each reason is written once. An agent is given a rule with its reason beside it. Counted that day: none of the 181 rules has the field yet, and 12 of the 35 colour rules state a reason in their text. The contract version was not changed. The values a rule points to stay in their one place (DEC-120), which becomes the token file (DEC-159); nothing is built to load them into an agent's prompt before then. Since 2026-11-24 the contract version changes by DEC-191; this release takes 0.2.0.",
+      "status": "answered",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-23",
+      "recordedOn": "2026-11-23"
+    },
+    {
+      "id": "DEC-181",
+      "question": "Which surface is on top and takes the fourth level?",
+      "options": [
+        "The surface that contains the keyboard focus, whichever region it is",
+        "The work surface the user last acted on, or a surface opened over it; a region opened beside the work never is"
+      ],
+      "answer": "The work surface the user last acted on, by a click, a tap or a key press inside it; moving the pointer over a surface is not acting on it. A work surface holds the task of the view; a view may have several, such as two side by side. A surface that opens over the work (in the top layer, CSS Positioned Layout 4), such as a dialog or a menu, is the new top while it is open: it takes the fourth level and pushes the work surface into the middle. A region beside the work, such as `navigation`, `banner`, `complementary` or `contentinfo`, is never the top: it is the first above the canvas, so it takes the second level, and it stays there while it is used.",
+      "notes": "The brightest surface shows where the user acts now. A region beside the work is used for a moment and sends the user back to the work; if it took the fourth level, the eye would be pulled away from the work each time. A surface that opens over the work is where the user has to act next, so it is the one place to look until it closes. The stack, from the bottom: the canvas, a region beside the work, a work surface not in use, the work surface last acted on, then each surface opened over it (DEC-162). Text on a surface pushed into the middle keeps its ratio there (DEC-167).",
+      "status": "answered",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-22",
+      "recordedOn": "2026-11-23"
+    },
+    {
+      "id": "DEC-182",
+      "question": "How does the day and night colour scheme know where the sun is, and when is it on?",
+      "options": [
+        "For a place the user sets by hand; the browser is never asked",
+        "For the reference city of the device's time zone, until the user sets a place",
+        "Following the device's setting, until the user sets a place",
+        "For the device's location, only with the user's permission; without it the option is off"
+      ],
+      "answer": "Day and night is light while the sun is above the horizon where the device is and dark while it is below; on a day the sun does not rise there it stays dark, and on a day it does not set it stays light. It takes the location only from the device, with the user's permission, never from its time zone, and uses it only to compute the two times. Each time the user turns it on, the product first says what it does and how to turn it off, then asks for the permission. Where the permission is refused, withdrawn or cannot be asked, day and night is off, and the colour scheme is the one chosen before it, or Auto where none was (DEC-173).",
+      "notes": "Turned on without the permission it would change nothing and look broken: an option that is on always has an effect. Read on 2026-11-22: a browser gives a location only after a permission prompt, in a secure context, and not to an embedded frame unless the host page allows it (W3C Geolocation), so there it cannot be asked; location data identifies a person (GDPR, Article 4(1)); a feature takes the least data it needs (W3C Privacy Principles). The times come from the device's clock and the sunrise equation, within a minute between 72 degrees north and south (NOAA). A time zone gives no place: computed for 22 November 2026, sunrise is 27 minutes from that of the time zone's reference city at the west edge of Egypt, 25 in Jeddah, and 3 hours 20 minutes in Kashgar.",
+      "status": "answered",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-23",
+      "recordedOn": "2026-11-23"
+    },
+    {
+      "id": "DEC-183",
+      "question": "Which rules does the file of an agent hold?",
+      "options": [
+        "Only the guidance rules the agent loads",
+        "The guidance rules, and every rule they name, of any kind and any foundation"
+      ],
+      "answer": "The guidance rules the agent loads, each with its reason (DEC-180), and every rule those name by its ID, given in full: a rule of any kind and of any foundation, and the rules it names in turn. No rule ID in the file of an agent points outside that file.",
+      "notes": "A pointer the agent cannot open is a rule it cannot follow. Found on 2026-11-23 by two fresh readers of the colour agent's file: its guidance named check rules that the file did not hold, and one reader could not tell what applied to a border that identifies a component. Counted that day, with the rules as they were: the file of the colour agent named 3 rules it did not hold, that of the layout agent 4, and that of the typography agent 17, of which 11 belong to the layout foundation. No check enforces those rules yet. Built into the generator the same day. The files of agents stay local (DEC-039).",
+      "status": "answered",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-23",
+      "recordedOn": "2026-11-23"
+    },
+    {
+      "id": "DEC-184",
+      "question": "How are colours that carry different meanings kept apart for people with a colour vision deficiency?",
+      "options": [
+        "By a second visible cue only, as WCAG 1.4.1 asks",
+        "By a second visible cue, and by lightness alone",
+        "By a second visible cue, and by the most vivid colour inside a safe range"
+      ],
+      "answer": "Colours that carry different meanings and are seen together, as the four statuses or the series of a chart, each take the most vivid colour in its safe range, starting from that of its meaning (for a status, DEC-132 and DEC-131). A colour is in its safe range when it still reads as its meaning: its hue stays nearer its own hue name than a neighbour's (DEC-178) and its lightness keeps its colour name (DEC-133), so a warning is never a brown; when it meets the contrast its use needs; and when it is at least 0.10 in Oklab from every other such colour, as typical, red-blind, green-blind and blue-blind vision see them. Outside it, a colour moves in by the least change of hue or lightness. A use that leaves it no safe range is not made of it. Each also carries a second visible cue (WCAG 1.4.1).",
+      "notes": "Replaced on 2026-11-24 by DEC-185. Red-blind and green-blind people keep two signals, light against dark and blue against yellow; a blended hue uses the second, lightness the first. Measured on 2026-11-23 from the signal hues: as fills, and as text on the dark canvas, the four are 0.161 to 0.165 apart at their most vivid, so nothing moves. A warning dark enough to be text on the light canvas would be a brown, so there it appears only as a fill that carries its text or icon, never as coloured text. There, success and information were 0.015 to 0.022 apart for blue-blind vision; the information moves darker and 8 degrees toward purple to reach 0.10. Vision models, in linear RGB: Vienot, Brettel and Mollon 1999; Brettel, Vienot and Mollon 1997.",
+      "status": "answered",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-23",
+      "recordedOn": "2026-11-23"
+    },
+    {
+      "id": "DEC-185",
+      "question": "How are colours that carry different meanings kept apart for every kind of colour vision?",
+      "options": ["At least 0.10 in Oklab apart", "At least 0.12 in Oklab apart"],
+      "answer": "Colours of different meanings seen together, as the statuses or the series of a chart, each take the most vivid colour in its safe range, starting from that of its meaning (for a status, DEC-132, DEC-131). There it meets the contrast its use needs, is 0.12 or more in Oklab from every other such colour for typical, red-blind, green-blind and blue-blind vision, and still reads as its meaning: a status hue stays within the limit of DEC-192; a warning is never a brown and a red fill never a pink (DEC-133); red as text or a graphical object on a dark canvas may be lighter than that limit, only as light as its contrast needs. Outside it a colour moves in by the least change of hue or lightness. A use that leaves it no safe range is not made of it. Each has a second visible cue (WCAG 1.4.1).",
+      "notes": "Replaces DEC-184. The floor was picked from a drawing, and no standard sets it: at 0.10 one colour moves on the light canvas, at 0.12 two, at 0.15 the danger turns a rust and the success near black. Fills and the dark canvas do not move (0.161 to 0.165 apart at their most vivid). On the light canvas the success and the information were 0.015 to 0.022 apart for blue-blind vision. Red-blind and green-blind people keep two signals, light against dark and blue against yellow. Danger text on the dark canvas in the AAA theme has a luminance near 0.35, over the red limit of DEC-133, and a naming survey calls it salmon: known and accepted from a drawing. Vision models, in linear RGB: Vienot, Brettel and Mollon 1999; Brettel, Vienot and Mollon 1997.",
+      "status": "answered",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-23",
+      "recordedOn": "2026-11-24",
+      "supersedes": ["DEC-184"]
+    },
+    {
+      "id": "DEC-186",
+      "question": "In which forms does a status colour appear, and how does each form meet its contrast?",
+      "options": [
+        "As a fill carrying text only",
+        "As a fill carrying text, and as text or a graphical object on the canvas where the status has a safe range there"
+      ],
+      "answer": "As a fill carrying text, and as text or a graphical object on the canvas. On the fill, the text is the dark or the light text neutral, whichever meets the theme's contrast ratio (DEC-030); when both do, dark on a warning fill and light on a danger, a success or an information fill. On the canvas, the status uses its fill colour where that meets the ratio; otherwise the most vivid colour of its safe range that does (DEC-185). Where it has none, as a warning on a light canvas, it is not text or a graphical object there: it appears as a fill that carries its text or icon, and text on the canvas takes a text neutral.",
+      "notes": "Replaced on 2026-11-24 by DEC-195. Replaces DEC-129, which moved the lightness of every status until it passed. The pairing used when both neutrals pass is that of Council Directive 92/58/EEC, Annex II: a black pictogram on yellow, a white one on red, green and blue. A warning dark enough to be text on a light canvas has a relative luminance of 0.18 in the AA theme and 0.10 in the AAA theme, under the limit of DEC-133: it is a brown, and a brown does not read as a warning. Danger text on the dark canvas in the AAA theme is lighter than the red limit and is kept (DEC-185).",
+      "status": "answered",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-23",
+      "recordedOn": "2026-11-24",
+      "supersedes": ["DEC-129"]
+    },
+    {
+      "id": "DEC-187",
+      "question": "What decides the colour of a status (danger, warning, success or information), and how is its contrast met?",
+      "options": [
+        "Its contrast and its distance from other colours first",
+        "Its meaning first, inside its safe range"
+      ],
+      "answer": "Its meaning first. Each of the four statuses keeps the hue that signals already give that meaning (DEC-132) and stays in its safe range (DEC-185). Contrast is met by the text colour, or on the canvas by the most vivid colour of that range that meets it (DEC-186), never by moving a colour out of its meaning.",
+      "notes": "Replaces DEC-128, whose answer met contrast by calibration (DEC-129). The statuses are danger, warning, success and information. Meanings read in the sources: the MUTCD colour code (2009 edition, Section 1A.12) gives red to stop or prohibition, yellow to warning, green to permitted movement, and blue to road user services and information; Council Directive 92/58/EEC, Annex I, gives red to prohibition and danger, yellow or amber to warning, green to no danger and blue to mandatory signs. No web standard gives a hue a meaning (WCAG 2.2, CSS Color 4). Known when deciding: a search that maximised colour distance alone turned the warning into a brown. WCAG 1.4.1 still requires a second visual cue for a status. Since 2026-11-24 the forms of a status are those of DEC-195.",
+      "status": "answered",
+      "decidedBy": "Ramy (resolved by research, as he ruled)",
+      "decidedOn": "2026-11-24",
+      "recordedOn": "2026-11-24",
+      "supersedes": ["DEC-128"]
+    },
+    {
+      "id": "DEC-188",
+      "question": "How are the colours of the series of a chart chosen?",
+      "options": [
+        "Hues at equal steps round the hue circle from the accent colour",
+        "Several combinations by colour harmony from the accent colour, for a person to choose from"
+      ],
+      "answer": "The agent proposes them as several combinations, and a person chooses one. A series that carries a status takes the colour of that status, chosen as DEC-187 sets. For the other series each combination is a colour harmony on the OKLCH hue circle: the hue of the accent colour (DEC-165) and the hues the harmony sets at its angles from it. Among the harmonies the agent prefers those whose hues lie furthest apart, so that the series are told apart. Where these series are more than the harmony has hues, the hues repeat in a second, less saturated version. Every colour of the chart meets the contrast DEC-136 sets for its theme and stays in its safe range (DEC-185); a combination that cannot is not offered.",
+      "notes": "Replaced on 2026-11-24 by DEC-196. Measured on 2026-11-23 from a test accent hue of 264 degrees, with the floor of DEC-185: the hues of every harmony tried (opposite, analogous, split opposite, triad, square) fit on the light and the dark canvas in both themes. With the second version, the four of an opposite pair fit everywhere, the six of a triad except on the light canvas in the AAA theme, the six of a split opposite on the dark canvas only, and no set was found for a square or an analogous harmony: a search with a limit, not a proof. So the number of series a combination holds is computed, and beyond it the second cue of DEC-185 tells the series apart. The second version was tested at 0.4 of the vivid chroma, a test share. No standard says how the hues of a chart are chosen.",
+      "status": "answered",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-24",
+      "recordedOn": "2026-11-24"
+    },
+    {
+      "id": "DEC-189",
+      "question": "Which colours may a gradient join, and how do two distant hues meet in it?",
+      "options": [
+        "The three kinds of pair of DEC-154, distant hues joined as two gradients end to end",
+        "The same three kinds of pair, distant hues joined in one gradient through one middle stop"
+      ],
+      "answer": "Three kinds of pair. Brand colours with each other. A brand colour with white or with the darkest colour (DEC-166): a tint or a shade of it. And a brand colour with a partner the OKLCH hue circle gives from it (DEC-178): a neighbour, or the hue a harmony sets at an angle from it on either side, such as 120 degrees for a triad or 180 for the opposite. Two colours up to 90 degrees of hue apart mix straight (DEC-152). Further apart they do not: they join in one gradient through white or the darkest colour as its one middle stop, or they go round the hue circle only where the path crosses no status hue (DEC-152).",
+      "notes": "Replaces DEC-154, which joined distant hues as two gradients end to end: one gradient with one middle stop has the fewest stops (DEC-152). Where products name the colours of their AI gradient, they come from the company's own brand palette (Google, Microsoft, ClickUp). Measured: two colours of equal chroma, a hue angle D apart, mixed straight in Oklab keep cos(D/2) of their chroma in the middle: 71 per cent at 90 degrees, 50 at 120, none at 180. The limit of 90 degrees was picked from a drawing on 2026-11-23. Black was asked for; it is the darkest colour. A harmony sets its angle on both sides of a colour.",
+      "status": "answered",
+      "decidedBy": "Ramy (resolved by research, as he ruled)",
+      "decidedOn": "2026-11-24",
+      "recordedOn": "2026-11-24",
+      "supersedes": ["DEC-154"]
+    },
+    {
+      "id": "DEC-190",
+      "question": "Do the six colour names stay at the hues of the CSS named colours, where a naming survey places two of them elsewhere?",
+      "options": [
+        "At the hue of the CSS named colour of each name",
+        "At the hue people give each name in a naming survey"
+      ],
+      "answer": "Yes. Each name stays at the OKLCH hue of the CSS named colour of that name (DEC-178). A status is not held to these names: it is held to its own hue (DEC-192).",
+      "notes": "Compared on 2026-11-23 with the colour of each name in the xkcd colour survey (949 names from a crowd survey, not a standard): red, yellow, green and blue agree within a degree; purple stands at 316.3 degrees against 328.4, and orange at 48.7 against 70.7. The survey's nearest names for CSS `orange` are mango and yellowish orange; the orange of traffic signs is at 44.9 degrees and that of hazard labels at 61.5 (the sources of DEC-132). Known when deciding, and accepted: with the CSS hues a brand colour at 38 degrees, inside the orange of traffic signs, is proposed as a red, and a person corrects the proposal (DEC-178).",
+      "status": "answered",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-23",
+      "recordedOn": "2026-11-24"
+    },
+    {
+      "id": "DEC-191",
+      "question": "When does the contract version of the registry change?",
+      "options": [
+        "It stays 0.1.0 until a tool outside the repository reads the registry",
+        "It changes with every release that changes the contract, as Semantic Versioning requires"
+      ],
+      "answer": "With every release in which the contract changed: its schemas, or the checks a registry file must pass. The contract version is a semantic version (Semantic Versioning 2.0.0): a released version is not modified, and any modification is released as a new version. While the major version is zero, the minor version goes up by one for each such release. Every registry file states the new version, and the schemas carry it in their `$id`. The release that adds the `reason` field of a rule (DEC-180) and the check of the pointers inside a rule's text takes 0.2.0.",
+      "notes": "Read on 2026-11-24 in Semantic Versioning 2.0.0: item 3, once a version is released its contents are not modified, and any modification is released as a new version; item 4, in 0.y.z anything may change; its FAQ, in that phase the minor version goes up with each release. The schemas already type the contract version as a semantic version, and 0.1.0 was released with the registry. Until this decision nothing said when it changes, and the check only requires every file to state the same one. Keeping the number while the contract changes conflicts with item 3, so it was not taken.",
+      "status": "answered",
+      "decidedBy": "Ramy (resolved by research, as he ruled)",
+      "decidedOn": "2026-11-24",
+      "recordedOn": "2026-11-24"
+    },
+    {
+      "id": "DEC-192",
+      "question": "How far may the hue of a status move from its own hue?",
+      "options": [
+        "As far as its hue name of DEC-178 reaches",
+        "A share of the hue angle between it and the status next to it"
+      ],
+      "answer": "At most 10 per cent of the hue angle between its own hue (DEC-132) and the hue of the status next to it on the OKLCH hue circle, measured separately on each side. The four statuses lie in the order danger, warning, success, information, and the circle closes from information back to danger. A status is held to its own hue in this way, not to a hue name (DEC-190). The limit holds for a status only: the hue of a series of a chart comes from its harmony (DEC-188).",
+      "notes": "Picked from a drawing on 2026-11-23, and no standard sets it. With the hues of DEC-132 the angles are 63, 81, 70 and 146 degrees, so the hue of danger may run from 12 to 32 degrees, of warning from 83 to 97, of success from 162 to 177 and of information from 233 to 254: computed, not stored. Measured with the floor of DEC-185 on the light canvas: at 5 per cent the danger of the AAA theme turns a dark maroon to keep the floor; from 10 it is kept by a success 7 degrees toward the information and an information 10 toward purple; at 15 and at 25 the same colours result. At 25 per cent the most vivid danger reads as a pink on one side and as an orange on the other. Since 2026-11-24 the colours of a chart's series are chosen by DEC-196.",
+      "status": "answered",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-23",
+      "recordedOn": "2026-11-24"
+    },
+    {
+      "id": "DEC-193",
+      "question": "Which text neutral does a fill take when both meet the theme's ratio and the fill is not a status?",
+      "options": [
+        "The dark text neutral in the light colour scheme and the light one in the dark",
+        "The one with the higher contrast ratio, and at equal ratios the one the colour scheme gives"
+      ],
+      "answer": "The one with the higher contrast ratio against the fill. Where the two ratios are equal, it is the dark text neutral in the light colour scheme and the light text neutral in the dark colour scheme. A status fill keeps the pairing of DEC-186.",
+      "notes": "Replaced on 2026-11-24 by DEC-194. The contrast ratios of a fill with the two text neutrals multiply to the ratio between the two neutrals, 20.25 (DEC-166). So where 4.5:1 is asked, both pass only where both are exactly 4.5:1; where 7:1 is asked, never; and where 3:1 is asked, over the range in which each lies between 3:1 and 6.75:1. Before this decision the rule sent every fill to the pairing of a status, which names four hues only: found on 2026-11-24 by a reader given the rules alone.",
+      "status": "answered",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-24",
+      "recordedOn": "2026-11-24"
+    },
+    {
+      "id": "DEC-194",
+      "question": "Which text neutral does a fill take when both meet the theme's ratio?",
+      "options": [
+        "A status fill by the pairing of safety signs, any other fill by the higher contrast ratio",
+        "Every fill by the higher contrast ratio, and at equal ratios by the colour scheme"
+      ],
+      "answer": "The one with the higher contrast ratio against the fill, for every fill, a status fill included. Where the two ratios are equal, it is the dark text neutral in the light colour scheme and the light text neutral in the dark colour scheme.",
+      "notes": "Replaces DEC-193, which kept a status fill on the pairing of safety signs (Council Directive 92/58/EEC, Annex II: a black pictogram on yellow, a white one on red, green and blue). Found on 2026-11-24: in the AA theme the most vivid danger fill takes dark text at 4.5:1, where the light neutral fails, and by the pairing it took the light neutral for large text and graphical objects at 3:1, so one fill carried two text colours. The contrast ratios of a fill with the two text neutrals multiply to the ratio between the two neutrals, 20.25 (DEC-166): where 4.5:1 is asked, both pass only where both are exactly 4.5:1; where 7:1 is asked, never; where 3:1 is asked, over the range in which each lies between 3:1 and 6.75:1.",
+      "status": "answered",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-24",
+      "recordedOn": "2026-11-24",
+      "supersedes": ["DEC-193"]
+    },
+    {
+      "id": "DEC-195",
+      "question": "In which forms does a status colour appear, and how is the contrast of each form met?",
+      "options": [
+        "With the pairing of safety signs where both text neutrals pass on a fill",
+        "With the text neutral of the higher contrast ratio where both pass on a fill"
+      ],
+      "answer": "As a fill carrying text, and as text or a graphical object on the canvas. On the fill, the text is the dark or the light text neutral, whichever meets the theme's contrast ratio (DEC-030); when both do, the one DEC-194 gives. On the canvas, the status uses its fill colour where that meets the ratio; otherwise the most vivid colour of its safe range that does (DEC-185). Where it has none, as a warning on a light canvas, it is not text or a graphical object there: it appears as a fill that carries its text or icon, and text on the canvas takes a text neutral.",
+      "notes": "Replaces DEC-186, which paired dark text with a warning fill and light text with the other fills where both passed; DEC-194 says why that pairing went. A warning dark enough to be text on a light canvas has a relative luminance of 0.18 in the AA theme and 0.10 in the AAA theme, under the limit of DEC-133: it is a brown, and a brown does not read as a warning. Danger text on the dark canvas in the AAA theme is lighter than the red limit and is kept (DEC-185).",
+      "status": "answered",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-24",
+      "recordedOn": "2026-11-24",
+      "supersedes": ["DEC-186"]
+    },
+    {
+      "id": "DEC-196",
+      "question": "How are the colours of the series of a chart chosen, and how is a second version of a hue made?",
+      "options": [
+        "A second, less saturated version at a set share of the chroma",
+        "A second version computed as the most vivid colour that keeps the floor from the first"
+      ],
+      "answer": "The agent proposes them as several combinations, and a person chooses one. A series that carries a status takes the colour of that status, chosen as DEC-187 sets. For the other series each combination is a colour harmony on the OKLCH hue circle: the hue of the accent colour (DEC-165) and the hues the harmony sets at its angles from it. Among the harmonies the agent prefers those whose hues lie furthest apart, so that the series are told apart. Where these series are more than the harmony has hues, the hues repeat in a second version: for each hue, the most vivid colour that keeps the floor of DEC-185 from the first. Every colour of the chart meets the contrast DEC-136 sets for its theme and stays in its safe range (DEC-185); a combination that cannot is not offered.",
+      "notes": "Replaces DEC-188, which called the second version less saturated: it is less vivid by construction, because the first is the most vivid, so no share of chroma is stored. Measured on 2026-11-23 from a test accent hue of 264 degrees, with the floor of DEC-185: the hues of every harmony tried (opposite, analogous, split opposite, triad, square) fit on both canvases in both themes. With a second version tested at 0.4 of the vivid chroma, the four of an opposite pair fit everywhere, the six of a triad except on the light canvas in the AAA theme, the six of a split opposite on the dark canvas only, and no set was found for a square or an analogous harmony: a search with a limit, not a proof. So the number of series a combination holds is computed; beyond it the second cue tells them apart.",
+      "status": "answered",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-24",
+      "recordedOn": "2026-11-24",
+      "supersedes": ["DEC-188"]
+    },
+    {
+      "id": "DEC-197",
+      "question": "Why does a brand colour stay as it is, and what happens where it does not pass?",
+      "options": [
+        "It moves wherever it fails a contrast ratio",
+        "It is kept, the system works around it, and what cannot be solved is flagged for a person"
+      ],
+      "answer": "A brand colour is the tenant's identity, so the system adapts around it and changes it only where WCAG leaves no other way. Where it passes, in the AA theme and the AAA theme, it is kept. Where it does not pass in a use, the system works around it: the text on it switches between the text neutrals (DEC-030, DEC-194), or the use takes a neutral colour or another colour of the brand that a person picks (DEC-165). What no workaround solves is flagged, so that a person decides, and a decision that breaks the AA theme is flagged as well. In the AAA theme, where neither text neutral reaches 7:1 on it, its lightness moves as DEC-042 and DEC-124 set: there WCAG leaves no other way.",
+      "notes": "The reason was not on record until 2026-11-24: DEC-030 said only that the brand colour does not move. In the AA theme no colour fails with both text neutrals, because they are 20.25:1 apart (DEC-166), so there a flag arises in the other uses of a brand colour, such as a graphical object against the colours next to it (WCAG 1.4.11).",
+      "status": "answered",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-24",
+      "recordedOn": "2026-11-24"
+    },
+    {
+      "id": "DEC-198",
+      "question": "Where may a gradient appear, and what does it follow?",
+      "options": [
+        "In three places only: brand moments, AI presence and continuous data scales",
+        "Wherever a product, a brand or a use calls for it, as the light on a surface or as a gradient that carries a meaning of its own"
+      ],
+      "answer": "A gradient is an option for different uses, not a list of places: a brand or a product may put one on the canvas, a fill or another surface, for style or a physical feel. Its uses are learned by trying: the agent proposes, a person confirms. A gradient on a surface is the light on it, so it follows the one light (DEC-199) and has no direction or colour of its own. A gradient that carries a meaning of its own, as an ordered data scale (DEC-206) or the mark of content made by AI, joins the colours of DEC-189 and mixes as DEC-152 sets. In every use it is never the only carrier of a meaning, has a solid background colour beside it, and its text meets the theme's ratio at its least contrasting area. It may move within DEC-153. In the AAA theme only an ordered data scale stays: it is the data.",
+      "notes": "Replaces DEC-151, which allowed a gradient in three places only. Forced colours mode computes background-image to none (CSS Color Adjustment 1), so a gradient vanishes there (DEC-146). WCAG technique F83 tests text against the part of the background most like it. Platforms that document gradients use them for the AI's mark, waiting and voice states, brand moments and data (Google Gemini, Microsoft Copilot, ClickUp, IBM Carbon, AWS Cloudscape); many use none (Notion, Slack, Linear, Zendesk, PatternFly). No source gives rules for text on gradients. The soft light study of 2026-11-20 had already found that shading every raised face is a gradient in a working view, which DEC-151 did not allow.",
+      "status": "answered",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-24",
+      "recordedOn": "2026-11-24",
+      "supersedes": ["DEC-151"]
+    },
+    {
+      "id": "DEC-199",
+      "question": "What is the light of the system, and what does it give a surface?",
+      "options": [
+        "No light: flat surfaces in both themes",
+        "One light, the same in both colour schemes, whose detail the AAA theme removes"
+      ],
+      "answer": "The system has one light source: a point, a direction and a transition. It is the same in the light and the dark colour scheme: it is how light falls on surfaces, from bright to dark, so a higher surface is the brighter one (DEC-162) and a surface nearer the light is lit more. Its colour is the tint of the greys (DEC-164). Every gradient on a surface and every shadow comes from this one light; none has a direction of its own. Lighting moves a face only between the colour of its own surface level and that of the level below, so text on it keeps its contrast ratio at every point (DEC-167). In the AA theme the light is on. The AAA theme removes its detail, the gradient across a face and the shadows, and keeps the flat levels. Where it stands and how it moves are DEC-200 and DEC-205.",
+      "notes": "Answered on 2026-11-24, with the unrecorded studies of 2026-11-19 and 2026-11-20. The visual system assumes one light from above, weakly (Ramachandran 1988; Morgenstern and others 2011, read in a researcher's report); one computed light removes lighting that disagrees across a view. Measured on 2026-11-20: a face runs from its own level at the point nearest the light to half-way to the level below, as two stops in Oklab; the light adds chroma in its own hue and never raises relative luminance, so hint text at the warmest point had 4.55 to 4.60:1 against the face's own 4.54:1 in the dark colour scheme, AA theme. Forced colours mode removes gradients and shadows, so each surface keeps a solid colour (DEC-146). With the light off nothing is lost: levels, states, text and focus hold.",
+      "status": "answered",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-24",
+      "recordedOn": "2026-11-24"
+    },
+    {
+      "id": "DEC-200",
+      "question": "Where does the light stand, and how do height and interaction change what it gives?",
+      "options": [
+        "A light with a sideways offset",
+        "A light straight above the top centre by default, which a person may move"
+      ],
+      "answer": "The light has four properties a person may set: its place, its height, its distance, from a near lamp to a far sun, and its size, from hard to soft. By default it stands straight above the top centre of the view, so it is the same in right-to-left and left-to-right layouts. Every lit face and every shadow is computed from it for where the object sits: a face is brightest at its point nearest the light, and a shadow falls away from the light, longer and softer as the object rises. An interaction acts as a change of height: a hovered object rises toward the light and a pressed one rises highest, so its face and its shadow follow, while the colour of its state steps as DEC-168 sets. The amounts of height, and the values of these properties, belong to the elevation and interaction foundations.",
+      "notes": "Recorded so that the answers of 2026-11-20 and 2026-11-24 are not lost; no colour rule rests on the geometry. Used on the test page: a point light over a plane, E = I z / (z^2 + r^2)^1.5; a shadow offset of h / (z - h) of the distance from the light; a blur of half the penumbra, since a box-shadow blur is a Gaussian with a standard deviation of half the blur radius (CSS Backgrounds 3). Read in a researcher's report: people lean to a light from above and about 26 degrees to the left (Mamassian and Goutcher 2001), less so readers of right-to-left scripts (Andrews and others 2013); no study tested readers of Arabic. In the light colour scheme the fourth level is white and cannot get lighter, so there the rise of a hovered or pressed object shows in its shadow.",
+      "status": "answered",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-24",
+      "recordedOn": "2026-11-24"
+    },
+    {
+      "id": "DEC-201",
+      "question": "Which colour does a shadow take, and how strong may it be?",
+      "options": [
+        "The hue of the surface it falls on, as strong as its height asks",
+        "The hue of the surface it falls on, never darker than where the text under it still passes"
+      ],
+      "answer": "The hue of the surface it falls on, at a lower lightness: a shadow lowers the luminance of what lies under it and keeps its hue. On the greys that is the tint of the greys (DEC-164). It is never pure black (DEC-166). It stays subtle: it darkens a surface at most to the colour of the lowest surface level (DEC-162), where the text under it still meets its contrast ratio (DEC-167). A shadow is never the only edge of a component or the only focus cue. It comes from the one light (DEC-199).",
+      "notes": "Replaces DEC-156, whose answer named surface levels and a canvas hue that were replaced. Vision science: a pure drop in luminance is read as lighting, a change of colour as paint (Kingdom, McGill; Kingdom, Beauce and Hunter 2004); colour constancy largely holds inside cast shadows (Morimoto et al. 2025). Forced colours mode computes box-shadow and text-shadow to none (CSS Color Adjustment 1), and Understanding 1.4.11 never accepts a shadow as the required boundary. Measured on 2026-11-20 with the levels of that day: in the light colour scheme the limit left a shadow about 3.5 per cent of opacity; in the dark colour scheme it does not bind, because a darker surface helps light text. Sizes and layers belong to the elevation foundation.",
+      "status": "answered",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-20",
+      "recordedOn": "2026-11-24",
+      "supersedes": ["DEC-156"]
+    },
+    {
+      "id": "DEC-202",
+      "question": "Where may a translucent surface with a backdrop filter appear, and how is its contrast met?",
+      "options": [
+        "On any surface, with its contrast met on average",
+        "Only on the surface on top, with its contrast met at its worst point"
+      ],
+      "answer": "Only on the surface on top (DEC-181), where dialogs and popovers are shown: never on the canvas or on a surface under the top. Its contrast is met at its worst point over any content beneath: the darkest colour it can take in the light colour scheme and the brightest in the dark, set by its tint and its `backdrop-filter`, never by its blur. Its text takes the three levels of DEC-139, measured against that point (DEC-167), and its edge meets the theme's ratio for component edges there (WCAG 1.4.11). In forced colours mode its background is an opaque `Canvas`; where `prefers-reduced-transparency: reduce` applies, it is the solid colour of the fourth surface level (DEC-162). It is legible without that query, and it carries no noise layer.",
+      "notes": "Replaces DEC-157, whose answer named the old top layer. Apple, Microsoft and Android keep glass to floating or temporary surfaces; Apple's Materials page rules it out of the content layer. Blur averages what lies beneath, but a large dark or bright area stays dark or bright, so only the tint and the filter bound the worst point; WCAG technique F83 tests text on an image at its darkest or lightest area. Measured on 2026-11-20 for content of any colour: body text on light glass needs a tint of 67% (AA) to 74.5% (AAA), or 40% to 53.5% when `contrast()` and `brightness()` narrow the backdrop. CSS Color Adjustment 1 keeps a background's alpha in forced colours and does not list `backdrop-filter`. `prefers-reduced-transparency` is not Baseline.",
+      "status": "answered",
+      "decidedBy": "Ramy (resolved by research, as he ruled)",
+      "decidedOn": "2026-11-24",
+      "recordedOn": "2026-11-24",
+      "supersedes": ["DEC-157"]
+    },
+    {
+      "id": "DEC-203",
+      "question": "Where does the texture of a surface come from?",
+      "options": ["From grain, noise or an image", "From light only"],
+      "answer": "From light only: the brightness of the surface levels (DEC-162, DEC-163), the light on a face (DEC-199) and the shadows that fall on it (DEC-201). No surface carries grain, noise or an image texture.",
+      "notes": "Answered on 2026-11-20 and drafted then, not recorded. A surface reads as natural through its colour and the light on it: a pure drop in luminance is read as lighting (Kingdom, McGill), and surfaces brighter as they rise give depth in both colour schemes. Noise is already ruled out for gradients (DEC-152), and grain would add visual clutter. Forced colours mode removes shadows (CSS Color Adjustment 1), so texture never carries a meaning.",
+      "status": "answered",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-20",
+      "recordedOn": "2026-11-24"
+    },
+    {
+      "id": "DEC-204",
+      "question": "Which edges of a surface or a component are drawn as a line?",
+      "options": [
+        "Every region and container, at 3:1",
+        "Only what WCAG 1.4.11 asks, at 3:1; every other edge comes from light or is a decorative separator"
+      ],
+      "answer": "Only the edges WCAG 1.4.11 asks for: what identifies a component or its state, such as the edge of a field, the indicator of a state and the focus indicator, each at 3:1 with the colours next to it. A component that its text identifies needs no line, and a region or a container is not a component. Every other edge comes from light: the difference between surface levels (DEC-162), the light on a face (DEC-199) and a shadow (DEC-201); or it is a decorative separator (DEC-177).",
+      "notes": "Direction given on 2026-11-20, after lines drawn at 3:1 round every region were found too strong. Understanding 1.4.11, read that day: the 3:1 is for what identifies a control and its state; a button whose text identifies it needs no boundary; no shadow serves as the required boundary. With the light on, a raised edge catches light at the top and falls into shade below, and a sunken face, such as a field, takes shade at the top. In forced colours mode a component keeps a border in the user's colours (DEC-146).",
+      "status": "answered",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-20",
+      "recordedOn": "2026-11-24"
+    },
+    {
+      "id": "DEC-205",
+      "question": "How does the product change from one colour scheme to the other?",
+      "options": ["At once", "Over 2.5 s, led by the light, with text recomputed on every frame"],
+      "answer": "Softly, over 2.5 s, whoever starts the change: the user, the device or day and night (DEC-173). The surfaces blend in Oklab between the tinted levels of the two colour schemes only, so every frame keeps the brand's tint. The light leads the change: it sinks to its lowest at the switch and rises back. It never follows the sun. Text never fades: on every frame its levels are computed against the surfaces as they are (DEC-167), and where neither text neutral would meet the ratio, the surfaces cross that band in one frame. Under `prefers-reduced-motion: reduce` the colours still blend and the light and the shadows do not move. In the AAA theme there is no light to move (DEC-199).",
+      "notes": "Answered on 2026-11-20 and 2026-11-24. An instant change from dark to light flashes in eyes adapted to the dark, and from light to dark it can look like a fault. Following the sun through the day was not taken, for its cost to performance. The light moves up and down only, so shadows always fall downwards and the change is the same in right-to-left and left-to-right layouts. WCAG 2.2 defines motion animation as excluding changes of colour, blurring or opacity that do not change the perceived size, shape or position of an element. Measured on the test page: 128 changes of 240 frames each kept text, links and the disabled grey at their ratios; the surfaces crossed a band of about 1.45:1 in the AA theme and 3.6:1 in the AAA theme in one frame. The timing belongs to the motion foundation.",
+      "status": "answered",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-24",
+      "recordedOn": "2026-11-24"
+    },
+    {
+      "id": "DEC-206",
+      "question": "How are the colours of an ordered data scale chosen, and which end is the high one?",
+      "options": [
+        "The low end is the full colour",
+        "The high end is the full colour and the low end the neutral"
+      ],
+      "answer": "An ordered scale is an ordered gradient: its lightness changes steadily (DEC-152). A scale from low to high joins a brand colour with white in the light colour scheme and with the darkest colour in the dark (DEC-189): its high end is the full colour and its low end the neutral, in both colour schemes, so the highest value stands out most. A scale around a middle value joins two colours through that same neutral as its one middle stop: its two ends are the full colours and its middle the neutral. The agent proposes the colours from the accent colour and its harmony partners, and a person chooses (DEC-196). The value is always given in another way as well (WCAG 1.4.1).",
+      "notes": "Answered on 2026-11-24 from a drawing. Understanding 1.4.11 lists colour gradients that represent a measurement, such as heat maps, among the graphics whose presentation is essential, outside the 3:1 requirement (read that day), so the low end may sit close to the canvas. The other order would make the highest values the hardest to see. Test values of that day, from an accent of #2056E2: on white the five steps of a scale had contrast ratios of 1.19 to 6.02 with the canvas.",
+      "status": "answered",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-24",
+      "recordedOn": "2026-11-24"
+    },
+    {
+      "id": "DEC-207",
+      "question": "Does any meaning beyond the four statuses take a status colour?",
+      "options": [
+        "Other meanings may take a colour of their own",
+        "Only the four; any other message maps onto one of them or stays neutral"
+      ],
+      "answer": "No. Only danger, warning, success and information take a status colour. A message that calls for the attention of the person maps onto one of them by what it asks: to stop or act now, danger; to take care, warning; that something is done or safe, success; to know something, information. Text that only states how things are, and calls for no attention, stays neutral. The agent proposes the mapping and a person confirms it.",
+      "notes": "Answered on 2026-11-24. The sources of the four hues name no fifth meaning (DEC-187). A fifth colour would also have to keep the floor of DEC-185 from the other four for every kind of colour vision. A colour appears only where it carries a meaning (DEC-161).",
+      "status": "answered",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-24",
+      "recordedOn": "2026-11-24"
+    },
+    {
+      "id": "DEC-208",
+      "question": "Which colours do the CSS system colour roles `AccentColorText`, `SelectedItem`, `SelectedItemText`, `ButtonBorder`, `Field` and `FieldText` take?",
+      "options": [
+        "Each a colour of its own",
+        "Each the colour an earlier decision already gives it"
+      ],
+      "answer": "`AccentColorText` is the text neutral DEC-194 gives on the accent colour. `SelectedItem` is the selected surface of DEC-170, and `SelectedItemText` the text of DEC-167 on it. `ButtonBorder` is an edge at 3:1 only on a button that its edge alone identifies (DEC-204); a disabled one follows DEC-169. `Field` is the colour of the surface the field sits on, and `FieldText` the text of DEC-167 on it; a field is identified by its edge at 3:1 (DEC-204) and, with the light on, by the shade a sunken face takes (DEC-199).",
+      "notes": "Resolved on 2026-11-24 from decisions already made; CSS Color 4, section 6.2, defines the roles. A field is not higher than its surface, so it is not brighter (DEC-162); and the canvas is the lowest and darkest level, so a field on it cannot be darker: it takes the colour of its surface.",
+      "status": "answered",
+      "decidedBy": "Ramy (resolved by research, as he ruled)",
+      "decidedOn": "2026-11-24",
+      "recordedOn": "2026-11-24"
+    },
+    {
+      "id": "DEC-209",
+      "question": "Which values do the CSS properties `accent-color`, `caret-color` and `scrollbar-color` and the `::backdrop` pseudo-element take?",
+      "options": [
+        "The accent colour for native controls and a veil behind the surface on top",
+        "Neutral native controls, the user agent's caret and scrollbars, and no veil"
+      ],
+      "answer": "`accent-color` is not set to the accent colour: only the main action takes it (DEC-161), and it never marks a selected item (DEC-170), so a native control takes neutral colours. `caret-color` and `scrollbar-color` stay `auto`: the caret takes the colour of the text, and the user agent draws the scrollbars for the colour scheme in use. `::backdrop` takes no colour of its own: what lies under the surface on top is already in the middle levels (DEC-162, DEC-181), and a shadow never darkens a surface past the lowest level (DEC-201).",
+      "notes": "Resolved on 2026-11-24 from decisions already made. WCAG 1.4.11 does not apply to a component whose appearance the user agent determines and the author has not modified, so a scrollbar left at `auto` is outside it. CSS Basic User Interface 4 defines `accent-color` and `caret-color`, CSS Scrollbars Styling 1 `scrollbar-color` and CSS Positioned Layout 4 `::backdrop`; these three were not read again on that day.",
+      "status": "answered",
+      "decidedBy": "Ramy (resolved by research, as he ruled)",
+      "decidedOn": "2026-11-24",
+      "recordedOn": "2026-11-24"
+    },
+    {
+      "id": "DEC-210",
+      "question": "May a region of a view take the other colour scheme?",
+      "options": [
+        "Yes: a region may be dark in the light colour scheme, or light in the dark",
+        "No, except the code block already decided"
+      ],
+      "answer": "No. Every surface of a view belongs to the colour scheme in use: the canvas is always the lowest and the darkest level and a higher surface the brighter one (DEC-162), which a region in the other colour scheme would break. The code block is the one exception (DEC-141).",
+      "notes": "Resolved on 2026-11-24 from DEC-162. CSS lets an element declare its own `color-scheme` (CSS Color Adjustment 1); the system does not use it for a region.",
+      "status": "answered",
+      "decidedBy": "Ramy (resolved by research, as he ruled)",
+      "decidedOn": "2026-11-24",
+      "recordedOn": "2026-11-24"
+    },
+    {
+      "id": "DEC-211",
+      "question": "How does the system answer a request for less contrast, a wide-gamut display and printing?",
+      "options": [
+        "It follows each as asked",
+        "It never goes below the AA theme, stays inside sRGB and prints in the light colour scheme"
+      ],
+      "answer": "A request for less contrast (`prefers-contrast: less`) is never followed below the AA theme (DEC-160, DEC-174). Colours stay inside sRGB on every display (DEC-152, DEC-134). A printed page takes the light colour scheme; `print-color-adjust` stays at its default and is never forced to `exact`, so the user agent and the user decide what is printed, and meaning survives a dropped background because it never rests on colour alone (DEC-146).",
+      "notes": "Resolved on 2026-11-24. CSS Color Adjustment 1, read that day: `print-color-adjust` lets the user agent adjust colours when printing, such as suppressing background colours to save ink; it names light text on a dark background among the choices that are unwise on a printer; and a user's own setting stands above the author's hint. Media Queries 5 defines `prefers-contrast` and `color-gamut`.",
+      "status": "answered",
+      "decidedBy": "Ramy (resolved by research, as he ruled)",
+      "decidedOn": "2026-11-24",
+      "recordedOn": "2026-11-24"
+    },
+    {
+      "id": "DEC-212",
+      "question": "Where may a colour be translucent?",
+      "options": [
+        "Wherever a lighter or a dimmer colour is wanted",
+        "Only where what lies beneath is meant to show through"
+      ],
+      "answer": "Only where what lies beneath is meant to show through: a shadow (DEC-201), a translucent surface, measured at its worst point (DEC-202), and the end of a fade (DEC-152). A colour that has to meet a contrast ratio is opaque, or is measured at its worst point over what lies beneath. A disabled state is never made with opacity (DEC-169), and no text is dimmed by it.",
+      "notes": "Resolved on 2026-11-24 from decisions already made: each of them already used or ruled out alpha, and no one rule said when it is allowed. Opacity multiplies with whatever lies beneath, so one value gives a different contrast on every surface.",
+      "status": "answered",
+      "decidedBy": "Ramy (resolved by research, as he ruled)",
+      "decidedOn": "2026-11-24",
+      "recordedOn": "2026-11-24"
+    },
+    {
+      "id": "DEC-213",
+      "question": "How does the system use a brand's logo and its images in each colour scheme?",
+      "options": [
+        "It recolours or dims them to fit the colour scheme",
+        "It uses only what the brand provides, never changes it, and flags a variation that fails 3:1"
+      ],
+      "answer": "It uses only the variations a brand provides and never recolours, tints, dims or filters one; the same holds for an image. A logo may come in more than one value of three properties: what it shows, the mark with its text or the mark alone; the ground it is made for, light or dark; and its arrangement, horizontal or vertical. In a colour scheme the system takes the variation made for that ground, and where two fit a surface, the one with the higher contrast ratio. It measures the variation against the surface under it as WCAG 1.4.11 measures a graphic, and flags one whose mark or text falls under 3:1, naming the parts, for a person to decide. Which of the mark with its text or the mark alone, and of horizontal or vertical, is used follows the space, which the layout foundation sets.",
+      "notes": "Answered on 2026-11-24. Not every brand has every variation. WCAG sets no contrast requirement for the text of a logo (1.4.3), so the flag is the system's own check. Read that day in two brand guides: a horizontal full logo as the primary, a vertical one when space requires, the mark alone only where the audience knows the brand or the full logo is near, and versions for light and for dark grounds chosen as the clearest against the background (HashiCorp; National Wildlife Federation); both forbid other colours and tints. HTML serves one image in the light colour scheme and another in the dark (the `picture` element with a `prefers-color-scheme` media query). A light plate behind a logo in the dark colour scheme was not taken: it would be brighter than the surface on top (DEC-162).",
+      "status": "answered",
+      "decidedBy": "Ramy",
+      "decidedOn": "2026-11-24",
+      "recordedOn": "2026-11-24"
     }
   ]
 }
